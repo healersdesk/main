@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Healing Desk — Healer's Desk</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#3B2366">
+<link rel="manifest" href="/desk/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/desk/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Healer's Desk">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Figtree:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --violet:#3B2366; --violet-2:#5B3F8C; --mist:#EEE8F6; --mist-2:#F6F2FB; --ivory:#FCFAF6;
+  --gold:#B8903F; --gold-soft:#F3EAD7; --ink:#2A2233; --muted:#6D6478; --line:#E2DAEC;
+  --rose:#B5536B; --rose-soft:#F8E3E8; --sage:#5F7F5B; --sage-soft:#E4EEE1; --sky:#4F7CAC; --sky-soft:#E1EBF5;
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Figtree",system-ui,-apple-system,sans-serif; --num:"Playfair Display",Georgia,serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+html{touch-action:manipulation;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ivory);color:var(--ink);font:15px/1.5 var(--sans);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+button,input,select,textarea{font:inherit;color:inherit}
+input,select,textarea{font-size:16px}  /* 16px stops iPhones zooming in (the "floating") when a field is tapped */
+a{color:var(--violet-2)}
+h1,h2,h3{font-family:var(--serif);color:var(--violet);font-weight:600;margin:0}
+.hidden{display:none!important}
+
+/* ---------- login ---------- */
+#login{min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
+.login-box{width:100%;max-width:380px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:34px 28px;text-align:center}
+.login-box img{width:110px;height:110px;object-fit:contain;mix-blend-mode:multiply}
+.login-box h1{font-size:2rem;margin:12px 0 4px}
+.login-box p{color:var(--muted);margin:0 0 22px}
+.login-box .fld{text-align:left}
+
+/* ---------- shell ---------- */
+.top{position:sticky;top:0;z-index:20;background:var(--violet);color:#fff;padding-top:env(safe-area-inset-top,0px)}
+.top-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:12px 20px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto}
+.brand img{width:40px;height:40px;object-fit:contain;background:#fff;border-radius:10px;padding:2px}
+.brand b{font:600 1.35rem var(--serif);letter-spacing:.2px}
+.nav{display:flex;gap:4px}
+.nav button{background:none;border:0;color:#E6DCF5;padding:8px 14px;border-radius:999px;cursor:pointer;font-weight:500;white-space:nowrap}
+.nav button.on{background:rgba(255,255,255,.14);color:#fff}
+.nav button:focus-visible{outline:2px solid var(--gold)}
+.top .out{background:none;border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:999px;padding:7px 14px;cursor:pointer}
+main{max-width:1180px;margin:0 auto;padding:26px 20px calc(110px + env(safe-area-inset-bottom,0px))}
+.page-h{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.page-h h1{font-size:2.1rem;margin-right:auto}
+@media (max-width:640px){
+  .page-h{align-items:center;gap:10px}
+  .page-h h1{flex:1 1 0;min-width:0;font-size:1.8rem}
+  .page-h .btn{flex:none}
+  .page-h::after{content:"";order:2;flex-basis:100%;height:0}
+  .page-h .sec{order:3;margin-left:auto}
+
+}
+
+/* ---------- controls ---------- */
+.btn{border:1px solid transparent;border-radius:999px;padding:9px 18px;cursor:pointer;font-weight:600;white-space:nowrap}
+.btn-p{background:var(--violet);color:#fff}.btn-p:hover{background:var(--violet-2)}
+.btn-g{background:var(--gold);color:#fff}
+.btn-o{background:#fff;border-color:var(--line)}
+.btn-wa{background:#25D366;color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+a.btn{text-decoration:none;display:inline-flex;align-items:center}
+.btn-sm{padding:6px 12px;font-size:.86rem}
+.btn-stop{background:#fff;border:1.5px solid var(--rose);color:var(--rose)}
+.btn-stop:hover{background:var(--rose-soft)}
+.btn-danger{background:none;border:0;color:var(--rose);cursor:pointer;font-weight:500;padding:6px}
+.btn:disabled{opacity:.55;cursor:wait}
+.btn:focus-visible,.link:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.fld{margin-bottom:14px}
+.fld label{display:block;font-weight:500;font-size:.9rem;margin-bottom:5px}
+input[type=text],input[type=email],input[type=tel],input[type=date],input[type=time],input[type=number],input[type=password],input[type=search],select,textarea{
+  width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--violet-2);box-shadow:0 0 0 3px rgba(91,63,140,.14)}
+textarea{min-height:80px;resize:vertical}
+input[type=date],input[type=time]{min-width:0;max-width:100%;display:block;min-height:44px}
+@supports (-webkit-touch-callout:none){input[type=date],input[type=time]{-webkit-appearance:none;appearance:none;text-align:left;line-height:1.4}}
+input::-webkit-date-and-time-value{text-align:left}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:640px){.g2,.g3{grid-template-columns:1fr}}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.filters input[type=search]{max-width:280px}
+.filters select{width:auto}
+
+/* ---------- overview ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:18px;background:#fff;margin-bottom:26px;overflow:hidden}
+.stat{padding:18px 20px;border-right:1px solid var(--line);min-width:0}
+.stat:last-child{border-right:0}
+.stat b{display:block;font:600 2.05rem/1.1 var(--num);color:var(--violet);font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum" 1,"tnum" 1}
+.stat b.rose{color:#A8445E}
+.stat b.gold{color:#9A7428}
+.stat b.sage{color:#4F6F48}
+.stat>span{display:block;margin-top:6px}
+.stat>span{color:var(--muted);font-size:.88rem}
+@media (max-width:760px){.stats{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+.cols{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:22px}
+.cols>*{min-width:0}
+main{overflow-x:clip}
+@media (max-width:900px){.cols{grid-template-columns:minmax(0,1fr)}}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.panel h2{font-size:1.45rem;margin-bottom:10px}
+.empty{color:var(--muted);padding:18px 0;text-align:center}
+
+/* ---------- lists / tables ---------- */
+.tbl-wrap{background:#fff;border:1px solid var(--line);border-radius:18px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:640px}
+th{text-align:left;font-weight:600;font-size:.82rem;color:var(--muted);padding:12px 14px;border-bottom:1px solid var(--line);background:var(--mist-2)}
+td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#FDFBFF}
+.link{background:none;border:0;padding:0;color:var(--violet);font-weight:600;cursor:pointer;text-align:left}
+.link:hover{text-decoration:underline}
+.av{width:38px;height:38px;border-radius:50%;background:var(--mist) center/cover no-repeat;display:inline-flex;align-items:center;justify-content:center;font:600 1rem var(--serif);color:var(--violet-2);flex-shrink:0}
+.who{display:flex;align-items:center;gap:10px}
+.tag{display:inline-block;font-size:.78rem;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--mist);color:var(--violet-2)}
+.tag.new{background:var(--gold-soft);color:#8a6a2a}
+.st{font-size:.8rem;font-weight:600;padding:3px 10px;border-radius:999px;border:0}
+.st-Pending{background:var(--gold-soft);color:#7d5e1f}
+.st-Complete{background:var(--sage-soft);color:#3d5a39}
+.st-Cancelled{background:var(--rose-soft);color:#8b3348}
+.st-Active{background:var(--sage-soft);color:#3d5a39}
+.st-Inactive{background:#EEE;color:#666}
+select.st{padding:4px 8px;width:auto;cursor:pointer}
+.row-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.row-item:last-child{border-bottom:0}
+.row-item .grow{flex:1;min-width:0;overflow:hidden}
+.row-item small{color:var(--muted);display:block}
+.day-h{font:600 1rem var(--sans);color:var(--muted);margin:14px 0 2px}
+.row-item .grow .link{display:block;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row-item small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.done-btn .short{display:none}
+@media (max-width:640px){.done-btn .full{display:none}.done-btn .short{display:inline}.panel{padding:16px}.row-item{gap:10px}}
+
+/* ---------- patient page ---------- */
+.back{background:none;border:0;color:var(--violet-2);cursor:pointer;padding:0;margin-bottom:14px;font-weight:500}
+.p-head{display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"photo info quick" "photo info ctl";gap:10px 20px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px}
+.p-head .p-photo{grid-area:photo}.p-head .p-info{grid-area:info}.p-head .p-quick{grid-area:quick;justify-self:end}.p-head .p-ctl{grid-area:ctl;justify-self:end}
+.p-quick{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:700px){
+  .p-head{grid-template-columns:auto 1fr;grid-template-areas:"photo quick" "info info" "ctl ctl";padding:16px}
+  .p-head .p-quick{align-self:start;flex-direction:column;align-items:flex-end}
+  .p-head .p-ctl{justify-self:start}
+}
+.p-photo{width:96px;height:96px;border-radius:20px;background:var(--mist) center/cover no-repeat;display:flex;align-items:center;justify-content:center;font:600 2.2rem var(--serif);color:var(--violet-2);flex-shrink:0;cursor:zoom-in}
+.p-info{min-width:0}
+.p-info h1{font-size:2rem}
+.p-info .meta{color:var(--muted)}
+.p-ctl{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.p-ctl select{width:auto}
+.tabs{display:flex;gap:4px;margin:22px 0 16px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{background:none;border:0;padding:10px 16px;cursor:pointer;color:var(--muted);font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);vertical-align:middle;margin-left:2px}
+.tabs button.on{color:var(--violet);border-bottom-color:var(--gold)}
+.dl{display:grid;grid-template-columns:200px 1fr;gap:0;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.dl dt,.dl dd{padding:12px 16px;margin:0;border-bottom:1px solid var(--line)}
+.dl dt{color:var(--muted);font-size:.9rem;background:var(--mist-2)}
+.dl dd{white-space:pre-wrap}
+@media (max-width:640px){.dl{grid-template-columns:1fr}.dl dt{border-bottom:0;padding-bottom:2px}}
+.symlist{display:flex;flex-direction:column;gap:8px}
+.symrow{display:flex;align-items:center;gap:10px}
+.bar{flex:0 0 140px;height:8px;border-radius:8px;background:var(--mist);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--gold)}
+@media (max-width:640px){.symrow{flex-wrap:wrap;gap:4px 10px}.bar{flex-basis:90px}
+  .top-in{gap:10px;flex-wrap:nowrap}.top .out{padding:6px 12px}.brand b{font-size:1.25rem}}
+
+/* scan cards */
+.scan-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.scan-card .grow{flex:1}
+.pill{display:inline-block;font-size:.75rem;padding:2px 8px;border-radius:999px;margin:0 4px 4px 0}
+.e-Congested,.a-Over{background:var(--rose-soft);color:#8b3348}
+.e-Normal,.a-Normal{background:var(--sage-soft);color:#3d5a39}
+.e-Depleted,.a-Under{background:var(--sky-soft);color:#2f5680}
+
+/* progress heatmap */
+.heat{border-collapse:separate;border-spacing:0;min-width:auto}
+.heat th,.heat td{padding:6px 8px;border-bottom:1px solid var(--line);font-size:.82rem;text-align:center;white-space:nowrap}
+.heat th:first-child,.heat td:first-child{text-align:left;position:sticky;left:0;background:#fff;font-weight:500}
+.heat .cell{display:flex;flex-direction:column;gap:3px;align-items:center}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.82rem;color:var(--muted);margin:10px 0 16px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:4px;display:inline-block}
+.chart-box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:18px;height:300px}
+
+/* fees */
+.fee-sum{display:grid;grid-template-columns:repeat(3,1fr);background:#fff;border:1px solid var(--line);border-radius:18px;margin-bottom:16px;overflow:hidden}
+.fee-sum div{padding:16px 18px;border-right:1px solid var(--line)}
+.fee-sum div:last-child{border-right:0}
+.fee-sum b{display:block;font:600 1.7rem/1.1 var(--num);color:var(--violet);font-feature-settings:"lnum" 1,"tnum" 1}
+.fee-sum .over b{color:var(--sky)}
+.fee-sum span{font-size:.86rem;color:var(--muted)}
+.fee-sum .due b{color:var(--rose)}
+
+/* ---------- modal ---------- */
+dialog{border:0;border-radius:22px;padding:0;width:min(760px,96vw);max-width:96vw;max-height:92vh;max-height:92dvh;overflow:hidden;background:var(--ivory);color:var(--ink)}
+dialog[open]{display:flex}
+#mform{display:flex;flex-direction:column;width:100%;max-height:inherit;min-height:0}
+@media (max-width:640px){
+  dialog{width:100%;max-width:100%;height:100vh;height:100dvh;max-height:100vh;max-height:100dvh;margin:0;border-radius:0;inset:0}
+  #mform{height:100%;max-height:100%}
+}
+html.lock,html.lock body{overflow:hidden}
+html.lock body{position:fixed;left:0;right:0}
+dialog::backdrop{background:rgba(35,20,60,.45)}
+.m-h{flex-shrink:0;background:var(--ivory);display:flex;align-items:center;gap:12px;padding:16px 22px;padding-top:calc(16px + env(safe-area-inset-top,0px));border-bottom:1px solid var(--line)}
+.m-h h2{font-size:1.6rem;margin-right:auto}
+.m-x{background:none;border:0;font-size:1.5rem;cursor:pointer;color:var(--muted);line-height:1}
+.m-b{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:20px 22px}
+.m-f{flex-shrink:0;background:var(--ivory);display:flex;justify-content:flex-end;gap:10px;padding:12px 22px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
+.m-f:empty{display:none}
+.sec-t{font:600 1.25rem var(--serif);color:var(--violet);margin:18px 0 10px}
+.chak{display:grid;grid-template-columns:120px 1fr 1fr;gap:8px 10px;align-items:center;padding:10px 12px;background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
+.chak b{font-weight:600}
+.chak .obs{grid-column:2 / -1}
+.chak select{padding:8px 10px}
+@media (max-width:640px){.chak{grid-template-columns:1fr 1fr}.chak b{padding-top:0;grid-column:1 / -1}.chak .obs{grid-column:1 / -1}}
+.dyn{display:grid;gap:8px;align-items:start;padding:10px 12px;background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
+.dyn-minor{grid-template-columns:1fr 1fr 1fr auto}
+.dyn-minor .obs{grid-column:1 / -1}
+.dyn-organ{grid-template-columns:1fr 1fr 1.4fr auto}
+.dyn-emo{grid-template-columns:1fr 2fr auto}
+@media (max-width:640px){.dyn-minor,.dyn-organ,.dyn-emo{grid-template-columns:1fr}}
+.add{background:none;border:1px dashed var(--gold);color:#8a6a2a;border-radius:10px;padding:8px 14px;cursor:pointer;font-weight:500}
+.days{display:flex;flex-wrap:wrap;gap:8px}
+.days label{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);padding:6px 10px;border-radius:999px;cursor:pointer}
+.radios{display:flex;gap:16px;flex-wrap:wrap}
+.radios label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.preview{background:var(--gold-soft);border-radius:10px;padding:10px 12px;font-size:.88rem;color:#5a4a2a}
+.view-block{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+.view-block small{color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;z-index:100;font-weight:500;opacity:0;transition:opacity .25s;pointer-events:none}
+.toast.show{opacity:1}
+.err-box{background:var(--rose-soft);color:#7a2c3f;padding:10px 12px;border-radius:10px;margin-top:10px;font-size:.9rem}
+.photo-big{max-width:100%;max-height:80vh;display:block;margin:0 auto;border-radius:12px}
+
+/* segmented control */
+.seg{display:flex;background:var(--mist);border-radius:999px;padding:4px;margin-bottom:18px}
+.seg button{flex:1;border:0;background:none;padding:9px 12px;border-radius:999px;cursor:pointer;font-weight:600;color:var(--muted)}
+.seg button.on{background:#fff;color:var(--violet);box-shadow:0 1px 3px rgba(59,35,102,.12)}
+.past-row{display:grid;grid-template-columns:1fr 1.3fr auto;gap:10px;align-items:end;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed var(--line)}
+.past-row label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:4px}
+.tsel{display:grid;grid-template-columns:1.4fr 1fr;gap:6px}
+@media (max-width:520px){.past-row{grid-template-columns:1fr auto}.past-row .pr-time{grid-column:1 / 2;grid-row:2}}
+.num{font-variant-numeric:tabular-nums}
+.due-cell{color:var(--rose);font-weight:600}
+.over-cell{color:var(--sky);font-weight:600}
+.paid-cell{color:var(--sage);font-weight:600}
+.share-box{display:flex;gap:8px}
+.share-box input{flex:1;min-width:0}
+.install-tip{display:flex;gap:12px;align-items:center;background:var(--gold-soft);color:#5a4a2a;border-radius:14px;padding:12px 16px;margin-bottom:18px;font-size:.92rem}
+.install-tip .grow{flex:1}
+.top .inst{background:var(--gold);border:0;color:#fff;border-radius:999px;padding:7px 14px;cursor:pointer;font-weight:600}
+
+/* bottom navigation */
+.bnav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--violet);border-top:1px solid rgba(255,255,255,.08);padding-bottom:env(safe-area-inset-bottom,0px)}
+.bnav-in{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.bnav button{background:none;border:0;border-top:2px solid transparent;margin-top:-1px;padding:9px 2px 10px;cursor:pointer;color:#CFC3E6;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:64px}
+.bnav .bt{height:24px;display:flex;align-items:center;justify-content:center;font:600 1.35rem/1 var(--num);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.bnav svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.bnav .bl{font-size:.72rem;line-height:1.15;font-weight:600;text-align:center}
+.bnav button.on{color:#fff;border-top-color:var(--gold);background:rgba(255,255,255,.06)}
+.bnav button.on .bt{color:#E2C27A}
+.bnav .emo{font-size:1.2rem;filter:saturate(.9)}
+.bnav .bl-only{flex:1;display:flex;align-items:center;justify-content:center;font-size:.8rem;line-height:1.2;font-weight:600;text-align:center}
+.bnav button:focus-visible{outline:2px solid var(--gold);outline-offset:-4px}
+
+.sharebar{display:flex;align-items:center;gap:12px;margin-bottom:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 12px 10px 16px}
+.sharebar span{flex:1;min-width:0;color:var(--muted);font-size:.92rem}
+.cmt{margin-bottom:12px}
+.cmt-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.cmt-h small{color:var(--muted)}
+
+@media (max-width:640px){
+  .stat{padding:14px}
+  .stat b{font-size:1.6rem}
+  .fee-sum div{padding:12px 10px;min-width:0}
+  .fee-sum b{font-size:1.2rem}
+  .fee-sum span{font-size:.8rem}
+  .p-head .p-ctl{display:grid;grid-template-columns:auto 1fr;gap:8px;width:100%;justify-self:stretch}
+  .p-ctl .btn{padding:9px 12px;font-size:.88rem;justify-content:center;white-space:normal;text-align:center}
+}
+
+/* hide / show amounts */
+.eye{background:none;border:1px solid var(--line);border-radius:999px;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--violet);flex:none;padding:0}
+.eye:hover{background:var(--mist-2)}
+.eye svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.eye .ec{display:none}
+body.money-hidden .eye .eo{display:none}
+body.money-hidden .eye .ec{display:block}
+body.money-hidden .mv-r{display:none}
+.mv-m{display:none}
+body.money-hidden .mv-m{display:inline}
+#v-money th{white-space:nowrap}
+#mtable td.num,#mrecent td.num{min-width:6.8em;white-space:nowrap}
+.mv{white-space:nowrap}
+
+.fb{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px;background:#FDFCFF}
+.fb-h{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.fb-t{min-width:0;width:100%;border-collapse:collapse}
+.fb-t th,.fb-t td{padding:6px 8px;border-bottom:1px solid var(--line);font-size:.9rem;text-align:left;background:none}
+.fb-t th{font-size:.78rem;color:var(--muted)}
+.fb-good{color:var(--sage);font-weight:600;white-space:nowrap}
+.fb-bad{color:var(--rose);font-weight:600;white-space:nowrap}
+.fb-same{color:var(--muted);white-space:nowrap}
+.fb-imp{margin-top:8px;font-size:.92rem}
+/* google sign-in, setup, settings */
+.gbtn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;background:#fff;border:1px solid #CFC6DB;border-radius:999px;padding:12px 18px;font-weight:600;cursor:pointer;color:var(--ink);transition:box-shadow .2s,border-color .2s}
+.gbtn:hover{border-color:var(--violet-2);box-shadow:0 2px 10px rgba(59,35,102,.12)}
+.gbtn:disabled{opacity:.6;cursor:wait}
+.gbtn svg{width:20px;height:20px;flex:none}
+.login-box .fine{font-size:.82rem;color:var(--muted);margin:18px 0 0;line-height:1.5}
+.login-box .fine a{color:var(--violet-2)}
+.login-wordmark{font:600 2.1rem/1.05 var(--serif);color:var(--violet);margin:10px 0 2px}
+.login-box h1.sub{font:500 1.15rem var(--sans);color:var(--muted);margin:0 0 22px}
+#setup{min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
+.setup-box{width:100%;max-width:520px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:30px 26px}
+.setup-box h1{font-size:2rem;margin:10px 0 4px}
+.setup-box > p{color:var(--muted);margin:0 0 20px}
+.slug-row{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.slug-row span{padding:10px 0 10px 12px;color:var(--muted);white-space:nowrap;font-size:.92rem}
+.slug-row input{border:0!important;box-shadow:none!important;padding-left:2px!important;min-width:0}
+.slug-row:focus-within{border-color:var(--violet-2);box-shadow:0 0 0 3px rgba(91,63,140,.14)}
+.hint{font-size:.82rem;color:var(--muted);margin-top:5px}
+.hint.bad{color:var(--rose)}
+.agree{display:flex;gap:10px;align-items:flex-start;font-size:.92rem;margin:6px 0 4px}
+.agree input{width:18px;height:18px;accent-color:var(--violet);margin-top:2px;flex:none}
+.top .gear{background:none;border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:999px;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.top .gear svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.brand .bmark{width:40px;height:40px;background:#fff;border-radius:10px;padding:4px;display:block}
+.page-h .greet-sub{width:100%;color:var(--muted);margin:-8px 0 0;font-size:.98rem}
+.danger-zone{margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+.danger-zone p{color:var(--muted);font-size:.9rem;margin:0 0 10px}
+.app-foot{text-align:center;color:var(--muted);font-size:.82rem;margin-top:34px}
+.app-foot a{color:var(--violet-2)}
+.fb-note{margin-top:8px;border-left:3px solid var(--gold);padding:2px 0 2px 12px;font-style:italic;color:#433a52;white-space:pre-wrap}
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<section id="login" class="hidden">
+  <div class="login-box">
+    <img src="/assets/mark.svg" alt="" width="96" height="96" style="width:96px;height:96px">
+    <div class="login-wordmark">Healer's Desk</div>
+    <h1 class="sub">Open your healing desk</h1>
+    <button type="button" class="gbtn" id="gbtn"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg><span>Continue with Google</span></button>
+    <div class="err-box hidden" id="lerr"></div>
+    <p class="fine">New here? Signing in with your Google account creates your own private healing desk. By continuing you agree to our <a href="/policy#terms">Terms</a>, <a href="/policy#privacy">Privacy Policy</a> and <a href="/policy#refund">Refund Policy</a>.</p>
+  </div>
+</section>
+
+<!-- ================= FIRST-TIME SETUP ================= -->
+<section id="setup" class="hidden">
+  <form class="setup-box" id="setupForm" novalidate>
+    <img src="/assets/mark.svg" alt="" width="64" height="64" style="width:64px;height:64px">
+    <h1>Set up your healing desk</h1>
+    <p>This takes a minute. Your clients will see your name and practice name on your intake form and progress reports.</p>
+    <div class="g2">
+      <div class="fld"><label for="su_name">Your name *</label><input type="text" id="su_name" autocomplete="name" maxlength="80"></div>
+      <div class="fld"><label for="su_wa">Your WhatsApp number *</label><input type="tel" id="su_wa" inputmode="tel" placeholder="98XXXXXXXX" maxlength="20"></div>
+    </div>
+    <div class="fld"><label for="su_prac">Practice name *</label><input type="text" id="su_prac" placeholder="e.g. Inner Light Healing" maxlength="100"></div>
+    <div class="fld"><label for="su_city">City</label><input type="text" id="su_city" maxlength="80"></div>
+    <div class="fld"><label for="su_slug">Your intake form link *</label>
+      <div class="slug-row"><span id="su_host">healersdesk.com/i/</span><input type="text" id="su_slug" autocapitalize="off" autocomplete="off" spellcheck="false" maxlength="40"></div>
+      <div class="hint" id="su_slughint">Lowercase letters, numbers and dashes. You can change this later.</div></div>
+    <label class="agree"><input type="checkbox" id="su_agree"> <span>I agree to the <a href="/policy#terms" target="_blank" rel="noopener">Terms of Use</a>, <a href="/policy#privacy" target="_blank" rel="noopener">Privacy Policy</a> and <a href="/policy#refund" target="_blank" rel="noopener">Refund &amp; Cancellation Policy</a>, and I will collect my clients' information only with their consent.</span></label>
+    <div class="err-box hidden" id="su_err"></div>
+    <div style="display:flex;gap:10px;justify-content:space-between;margin-top:18px;align-items:center">
+      <button type="button" class="btn-danger" id="su_out">Use a different account</button>
+      <button class="btn btn-p" id="su_ok">Open My Healing Desk</button>
+    </div>
+  </form>
+</section>
+
+<!-- ================= APP ================= -->
+<div id="app" class="hidden">
+  <header class="top"><div class="top-in">
+    <div class="brand"><img class="bmark" src="/assets/mark.svg" alt=""><b>Healer's Desk</b></div>
+    <button class="gear" id="settingsBtn" aria-label="Desk settings" title="Desk settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+    <button class="out" id="logout">Sign out</button>
+  </div></header>
+
+  <main>
+    <!-- OVERVIEW -->
+    <section id="v-home">
+      <div class="page-h"><h1>My Healing Desk</h1><p class="greet-sub" id="greet">Welcome</p></div>
+      <div class="install-tip hidden" id="andTip"><span style="font-size:1.4rem">📲</span><div class="grow"><b>Install My Healing Desk as an app</b><br>It opens full screen from your Home Screen.</div><button class="btn btn-p btn-sm" id="installBtn">Install</button></div>
+      <div class="install-tip hidden" id="iosTip"><span style="font-size:1.4rem">📲</span><div class="grow"><b>Add My Healing Desk to your Home Screen</b><br>Tap the Share button <b>⬆</b> in Safari, then <b>Add to Home Screen</b>.</div><button class="btn-danger" id="iosTipX" aria-label="Dismiss">✕</button></div>
+      <div class="stats">
+        <div class="stat"><b id="s-today">0</b><span>Healings today</span></div>
+        <div class="stat"><b id="s-week">0</b><span>Healings (next 7 days)</span></div>
+        <div class="stat"><b id="s-active">0</b><span>Active patients</span></div>
+        <div class="stat"><b id="s-new">0</b><span>New intakes this week</span></div>
+      </div>
+      <div class="cols">
+        <div class="panel"><h2>Upcoming healings</h2><div id="upcoming"></div></div>
+        <div class="panel"><h2>New intake forms</h2><div id="recent"></div></div>
+      </div>
+      <div class="panel hidden" id="fbPanel" style="margin-top:22px"><h2>New feedback 💬</h2><div id="fbList"></div></div>
+      <div class="panel" style="margin-top:22px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><h2 style="margin:0">Energy Exchange</h2><button type="button" class="eye" data-eye aria-label="Show or hide amounts"><svg class="eo" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="ec" viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M10.6 5.1A10.6 10.6 0 0 1 12 5c6.4 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.1M6.6 6.6C3.8 8.4 2 12 2 12s3.6 7 10 7a9.7 9.7 0 0 0 4.4-1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button><button class="link" data-goto="money" style="margin-left:auto">View all ›</button></div>
+        <div class="stats" style="margin-bottom:14px">
+          <div class="stat"><b id="o-month">₹0</b><span>Received this month</span></div>
+          <div class="stat"><b id="o-all">₹0</b><span>Total received</span></div>
+          <div class="stat"><b id="o-due" class="rose">₹0</b><span>Pending</span></div>
+          <div class="stat"><b id="o-duen">0</b><span>Patients with pending</span></div>
+        </div>
+        <div id="o-duelist"></div>
+      </div>
+    </section>
+
+    <!-- PATIENTS -->
+    <section id="v-patients" class="hidden">
+      <div class="page-h"><h1>Patients</h1>
+        <button class="btn btn-o sec" id="copyLink">Copy Intake Form Link</button>
+        <button class="btn btn-p" data-act="new-patient">Add Patient</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="ps-total">0</b><span>Total patients</span></div>
+        <div class="stat"><b id="ps-active" class="sage">0</b><span>Active</span></div>
+        <div class="stat"><b id="ps-month" class="gold">0</b><span>New This Month</span></div>
+        <div class="stat"><b id="ps-week">0</b><span>New This Week</span></div>
+      </div>
+      <div class="filters">
+        <input type="search" id="pq" placeholder="Search by name or number" aria-label="Search patients">
+        <select id="pstatus" aria-label="Status"><option value="">All statuses</option><option>Active</option><option>Inactive</option></select>
+        <select id="pcat" aria-label="Category"><option value="">All categories</option></select>
+      </div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Name</th><th>Contact</th><th>Age</th><th>Status</th><th>Category</th><th>Looking for support with</th></tr></thead>
+        <tbody id="ptable"></tbody>
+      </table></div>
+    </section>
+
+    <!-- HEALINGS -->
+    <section id="v-healings" class="hidden">
+      <div class="page-h"><h1>Healings</h1><button class="btn btn-o sec" data-act="past-healing">Record past healing</button><button class="btn btn-p" data-act="new-healing">Schedule healing</button></div>
+      <div class="stats">
+        <div class="stat"><b id="hs-today">0</b><span>Today</span></div>
+        <div class="stat"><b id="hs-week" class="gold">0</b><span>Next 7 days</span></div>
+        <div class="stat"><b id="hs-month" class="sage">0</b><span>Completed this month</span></div>
+        <div class="stat"><b id="hs-over" class="rose">0</b><span>Past, still pending</span></div>
+      </div>
+      <div class="filters">
+        <input type="search" id="hq" placeholder="Search by patient" aria-label="Search healings">
+        <select id="hrange" aria-label="When"><option value="today">Today</option><option value="tomorrow">Tomorrow</option><option value="week">Next 7 days</option><option value="upcoming" selected>All upcoming</option><option value="past">Past</option><option value="all">All dates</option></select>
+        <select id="hstatus" aria-label="Status"><option value="">All statuses</option><option>Pending</option><option>Complete</option><option>Cancelled</option></select>
+      </div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Patient</th><th>Date</th><th>Time</th><th>Status</th><th>Notes</th><th></th></tr></thead>
+        <tbody id="htable"></tbody>
+      </table></div>
+    </section>
+
+    <!-- ENERGY EXCHANGE -->
+    <section id="v-money" class="hidden">
+      <div class="page-h"><h1 style="flex:none;margin-right:0">Energy Exchange</h1><button type="button" class="eye" data-eye aria-label="Show or hide amounts"><svg class="eo" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="ec" viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M10.6 5.1A10.6 10.6 0 0 1 12 5c6.4 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.1M6.6 6.6C3.8 8.4 2 12 2 12s3.6 7 10 7a9.7 9.7 0 0 0 4.4-1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button></div>
+      <div class="stats">
+        <div class="stat"><b id="m-all" class="num">₹0</b><span>Total received</span></div>
+        <div class="stat"><b id="m-month" class="num">₹0</b><span>Received this month</span></div>
+        <div class="stat"><b id="m-due" class="num" style="color:var(--rose)">₹0</b><span>Pending</span></div>
+        <div class="stat"><b id="m-duen">0</b><span>Patients with pending</span></div>
+      </div>
+      <div class="filters">
+        <input type="search" id="mq" placeholder="Search by name" aria-label="Search">
+        <select id="mf" aria-label="Show"><option value="">All patients</option><option value="due">With pending</option><option value="paid">Fully paid</option><option value="over">Overpaid</option><option value="unset">Fees not set</option></select>
+      </div>
+      <div class="tbl-wrap" style="margin-bottom:26px"><table>
+        <thead><tr><th>Patient</th><th>Case fees</th><th>Received</th><th>Pending</th><th style="white-space:nowrap">Last payment</th><th></th><th></th></tr></thead>
+        <tbody id="mtable"></tbody>
+      </table></div>
+      <h2 style="font-size:1.5rem;margin-bottom:10px">Recent payments</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Date</th><th>Patient</th><th>Amount</th><th>Mode</th><th></th></tr></thead>
+        <tbody id="mrecent"></tbody>
+      </table></div>
+    </section>
+
+    <!-- PATIENT DETAIL -->
+    <section id="v-patient" class="hidden"></section>
+    <p class="app-foot">Healer's Desk · <a href="/policy">Policies</a> · <a href="mailto:healersdesk@gmail.com">healersdesk@gmail.com</a> · <a href="https://wa.me/919509831551" target="_blank" rel="noopener">+91-950-983-1551</a></p>
+  </main>
+
+  <nav class="bnav" aria-label="Main">
+    <div class="bnav-in">
+      <button data-view="home" class="on"><span class="bt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4c1.8 2 2.7 4.3 2.7 6.6S13.8 15 12 17c-1.8-2-2.7-4.1-2.7-6.4S10.2 6 12 4z"/><path d="M12 17c-2.4-.2-4.6-1.2-6.2-3.1C5 12 5 10.4 5.3 9c2 .3 3.7 1.1 5 2.4"/><path d="M12 17c2.4-.2 4.6-1.2 6.2-3.1.8-1.9.8-3.5.5-4.9-2 .3-3.7 1.1-5 2.4"/><path d="M4 19.5h16"/></svg></span><span class="bl">My Desk</span></button>
+      <button data-view="patients"><span class="bt" id="nav-p">0</span><span class="bl">Patients</span></button>
+      <button data-view="healings"><span class="bt" id="nav-h">0</span><span class="bl">Healings Today</span></button>
+      <button data-view="money"><span class="bt emo" aria-hidden="true">💵</span><span class="bl">Energy<br>Exchange</span></button>
+    </div>
+  </nav>
+</div>
+
+<!-- ================= MODALS ================= -->
+<dialog id="modal"><form method="dialog" id="mform" novalidate>
+  <div class="m-h"><h2 id="mtitle"></h2><button class="m-x" value="cancel" aria-label="Close" formnovalidate>×</button></div>
+  <div class="m-b" id="mbody"></div>
+  <div class="m-f" id="mfoot"></div>
+</form></dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+<script src="/config.js"></script>
+<script>
+/* =====================================================================
+   CONFIG & CONSTANTS
+   ===================================================================== */
+const C = window.HD_CONFIG || {};
+const sb = window.supabase.createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY, { auth:{ flowType:'pkce', persistSession:true, autoRefreshToken:true, detectSessionInUrl:true } });
+const MAJOR = ["Crown","Forehead","Ajna","Throat","Front Heart","Back Heart","Front Solar","Back Solar","Front Spleen","Back Spleen","Navel","Meng Mein","Sex","Basic"];
+const ENERGY = ["Congested","Normal","Depleted"];
+const ACTIV  = ["Over Activated","Normal","Under Activated"];
+const UNITS  = ["Inches","Centimeters","Feet","Meters"];
+const TO_IN  = {Inches:1, Centimeters:1/2.54, Feet:12, Meters:39.3701};
+const CATEGORIES = ["Normal","ACPH","CPH","CPP"];
+const HSTATUS = ["Pending","Complete","Cancelled"];
+const PAYMODES = ["UPI","Cash","Bank transfer","Card","Other"];
+const WEEKDAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+const S = { patients:[], healings:[], payments:[], photos:{}, current:null, tab:'profile', view:'home', chart:null };
+let D = null;      // this healer's desk (name, practice, slug…)
+let UID = null;    // signed-in healer's id
+const first = n => String(n||'').trim().split(/\s+/)[0] || '';
+const intakeURL = () => `${location.origin}/i/${D.slug}`;
+const slugify = s => String(s||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40);
+const slugOK = s => /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$/.test(s);
+
+/* =====================================================================
+   HELPERS
+   ===================================================================== */
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const todayISO = () => { const d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOffset()); return d.toISOString().slice(0,10); };
+const iso = d => { const x=new Date(d); x.setMinutes(x.getMinutes()-x.getTimezoneOffset()); return x.toISOString().slice(0,10); };
+const addDays = (s,n) => { const d=new Date(s+'T00:00:00'); d.setDate(d.getDate()+n); return iso(d); };
+const fmtDate = s => s ? new Date(s.length>10?s:s+'T00:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '—';
+const fmtDay = s => new Date(s+'T00:00:00').toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'short'});
+const fmtTime = t => { if(!t) return '—'; const [h,m]=t.split(':'); const d=new Date(); d.setHours(+h,+m); return d.toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'}); };
+const money = n => '₹' + Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2});
+const age = dob => { if(!dob) return '—'; const b=new Date(dob+'T00:00:00'), n=new Date(); let a=n.getFullYear()-b.getFullYear(); if(n<new Date(n.getFullYear(),b.getMonth(),b.getDate())) a--; return a; };
+const initials = n => (n||'?').trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+const waNum = p => { let d=String(p||'').replace(/\D/g,''); if(d.length===10) d='91'+d; if(d.length===11 && d.startsWith('0')) d='91'+d.slice(1); return d; };
+const waLink = (p,msg='') => `https://wa.me/${waNum(p)}${msg?`?text=${encodeURIComponent(msg)}`:''}`;
+const uuid = () => (crypto.randomUUID ? crypto.randomUUID() : '10000000-1000-4000-8000-100000000000'.replace(/[018]/g,c=>(c^crypto.getRandomValues(new Uint8Array(1))[0]&15>>c/4).toString(16)));
+// Time picker: hours + 00/15/30/45 minutes only
+function timeSel(cls, val){
+  let [h,m]=(val||'').split(':'); h = h===undefined||h==='' ? '' : String(+h); m = m||'00';
+  if(!['00','15','30','45'].includes(m)) m=String(Math.round(+m/15)*15%60).padStart(2,'0');
+  const hours=[...Array(24).keys()].map(i=>(i+6)%24);
+  const lab=i=>i===0?'12 AM':i===12?'12 PM (noon)':i<12?`${i} AM`:`${i-12} PM`;
+  return `<div class="tsel"><select class="${cls}-h" aria-label="Hour"><option value="">No time</option>${hours.map(i=>`<option value="${i}" ${String(i)===h?'selected':''}>${lab(i)}</option>`).join('')}</select>
+    <select class="${cls}-m" aria-label="Minutes">${['00','15','30','45'].map(x=>`<option value="${x}" ${x===m?'selected':''}>:${x}</option>`).join('')}</select></div>`;
+}
+function readTime(root, cls){ const h=$('.'+cls+'-h',root).value; if(h==='') return null; return `${h.padStart(2,'0')}:${$('.'+cls+'-m',root).value}`; }
+const pById = id => S.patients.find(p=>p.id===id);
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),2600); }
+function fail(e){ console.error(e); toast(e?.message ? `Couldn't save: ${e.message}` : "Couldn't save. Check your connection."); }
+const opts = (arr, sel, blank) => (blank!==undefined?`<option value="">${esc(blank)}</option>`:'') + arr.map(o=>`<option ${o===sel?'selected':''}>${esc(o)}</option>`).join('');
+const avatar = (p,cls='av') => { const u=S.photos[p.id]; return `<span class="${cls}" style="${u?`background-image:url('${u}')`:''}">${u?'':esc(initials(p.full_name))}</span>`; };
+
+/* =====================================================================
+   AUTH
+   ===================================================================== */
+async function boot(){
+  if(!C.SUPABASE_URL || !C.SUPABASE_ANON_KEY || C.SUPABASE_ANON_KEY.startsWith('PASTE')){
+    document.body.innerHTML = '<p style="padding:40px;text-align:center">Add your Supabase anon key to <b>config.js</b> to open Healer\'s Desk.</p>'; return;
+  }
+  const q = new URLSearchParams(location.search);
+  if(q.get('error_description')){ showLogin(q.get('error_description')); history.replaceState(null,'',location.pathname); return; }
+  const { data:{ session } } = await sb.auth.getSession();
+  if(q.has('code')) history.replaceState(null,'',location.pathname+location.hash);
+  session ? enter(session) : showLogin();
+  sb.auth.onAuthStateChange((ev)=>{ if(ev==='SIGNED_OUT') showLogin(); });
+}
+function hideAll(){ ['login','setup','app'].forEach(id=>$('#'+id).classList.add('hidden')); }
+function showLogin(msg){
+  hideAll(); $('#login').classList.remove('hidden');
+  const e=$('#lerr'); if(msg){ e.textContent=msg; e.classList.remove('hidden'); } else e.classList.add('hidden');
+}
+$('#gbtn').onclick = async ()=>{
+  const b=$('#gbtn'); b.disabled=true; $('#gbtn span').textContent='Opening Google…';
+  const { error } = await sb.auth.signInWithOAuth({ provider:'google', options:{ redirectTo: location.origin + '/desk', queryParams:{ prompt:'select_account' } } });
+  if(error){ b.disabled=false; $('#gbtn span').textContent='Continue with Google'; showLogin(error.message); }
+};
+$('#logout').onclick = async ()=>{ await sb.auth.signOut(); showLogin(); };
+
+async function enter(session){
+  UID = session.user.id;
+  const { data:desk, error } = await sb.from('desks').select('*').eq('id',UID).maybeSingle();
+  if(error){ showLogin("Couldn't open your desk: "+error.message); return; }
+  if(!desk){ showSetup(session.user); return; }
+  D = desk; openDesk();
+}
+async function openDesk(){
+  hideAll(); $('#app').classList.remove('hidden');
+  const h=new Date().getHours();
+  $('#greet').textContent = `${h<12?'Good morning':h<17?'Good afternoon':'Good evening'}, ${first(D.healer_name)} · ${D.practice_name}`;
+  $('#pcat').innerHTML = opts(CATEGORIES, '', 'All categories');
+  await loadAll();
+  const hash = location.hash.slice(1);
+  if(hash.startsWith('p/')) openPatient(hash.slice(2)); else go(['patients','healings','money'].includes(hash)?hash:'home');
+}
+
+/* ---- first-time setup ---- */
+function showSetup(user){
+  hideAll(); $('#setup').classList.remove('hidden');
+  const meta=user.user_metadata||{};
+  $('#su_host').textContent = location.host.replace(/^www\./,'') + '/i/';
+  if(!$('#su_name').value) $('#su_name').value = meta.full_name || meta.name || '';
+  let touched=false;
+  $('#su_prac').oninput=()=>{ if(!touched) $('#su_slug').value=slugify($('#su_prac').value); checkSlug(); };
+  $('#su_slug').oninput=()=>{ touched=true; $('#su_slug').value=$('#su_slug').value.toLowerCase().replace(/[^a-z0-9-]/g,''); checkSlug(); };
+  $('#su_out').onclick=async()=>{ await sb.auth.signOut(); showLogin(); };
+  $('#su_name').focus();
+}
+let slugTimer=null;
+function checkSlug(hintSel='#su_slughint', inputSel='#su_slug'){
+  const s=$(inputSel).value, h=$(hintSel);
+  clearTimeout(slugTimer);
+  if(!s){ h.textContent='Lowercase letters, numbers and dashes.'; h.classList.remove('bad'); return; }
+  if(!slugOK(s)){ h.textContent='Use 3–40 lowercase letters, numbers or dashes (not starting or ending with a dash).'; h.classList.add('bad'); return; }
+  slugTimer=setTimeout(async()=>{ const { data } = await sb.rpc('slug_available',{p_slug:s});
+    if($(inputSel).value!==s) return;
+    h.textContent = data ? `✓ ${location.host.replace(/^www\./,'')}/i/${s} is available` : 'That link is taken. Try another.'; h.classList.toggle('bad',!data); },350);
+}
+$('#setupForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const err=$('#su_err'); err.classList.add('hidden');
+  const row={ id:UID, healer_name:$('#su_name').value.trim(), whatsapp:$('#su_wa').value.trim(), practice_name:$('#su_prac').value.trim(),
+    city:$('#su_city').value.trim()||null, slug:$('#su_slug').value.trim(), contact_email:(await sb.auth.getUser()).data.user?.email||null };
+  const bad = !row.healer_name ? 'Please enter your name.' : row.whatsapp.replace(/\D/g,'').length<10 ? 'Please enter a valid WhatsApp number.' :
+    !row.practice_name ? 'Please enter your practice name.' : !slugOK(row.slug) ? 'Please choose a valid intake link.' : !$('#su_agree').checked ? 'Please accept the terms to continue.' : '';
+  if(bad){ err.textContent=bad; err.classList.remove('hidden'); return; }
+  const b=$('#su_ok'); b.disabled=true; b.textContent='Setting up…';
+  const { data, error } = await sb.from('desks').insert(row).select().single();
+  b.disabled=false; b.textContent='Open My Healing Desk';
+  if(error){ err.textContent = /duplicate|unique/i.test(error.message) ? 'That intake link is already taken. Please choose another.' : error.message; err.classList.remove('hidden'); return; }
+  D=data; toast('Your healing desk is ready 🌿'); openDesk();
+});
+
+/* =====================================================================
+   DATA
+   ===================================================================== */
+async function loadAll(){
+  const [p,h,pay,fb] = await Promise.all([
+    sb.from('patients').select('*').order('created_at',{ascending:false}),
+    sb.from('healings').select('*').order('healing_date').order('healing_time',{nullsFirst:true}),
+    sb.from('payments').select('*').order('paid_on',{ascending:false}),
+    sb.from('feedback').select('id,patient_id,created_at').eq('seen',false).order('created_at',{ascending:false})
+  ]);
+  if(p.error){
+    fail(p.error);
+  }
+  S.patients = p.data||[]; S.healings = (h.data||[]).sort((a,b)=>(a.healing_date+(a.healing_time||'')).localeCompare(b.healing_date+(b.healing_time||''))) ; S.payments = pay.data||[];
+  S.unseen = fb.error ? [] : (fb.data||[]);
+  await loadPhotos();
+}
+async function loadPhotos(){
+  const need = S.patients.filter(p=>p.photo_path && !S.photos[p.id]);
+  if(!need.length) return;
+  const { data } = await sb.storage.from('patient-photos').createSignedUrls(need.map(p=>p.photo_path), 60*60*6);
+  (data||[]).forEach((r,i)=>{ if(r.signedUrl) S.photos[need[i].id]=r.signedUrl; });
+}
+
+/* =====================================================================
+   NAVIGATION
+   ===================================================================== */
+function go(view){
+  S.view=view;
+  ['home','patients','healings','money','patient'].forEach(v=>$('#v-'+v).classList.toggle('hidden', v!==view));
+  $$('.bnav button').forEach(b=>b.classList.toggle('on', b.dataset.view===view || (view==='patient'&&b.dataset.view==='patients')));
+  updateNav();
+  if(view!=='patient') history.replaceState(null,'', view==='home'?location.pathname:'#'+view);
+  ({home:renderHome, patients:renderPatients, healings:renderHealings, money:renderMoney})[view]?.();
+  window.scrollTo(0,0);
+}
+$$('.bnav button').forEach(b=>b.onclick=()=>go(b.dataset.view));
+function updateNav(){
+  const t=todayISO();
+  $('#nav-p').textContent=S.patients.length;
+  $('#nav-h').textContent=S.healings.filter(h=>h.healing_date===t && h.status!=='Cancelled').length;
+}
+document.addEventListener('click', e=>{
+  const a = e.target.closest('[data-act]'); if(!a) return;
+  const act=a.dataset.act, id=a.dataset.id;
+  if(act==='new-patient') patientModal();
+  if(act==='new-healing') healingModal(S.view==='patient'?S.current:null,'schedule');
+  if(act==='past-healing') healingModal(S.view==='patient'?S.current:null,'past');
+  if(act==='open') openPatient(id);
+});
+
+/* =====================================================================
+   OVERVIEW
+   ===================================================================== */
+function renderHome(){
+  const t=todayISO(), wk=addDays(t,7), wkAgo=addDays(t,-7);
+  const pend = S.healings.filter(h=>h.status==='Pending');
+  $('#s-today').textContent = pend.filter(h=>h.healing_date===t).length;
+  $('#s-week').textContent  = pend.filter(h=>h.healing_date>=t && h.healing_date<=wk).length;
+  $('#s-active').textContent= S.patients.filter(p=>p.status==='Active').length;
+  $('#s-new').textContent   = S.patients.filter(p=>p.source==='web_form' && p.created_at.slice(0,10)>=wkAgo).length;
+
+  const up = pend.filter(h=>h.healing_date>=t && h.healing_date<=wk);
+  const overdue = pend.filter(h=>h.healing_date<t);
+  let html='';
+  if(overdue.length) html += `<div class="day-h" style="color:var(--rose)">Past sessions still marked pending (${overdue.length})</div>` + overdue.slice(-5).map(healRow).join('');
+  let last='';
+  up.forEach(h=>{ if(h.healing_date!==last){ last=h.healing_date; html+=`<div class="day-h">${h.healing_date===t?'Today':fmtDay(h.healing_date)}</div>`; } html+=healRow(h); });
+  $('#upcoming').innerHTML = html || '<div class="empty">No healings in the next 7 days.<br>Schedule one from the Healings tab.</div>';
+
+  const rec = S.patients.filter(p=>p.source==='web_form').slice(0,8);
+  $('#recent').innerHTML = rec.length ? rec.map(p=>`
+    <div class="row-item">${avatar(p)}<div class="grow"><button class="link" data-act="open" data-id="${p.id}">${esc(p.full_name)}</button>
+      <small>${esc((p.primary_concerns||[]).join(', ')||'—')} · ${fmtDate(p.created_at)}</small></div>
+      ${p.created_at.slice(0,10)>=wkAgo?'<span class="tag new">New</span>':''}</div>`).join('')
+    : '<div class="empty">No forms yet. Share the intake link with new patients.</div>';
+  bindHealRows($('#upcoming'));
+  const fbs=(S.unseen||[]).filter(f=>pById(f.patient_id));
+  $('#fbPanel').classList.toggle('hidden',!fbs.length);
+  $('#fbList').innerHTML = fbs.slice(0,8).map(f=>{const p=pById(f.patient_id); return `<div class="row-item">${avatar(p)}<div class="grow"><button class="link" data-fb="${p.id}">${esc(p.full_name)}</button><small>Sent feedback · ${fmtDate(f.created_at)}</small></div><span class="tag new">New</span></div>`;}).join('');
+  $$('[data-fb]').forEach(b=>b.onclick=()=>{ S.tab='progress'; S.current=null; openPatient(b.dataset.fb).then(()=>{ S.tab='progress'; renderPatient(); }); });
+
+  // energy exchange snapshot
+  const L=S.patients.map(p=>({p,...ledger(p)})), month=t.slice(0,7);
+  $('#o-month').innerHTML=mv(S.payments.filter(x=>x.paid_on.slice(0,7)===month).reduce((a,x)=>a+Number(x.amount),0));
+  $('#o-all').innerHTML=mv(S.payments.reduce((a,x)=>a+Number(x.amount),0));
+  $('#o-due').innerHTML=mv(L.reduce((a,r)=>a+r.due,0));
+  $('#o-duen').textContent=L.filter(r=>r.due>0).length;
+  const dl=L.filter(r=>r.due>0).sort((a,b)=>b.due-a.due).slice(0,5);
+  $('#o-duelist').innerHTML = dl.length ? `<div class="day-h" style="margin-top:0">Pending</div>`+dl.map(({p,due})=>`<div class="row-item">${avatar(p)}<div class="grow"><button class="link" data-act="open" data-id="${p.id}">${esc(p.full_name)}</button><small class="num" style="color:var(--rose)">${mv(due)} pending</small></div>
+      <a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="${reminderLink(p,due)}">Remind</a></div>`).join('')
+    : '<div class="empty" style="padding:6px 0">No pending energy exchange. 🌿</div>';
+}
+document.addEventListener('click',e=>{ const g=e.target.closest('[data-goto]'); if(g) go(g.dataset.goto); });
+function healRow(h){
+  const p=pById(h.patient_id); if(!p) return '';
+  return `<div class="row-item">${avatar(p)}<div class="grow"><button class="link" data-act="open" data-id="${p.id}">${esc(p.full_name)}</button>
+    <small>${fmtTime(h.healing_time)}${h.healing_date<todayISO()?' · '+fmtDate(h.healing_date):''}${h.notes?' · '+esc(h.notes):''}</small></div>
+    <button class="btn btn-o btn-sm done-btn" data-done="${h.id}" aria-label="Mark complete"><span class="full">Mark complete</span><span class="short">✓ Done</span></button></div>`;
+}
+function bindHealRows(root){
+  $$('[data-done]',root).forEach(b=>b.onclick=async()=>{ await setHealStatus(b.dataset.done,'Complete'); });
+}
+async function setHealStatus(id,status){
+  const { error } = await sb.from('healings').update({status}).eq('id',id);
+  if(error) return fail(error);
+  const h=S.healings.find(x=>x.id===id); if(h) h.status=status;
+  toast(`Marked ${status.toLowerCase()}`); refresh();
+}
+function refresh(){ updateNav(); if(S.view==='patient') renderPatient(); else go(S.view); }
+
+/* =====================================================================
+   PATIENT LIST
+   ===================================================================== */
+function renderPatients(){
+  const m=todayISO().slice(0,7);
+  $('#ps-total').textContent=S.patients.length;
+  $('#ps-active').textContent=S.patients.filter(p=>p.status==='Active').length;
+  $('#ps-month').textContent=S.patients.filter(p=>p.created_at.slice(0,7)===m).length;
+  $('#ps-week').textContent=S.patients.filter(p=>p.created_at.slice(0,10)>=addDays(todayISO(),-7)).length;
+  const q=$('#pq').value.trim().toLowerCase(), st=$('#pstatus').value, cat=$('#pcat').value;
+  const list = S.patients.filter(p=>(!q || p.full_name.toLowerCase().includes(q) || (p.whatsapp||'').includes(q)) && (!st||p.status===st) && (!cat||p.category===cat));
+  $('#ptable').innerHTML = list.length ? list.map(p=>`<tr>
+    <td><div class="who">${avatar(p)}<button class="link" data-act="open" data-id="${p.id}">${esc(p.full_name)}</button></div></td>
+    <td>${esc(p.whatsapp)}<br><small style="color:var(--muted)">${esc(p.email||'')}</small></td>
+    <td>${age(p.dob)}</td>
+    <td><span class="st st-${esc(p.status)}">${esc(p.status)}</span></td>
+    <td><span class="tag">${esc(p.category)}</span></td>
+    <td style="min-width:180px;max-width:280px;white-space:normal">${esc([...(p.primary_concerns||[]).filter(c=>c!=='Others'),p.concern_other].filter(Boolean).join(', ')||'—')}</td></tr>`).join('')
+    : `<tr><td colspan="6" class="empty">${S.patients.length?'No patients match these filters.':'No patients yet. Share the intake form or add one yourself.'}</td></tr>`;
+}
+['pq','pstatus','pcat'].forEach(id=>$('#'+id).addEventListener('input',renderPatients));
+$('#copyLink').onclick = async()=>{ const url=intakeURL(); try{ await navigator.clipboard.writeText(url); toast('Intake form link copied'); }catch{ prompt('Copy this link', url); } };
+
+/* =====================================================================
+   HEALINGS LIST
+   ===================================================================== */
+function renderHealings(){
+  const q=$('#hq').value.trim().toLowerCase(), st=$('#hstatus').value, r=$('#hrange').value, t=todayISO(), tm=addDays(t,1), wk=addDays(t,7), m=t.slice(0,7);
+  const live=S.healings.filter(h=>pById(h.patient_id));
+  $('#hs-today').textContent=live.filter(h=>h.healing_date===t && h.status!=='Cancelled').length;
+  $('#hs-week').textContent=live.filter(h=>h.healing_date>=t && h.healing_date<=wk && h.status==='Pending').length;
+  $('#hs-month').textContent=live.filter(h=>h.healing_date.slice(0,7)===m && h.status==='Complete').length;
+  $('#hs-over').textContent=live.filter(h=>h.healing_date<t && h.status==='Pending').length;
+  const inRange=d=>({today:d===t, tomorrow:d===tm, week:d>=t&&d<=wk, upcoming:d>=t, past:d<t, all:true})[r];
+  let list = live.filter(h=>{ const p=pById(h.patient_id); return (!q||p.full_name.toLowerCase().includes(q)) && (!st||h.status===st) && inRange(h.healing_date); });
+  if(r==='past') list = list.slice().reverse();
+  $('#htable').innerHTML = list.length ? list.map(h=>{ const p=pById(h.patient_id); return `<tr>
+    <td><div class="who">${avatar(p)}<button class="link" data-act="open" data-id="${p.id}">${esc(p.full_name)}</button></div></td>
+    <td>${fmtDate(h.healing_date)}</td><td>${fmtTime(h.healing_time)}</td>
+    <td><select class="st st-${h.status}" data-hs="${h.id}" aria-label="Status">${opts(HSTATUS,h.status)}</select></td>
+    <td style="max-width:260px">${esc(h.notes||'')}</td>
+    <td><button class="btn btn-o btn-sm" data-he="${h.id}">Edit</button></td></tr>`; }).join('')
+    : '<tr><td colspan="6" class="empty">No healings here.</td></tr>';
+  bindHealTable($('#htable'));
+}
+function bindHealTable(root){
+  $$('[data-hs]',root).forEach(s=>s.onchange=()=>setHealStatus(s.dataset.hs,s.value));
+  $$('[data-he]',root).forEach(b=>b.onclick=()=>editHealingModal(b.dataset.he));
+}
+['hq','hstatus','hrange'].forEach(id=>$('#'+id).addEventListener('input',renderHealings));
+
+/* =====================================================================
+   PATIENT DETAIL
+   ===================================================================== */
+async function openPatient(id){
+  const p=pById(id); if(!p){ go('patients'); return; }
+  if(S.current!==id) S.tab='profile'; S.current=id;
+  history.replaceState(null,'','#p/'+id);
+  ['home','patients','healings','money'].forEach(v=>$('#v-'+v).classList.add('hidden'));
+  $('#v-patient').classList.remove('hidden'); S.view='patient';
+  $$('.bnav button').forEach(b=>b.classList.toggle('on', b.dataset.view==='patients')); updateNav();
+  const [sc, fbk] = await Promise.all([
+    sb.from('scans').select('*').eq('patient_id',id).order('scan_date',{ascending:false}),
+    sb.from('feedback').select('*').eq('patient_id',id).order('created_at',{ascending:false})
+  ]);
+  if(sc.error) fail(sc.error);
+  p._scans = sc.data||[]; p._feedback = fbk.error ? [] : (fbk.data||[]);
+  renderPatient(); window.scrollTo(0,0);
+}
+function renderPatient(){
+  const p=pById(S.current); if(!p) return go('patients');
+  const photo=S.photos[p.id];
+  $('#v-patient').innerHTML = `
+    <button class="back" id="pback">‹ All patients</button>
+    <div class="p-head">
+      <div class="p-photo" id="pphoto" style="${photo?`background-image:url('${photo}')`:''}" title="${photo?'View photo':''}">${photo?'':esc(initials(p.full_name))}</div>
+      <div class="p-quick">
+        <select id="pstat" class="st st-${esc(p.status)}" aria-label="Status">${opts(['Active','Inactive'],p.status)}</select>
+        <button class="btn btn-o btn-sm" id="pedit">Edit details</button>
+      </div>
+      <div class="p-info"><h1>${esc(p.full_name)}</h1>
+        <div class="meta">${[p.dob?age(p.dob)+' yrs':'', p.gender, p.occupation].filter(Boolean).map(esc).join(' · ')||'&nbsp;'}</div>
+        <div class="meta">${esc(p.whatsapp)}${p.email?' · '+esc(p.email):''}</div>
+      </div>
+      <div class="p-ctl">
+        <a class="btn btn-wa" href="${waLink(p.whatsapp,`Hi ${first(p.full_name)}, this is ${first(D.healer_name)} from ${D.practice_name}.`)}" target="_blank" rel="noopener">WhatsApp</a>
+        <button class="btn btn-p" id="pshare">Share Progress Report</button>
+      </div>
+    </div>
+    <div class="tabs" role="tablist">
+      ${[['profile','Profile'],['scans',`Scans (${p._scans.length})`],['healings',`Healings (${S.healings.filter(h=>h.patient_id===p.id).length})`],['progress',`Progress${(S.unseen||[]).some(f=>f.patient_id===p.id)?' <span class="dot"></span>':''}`],['fees','Energy exchange']]
+        .map(([k,l])=>`<button role="tab" data-tab="${k}" class="${S.tab===k?'on':''}">${l}</button>`).join('')}
+    </div>
+    <div id="ptab"></div>`;
+  $('#pback').onclick=()=>go('patients');
+  $('#pedit').onclick=()=>patientModal(p);
+  $('#pphoto').onclick=()=>{ if(photo) viewPhoto(p); };
+  $('#pstat').onchange=e=>updatePatient(p,{status:e.target.value});
+  $('#pshare').onclick=()=>shareModal(p);
+  $$('.tabs button').forEach(b=>b.onclick=()=>{ S.tab=b.dataset.tab; renderPatient(); });
+  ({profile:tabProfile, scans:tabScans, healings:tabHealings, progress:tabProgress, fees:tabFees})[S.tab](p);
+}
+async function updatePatient(p,patch){
+  const { error } = await sb.from('patients').update(patch).eq('id',p.id);
+  if(error) return fail(error);
+  Object.assign(p,patch); toast('Saved'); renderPatient();
+}
+function viewPhoto(p){
+  openModal(esc(p.full_name), `<img class="photo-big" src="${S.photos[p.id]}" alt="Photo of ${esc(p.full_name)}">`, `<a class="btn btn-o" href="${S.photos[p.id]}" target="_blank" rel="noopener">Open full size</a>`);
+}
+
+/* ---- Profile tab ---- */
+function tabProfile(p){
+  const sy = (p.symptoms||[]).filter(s=>s.name);
+  const rows = [
+    ['Joined', `${fmtDate(p.created_at)} · ${p.source==='web_form'?'via website form':'added by you'}`],
+    ['Date of birth', p.dob?`${fmtDate(p.dob)} (${age(p.dob)} yrs)`:'—'],
+    ['City', p.address||'—'],
+    ['Looking for support with', [...(p.primary_concerns||[]).filter(c=>c!=='Others'), p.concern_other].filter(Boolean).join(', ')||'—'],
+    ['Wants to heal, release or strengthen', p.heal_goal||'—'],
+    ['Impact on daily life', p.impact_score?`${p.impact_score} / 10`:'—'],
+    ['Medical history', p.medical_history||'—'],
+    ['Heard about us from', [p.heard_from, p.heard_other].filter(Boolean).join(': ')||'—'],
+    ['Consent', p.consent?`Agreed on ${fmtDate(p.consent_at)}`:'—'],
+  ];
+  $('#ptab').innerHTML = `
+    <dl class="dl">${rows.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}
+      <dt>Symptoms</dt><dd>${sy.length?`<div class="symlist">${sy.map(s=>`<div class="symrow"><div class="bar"><i style="width:${(s.intensity||0)*10}%"></i></div><b>${s.intensity}/10</b> ${esc(s.name)}${s.remarks?` <span style="color:var(--muted)">— ${esc(s.remarks)}</span>`:''}</div>`).join('')}</div>`:'—'}</dd>
+    </dl>
+    <div class="panel" style="margin-top:16px"><h2>Private notes</h2>
+      <textarea id="anotes" placeholder="Anything you want to remember about ${esc(p.full_name.split(' ')[0])}">${esc(p.admin_notes||'')}</textarea>
+      <div style="display:flex;justify-content:space-between;margin-top:10px">
+        <button class="btn-danger" id="pdel">Delete patient</button>
+        <button class="btn btn-p btn-sm" id="savenotes">Save notes</button></div>
+    </div>`;
+  $('#savenotes').onclick=()=>updatePatient(p,{admin_notes:$('#anotes').value});
+  $('#pdel').onclick=async()=>{
+    if(!confirm(`Delete ${p.full_name} and all their scans, healings and payments? This can't be undone.`)) return;
+    if(p.photo_path) await sb.storage.from('patient-photos').remove([p.photo_path]);
+    const { error } = await sb.from('patients').delete().eq('id',p.id);
+    if(error) return fail(error);
+    S.patients=S.patients.filter(x=>x.id!==p.id); S.healings=S.healings.filter(h=>h.patient_id!==p.id); S.payments=S.payments.filter(x=>x.patient_id!==p.id);
+    toast('Patient deleted'); go('patients');
+  };
+}
+
+/* ---- Scans tab ---- */
+function scanSummary(sc){
+  const vals=Object.values(sc.major_chakras||{});
+  const cnt=k=>vals.filter(v=>v.energy===k).length;
+  const ac=k=>vals.filter(v=>v.activation===k).length;
+  return [['Congested',cnt('Congested'),'e-Congested'],['Depleted',cnt('Depleted'),'e-Depleted'],['Over activated',ac('Over Activated'),'a-Over'],['Under activated',ac('Under Activated'),'a-Under']]
+    .filter(x=>x[1]).map(([l,n,c])=>`<span class="pill ${c}">${n} ${l.toLowerCase()}</span>`).join('') || '<span class="pill e-Normal">All recorded chakras normal</span>';
+}
+function tabScans(p){
+  $('#ptab').innerHTML = `<div style="display:flex;justify-content:flex-end;margin-bottom:12px"><button class="btn btn-p" id="newscan">New scan</button></div>` +
+    (p._scans.length ? p._scans.map(sc=>`<div class="scan-card"><div class="grow"><b>${fmtDate(sc.scan_date)}</b>
+      <div style="color:var(--muted);font-size:.88rem">Aura ${sc.avg_aura??'—'} ${sc.avg_aura!=null?esc(sc.aura_unit):''} · Activation ${sc.avg_activation??'—'} ${sc.avg_activation!=null?esc(sc.activation_unit):''}</div>
+      <div style="margin-top:6px">${scanSummary(sc)}</div></div>
+      <button class="btn btn-o btn-sm" data-sv="${sc.id}">View</button><button class="btn btn-o btn-sm" data-se="${sc.id}">Edit</button></div>`).join('')
+    : '<div class="panel empty">No scans yet. Record the first scan to start tracking progress.</div>');
+  $('#newscan').onclick=()=>scanModal(p);
+  $$('[data-sv]').forEach(b=>b.onclick=()=>scanView(p,p._scans.find(s=>s.id===b.dataset.sv)));
+  $$('[data-se]').forEach(b=>b.onclick=()=>scanModal(p,p._scans.find(s=>s.id===b.dataset.se)));
+}
+
+/* ---- Healings tab ---- */
+function tabHealings(p){
+  const list=S.healings.filter(h=>h.patient_id===p.id);
+  const done=list.filter(h=>h.status==='Complete').length;
+  $('#ptab').innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px;flex-wrap:wrap">
+      <span style="color:var(--muted)">${done} completed · ${list.filter(h=>h.status==='Pending').length} pending</span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-o" data-act="past-healing">Record past healing</button><button class="btn btn-p" data-act="new-healing">Schedule healing</button></div></div>
+    <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Time</th><th>Status</th><th>Notes</th><th></th></tr></thead><tbody>
+    ${list.length ? list.map(h=>`<tr><td>${fmtDate(h.healing_date)}</td><td>${fmtTime(h.healing_time)}</td>
+      <td><select class="st st-${h.status}" data-hs="${h.id}" aria-label="Status">${opts(HSTATUS,h.status)}</select></td>
+      <td>${esc(h.notes||'')}</td><td><button class="btn btn-o btn-sm" data-he="${h.id}">Edit</button></td></tr>`).join('')
+      : '<tr><td colspan="5" class="empty">No healings scheduled yet.</td></tr>'}
+    </tbody></table></div>`;
+  bindHealTable($('#ptab'));
+}
+
+/* ---- Progress tab ---- */
+function tabProgress(p){
+  const scans=[...p._scans].sort((a,b)=>a.scan_date.localeCompare(b.scan_date));
+  const short = s=>({Congested:'Cong.',Normal:'Norm.',Depleted:'Depl.','Over Activated':'Over','Under Activated':'Under'}[s]||'');
+  const cls = (s,pre)=>s?(pre+'-'+s.split(' ')[0]):'';
+  const normalCount = sc=>MAJOR.filter(c=>{const v=(sc.major_chakras||{})[c]; return v && v.energy==='Normal' && v.activation==='Normal';}).length;
+  const comments = (p.healer_comments||[]).length ? p.healer_comments : [{text:''}];
+  $('#ptab').innerHTML = `
+    <div class="sharebar">
+      <span>${p.share_token?'🔗 Report link is active':'Share this report with the patient.'}</span>
+      <button class="btn btn-p btn-sm" id="shareBtn">Share Progress Report</button></div>
+    ${scans.length ? `
+    <div class="chart-box"><canvas id="pchart" aria-label="Aura, activation and balanced chakras over time"></canvas></div>
+    <div class="panel"><h2>Chakras across scans</h2>
+      <div class="legend"><span><i style="background:var(--rose-soft)"></i>Congested / Over activated</span><span><i style="background:var(--sage-soft)"></i>Normal</span><span><i style="background:var(--sky-soft)"></i>Depleted / Under activated</span></div>
+      <div style="overflow-x:auto"><table class="heat"><thead><tr><th>Chakra</th>${scans.map(s=>`<th>${fmtDate(s.scan_date)}</th>`).join('')}</tr></thead><tbody>
+      ${MAJOR.map(c=>`<tr><td>${c}</td>${scans.map(s=>{const v=(s.major_chakras||{})[c]||{}; const ob=obsOf(v); return `<td><div class="cell" title="${esc(ob)}">${v.energy?`<span class="pill ${cls(v.energy,'e')}">${short(v.energy)}</span>`:'<span style="color:var(--line)">·</span>'}${v.activation?`<span class="pill ${cls(v.activation,'a')}">${short(v.activation)}</span>`:''}</div></td>`;}).join('')}</tr>`).join('')}
+      <tr><td><b>Balanced chakras</b></td>${scans.map(s=>`<td><b>${normalCount(s)} / 14</b></td>`).join('')}</tr>
+      </tbody></table></div></div>`
+    : '<div class="panel empty">Charts appear here once you record scans. Two or more scans show the change over time.</div>'}
+    <div class="panel" style="margin-top:18px"><h2>Patient feedback</h2>${feedbackHTML(p)}</div>
+    <div class="panel" style="margin-top:18px"><h2>Healer's comments</h2>
+      <p style="margin:-4px 0 12px;color:var(--muted);font-size:.9rem">Add up to 5 comments about ${esc(p.full_name.split(' ')[0])}'s progress.</p>
+      <div id="cmts">${comments.map((c,i)=>cmtRow(c,i)).join('')}</div>
+      <button type="button" class="add" id="addCmt">+ Add another comment</button>
+      <label style="display:flex;gap:8px;align-items:center;margin-top:14px"><input type="checkbox" id="cmtShare" ${p.share_comments!==false?'checked':''} style="width:18px;height:18px;accent-color:var(--violet)"> Show these comments on the shared progress report</label>
+      <div style="display:flex;justify-content:flex-end;margin-top:12px"><button class="btn btn-p btn-sm" id="saveCmt">Save comments</button></div>
+    </div>`;
+  $('#shareBtn').onclick=()=>shareModal(p);
+  const renum=()=>{ $$('#cmts .cmt').forEach((r,i)=>{ $('.cmt-n',r).textContent=`Comment ${i+1}`; }); $('#addCmt').classList.toggle('hidden', $$('#cmts .cmt').length>=5); };
+  const wire=()=>$$('#cmts .rm').forEach(b=>b.onclick=()=>{ if($$('#cmts .cmt').length>1) b.closest('.cmt').remove(); else $('textarea',b.closest('.cmt')).value=''; renum(); });
+  $('#addCmt').onclick=()=>{ if($$('#cmts .cmt').length>=5) return; $('#cmts').insertAdjacentHTML('beforeend',cmtRow({text:''},$$('#cmts .cmt').length)); wire(); renum(); $$('#cmts textarea').pop().focus(); };
+  wire(); renum();
+  $('#saveCmt').onclick=async()=>{
+    const old=p.healer_comments||[];
+    const list=$$('#cmts .cmt').map((r,i)=>({text:$('textarea',r).value.trim(), date:r.dataset.date||todayISO()})).filter(c=>c.text);
+    const patch={healer_comments:list, share_comments:$('#cmtShare').checked};
+    const { error } = await sb.from('patients').update(patch).eq('id',p.id);
+    if(error) return fail(error);
+    Object.assign(p,patch); toast('Comments saved'); renderPatient();
+  };
+  if(S.chart){ S.chart.destroy(); S.chart=null; }
+  if(!scans.length) return;
+  const inch=(v,u)=>v==null?null:+(v*(TO_IN[u]||1)).toFixed(1);
+  S.chart = new Chart($('#pchart'),{type:'line',
+    data:{labels:scans.map(s=>fmtDate(s.scan_date)),datasets:[
+      {label:'Average aura (inches)',data:scans.map(s=>inch(s.avg_aura,s.aura_unit)),borderColor:'#5B3F8C',backgroundColor:'#5B3F8C',tension:.3,spanGaps:true,yAxisID:'y'},
+      {label:'Average activation (inches)',data:scans.map(s=>inch(s.avg_activation,s.activation_unit)),borderColor:'#B8903F',backgroundColor:'#B8903F',tension:.3,spanGaps:true,yAxisID:'y'},
+      {label:'Balanced chakras (of 14)',data:scans.map(normalCount),borderColor:'#5F7F5B',backgroundColor:'#5F7F5B',borderDash:[5,4],tension:.3,yAxisID:'y1'}]},
+    options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{font:{family:'Figtree'}}}},
+      scales:{y:{title:{display:true,text:'Inches'},beginAtZero:true},y1:{position:'right',min:0,max:14,grid:{drawOnChartArea:false},title:{display:true,text:'Balanced chakras'}}}}});
+}
+function feedbackHTML(p){
+  const list=p._feedback||[];
+  if(!list.length) return `<p class="empty" style="padding:6px 0;text-align:left">No feedback yet. Patients can send feedback from their shared progress report.</p>`;
+  // mark as seen
+  const unseen=list.filter(f=>!f.seen).map(f=>f.id);
+  if(unseen.length){ sb.from('feedback').update({seen:true}).in('id',unseen).then(({error})=>{ if(!error){ list.forEach(f=>f.seen=true); S.unseen=(S.unseen||[]).filter(f=>!unseen.includes(f.id)); } }); }
+  const arrow=(b,n)=>{ if(b==null||n==null) return ''; const d=n-b; return d<0?`<span class="fb-good">▼ ${Math.abs(d)}</span>`:d>0?`<span class="fb-bad">▲ ${d}</span>`:`<span class="fb-same">= same</span>`; };
+  return list.map(f=>`<div class="fb">
+    <div class="fb-h"><b>${fmtDate(f.created_at)}</b>${!f.seen?'<span class="tag new">New</span>':''}</div>
+    ${(f.symptoms||[]).length?`<table class="fb-t"><thead><tr><th>Symptom</th><th>At start</th><th>Now</th><th></th></tr></thead><tbody>
+      ${f.symptoms.map(x=>`<tr><td>${esc(x.name)}</td><td class="num">${x.before??'—'}/10</td><td class="num"><b>${x.now??'—'}/10</b></td><td>${arrow(x.before,x.now)}</td></tr>`).join('')}</tbody></table>`:''}
+    ${f.impact_now?`<div class="fb-imp">Impact on daily energy &amp; peace of mind: ${f.impact_before??'—'}/10 → <b>${f.impact_now}/10</b> ${arrow(f.impact_before,f.impact_now)}</div>`:''}
+    ${f.note?`<div class="fb-note">“${esc(f.note)}”</div>`:''}
+  </div>`).join('');
+}
+function cmtRow(c,i){
+  return `<div class="cmt" data-date="${esc(c.date||'')}"><div class="cmt-h"><b class="cmt-n">Comment ${i+1}</b>${c.date?`<small>${fmtDate(c.date)}</small>`:''}<button type="button" class="btn-danger rm" style="margin-left:auto">Remove</button></div>
+    <textarea placeholder="e.g. Solar plexus much lighter since the last session; sleep has improved.">${esc(c.text||'')}</textarea></div>`;
+}
+
+/* ---- Fees tab ---- */
+function tabFees(p){
+  const pays=S.payments.filter(x=>x.patient_id===p.id).sort((a,b)=>b.paid_on.localeCompare(a.paid_on));
+  const {paid,fee,due,over}=ledger(p);
+  $('#ptab').innerHTML = `
+    <div class="fee-sum"><div><b>${fee!=null?money(fee):'—'}</b><span>Case fees <button class="link" id="editfee" style="font-size:.85rem">(${fee!=null?'change':'set'})</button></span></div>
+      <div><b>${money(paid)}</b><span>Received</span></div>
+      ${over>0?`<div class="over"><b>${money(over)}</b><span>Overpaid</span></div>`
+              :`<div class="${due>0?'due':''}"><b>${fee!=null?(due>0?money(due):'Paid ✓'):'—'}</b><span>Balance due</span></div>`}</div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-bottom:12px;flex-wrap:wrap">
+      ${due>0?`<a class="btn btn-wa" target="_blank" rel="noopener" href="${reminderLink(p,due)}">Send reminder</a>`:''}
+      <button class="btn btn-p" id="addpay">Record payment</button></div>
+    <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Amount</th><th>Mode</th><th>Note</th><th></th></tr></thead><tbody>
+    ${pays.length?pays.map(x=>`<tr><td>${fmtDate(x.paid_on)}</td><td class="num"><b>${money(x.amount)}</b></td><td>${esc(x.mode||'—')}</td><td>${esc(x.note||'')}</td>
+      <td><div style="display:flex;gap:6px;justify-content:flex-end"><button class="btn btn-o btn-sm" data-pe="${x.id}">Edit</button><button class="btn-danger" data-pd="${x.id}">Delete</button></div></td></tr>`).join('')
+      :'<tr><td colspan="5" class="empty">No payments recorded yet.</td></tr>'}
+    </tbody></table></div>`;
+  $('#editfee').onclick=()=>feeModal(p, renderPatient);
+  $('#addpay').onclick=()=>paymentModal(p, renderPatient);
+  $$('#ptab [data-pe]').forEach(b=>b.onclick=()=>paymentModal(p, renderPatient, S.payments.find(y=>y.id===b.dataset.pe)));
+  $$('#ptab [data-pd]').forEach(b=>b.onclick=async()=>{ if(!confirm('Delete this payment?')) return;
+    const { error } = await sb.from('payments').delete().eq('id',b.dataset.pd); if(error) return fail(error);
+    S.payments=S.payments.filter(x=>x.id!==b.dataset.pd); toast('Payment deleted'); renderPatient(); });
+}
+
+/* =====================================================================
+   ENERGY EXCHANGE
+   ===================================================================== */
+function ledger(p){
+  const pays=S.payments.filter(x=>x.patient_id===p.id);
+  const paid=pays.reduce((a,x)=>a+Number(x.amount),0);
+  const fee=p.case_fees==null?null:Number(p.case_fees);
+  const due=fee==null?0:Math.max(fee-paid,0);
+  const over=fee==null?0:Math.max(paid-fee,0);
+  const last=pays.map(x=>x.paid_on).sort().pop()||null;
+  return {paid,fee,due,over,last};
+}
+const mv = a => `<span class="mv"><span class="mv-r">${money(a)}</span><span class="mv-m" aria-label="amount hidden">₹••••</span></span>`;
+const reminderLink=(p,due)=>waLink(p.whatsapp,`Hi ${first(p.full_name)}, a gentle reminder that ${money(due)} is pending as your energy exchange for your healing sessions at ${D.practice_name}. Thank you 🙏`);
+function feeModal(p, after){
+  openModal('Case fees · '+esc(p.full_name),`<div class="fld"><label for="fee">Total case fees (₹)</label><input type="number" inputmode="numeric" id="fee" min="0" step="1" value="${p.case_fees??''}"></div>`,
+    `<button class="btn btn-o" value="cancel">Cancel</button><button class="btn btn-p" id="ok" value="">Save fees</button>`);
+  $('#ok').onclick=async e=>{ e.preventDefault(); const v=$('#fee').value;
+    const { error } = await sb.from('patients').update({case_fees:v===''?null:+v}).eq('id',p.id); if(error) return fail(error);
+    p.case_fees=v===''?null:+v; closeModal(); toast('Fees saved'); after&&after(); };
+}
+function paymentModal(p, after, x){
+  const e=x||{};
+  openModal((x?'Edit payment · ':'Record payment · ')+esc(p.full_name),`<div class="g3"><div class="fld"><label for="pa">Amount (₹)</label><input type="number" inputmode="numeric" id="pa" min="1" step="1" value="${e.amount??''}"></div>
+    <div class="fld"><label for="pdt">Date</label><input type="date" id="pdt" value="${e.paid_on||todayISO()}" max="${todayISO()}"></div>
+    <div class="fld"><label for="pm">Mode</label><select id="pm">${opts(PAYMODES,e.mode||'UPI')}</select></div></div>
+    <div class="fld"><label for="pn">Note</label><input type="text" id="pn" placeholder="e.g. 5-session package" value="${esc(e.note||'')}"></div>`,
+    `${x?'<button class="btn-danger" id="pdel" style="margin-right:auto">Delete</button>':''}<button class="btn btn-o" value="cancel">Cancel</button><button class="btn btn-p" id="ok" value="">${x?'Save changes':'Save payment'}</button>`);
+  $('#ok').onclick=async ev=>{ ev.preventDefault(); const amt=+$('#pa').value; if(!amt){ $('#pa').focus(); return; }
+    const row={amount:amt,paid_on:$('#pdt').value||todayISO(),mode:$('#pm').value,note:$('#pn').value.trim()||null};
+    $('#ok').disabled=true;
+    const res = x ? await sb.from('payments').update(row).eq('id',x.id).select().single()
+                  : await sb.from('payments').insert({...row,patient_id:p.id}).select().single();
+    if(res.error){ $('#ok').disabled=false; return fail(res.error); }
+    if(x) Object.assign(x,res.data); else S.payments.unshift(res.data);
+    closeModal(); toast(x?'Payment updated':'Payment saved'); after&&after(); };
+  if(x) $('#pdel').onclick=async ev=>{ ev.preventDefault(); if(!confirm('Delete this payment?')) return;
+    const { error } = await sb.from('payments').delete().eq('id',x.id); if(error) return fail(error);
+    S.payments=S.payments.filter(y=>y.id!==x.id); closeModal(); toast('Payment deleted'); after&&after(); };
+}
+function renderMoney(){
+  const t=todayISO(), month=t.slice(0,7);
+  const total=S.payments.reduce((a,x)=>a+Number(x.amount),0);
+  const thisMonth=S.payments.filter(x=>x.paid_on.slice(0,7)===month).reduce((a,x)=>a+Number(x.amount),0);
+  const rows=S.patients.map(p=>({p,...ledger(p)}));
+  const dueRows=rows.filter(r=>r.due>0);
+  $('#m-all').innerHTML=mv(total); $('#m-month').innerHTML=mv(thisMonth);
+  $('#m-due').innerHTML=mv(dueRows.reduce((a,r)=>a+r.due,0)); $('#m-duen').textContent=dueRows.length;
+  const q=$('#mq').value.trim().toLowerCase(), f=$('#mf').value;
+  const list=rows.filter(r=>(!q||r.p.full_name.toLowerCase().includes(q)) &&
+    (!f || (f==='due'&&r.due>0) || (f==='paid'&&r.fee!=null&&r.due===0&&r.over===0) || (f==='over'&&r.over>0) || (f==='unset'&&r.fee==null)))
+    .sort((a,b)=>b.due-a.due || a.p.full_name.localeCompare(b.p.full_name));
+  $('#mtable').innerHTML = list.length ? list.map(({p,paid,fee,due,over,last})=>`<tr>
+    <td><div class="who">${avatar(p)}<button class="link" data-act="open" data-id="${p.id}">${esc(p.full_name)}</button></div></td>
+    <td class="num">${fee==null?`<button class="link" data-fee="${p.id}" style="font-weight:500">Set fees</button>`:mv(fee)}</td>
+    <td class="num">${mv(paid)}</td>
+    <td class="num ${due>0?'due-cell':over>0?'over-cell':fee!=null?'paid-cell':''}">${fee==null?'—':due>0?mv(due):over>0?`Overpaid ${mv(over)}`:'Paid ✓'}</td>
+    <td style="white-space:nowrap">${last?fmtDate(last):'—'}</td>
+    <td style="text-align:right"><button class="btn btn-o btn-sm" data-pay="${p.id}">Record payment</button></td>
+    <td style="text-align:right">${due>0?`<a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="${reminderLink(p,due)}">Remind</a>`:''}</td></tr>`).join('')
+    : `<tr><td colspan="7" class="empty">${S.patients.length?'No patients match.':'No patients yet.'}</td></tr>`;
+  const recent=S.payments.slice().sort((a,b)=>b.paid_on.localeCompare(a.paid_on)).slice(0,15);
+  $('#mrecent').innerHTML = recent.length ? recent.map(x=>{const p=pById(x.patient_id); return `<tr><td>${fmtDate(x.paid_on)}</td>
+    <td>${p?`<button class="link" data-act="open" data-id="${p.id}">${esc(p.full_name)}</button>`:'—'}</td>
+    <td class="num"><b>${mv(x.amount)}</b></td><td>${esc(x.mode||'—')}</td>
+    <td>${p?`<button class="btn btn-o btn-sm" data-pe="${x.id}">Edit</button>`:''}</td></tr>`;}).join('')
+    : '<tr><td colspan="5" class="empty">No payments recorded yet.</td></tr>';
+  $$('#mrecent [data-pe]').forEach(b=>{ const x=S.payments.find(y=>y.id===b.dataset.pe); b.onclick=()=>paymentModal(pById(x.patient_id), renderMoney, x); });
+  $$('[data-pay]').forEach(b=>b.onclick=()=>paymentModal(pById(b.dataset.pay), renderMoney));
+  $$('[data-fee]').forEach(b=>b.onclick=()=>feeModal(pById(b.dataset.fee), renderMoney));
+}
+['mq','mf'].forEach(id=>$('#'+id).addEventListener('input',renderMoney));
+
+// Show / hide amounts — remembered on this device
+(function(){
+  let hide=true; try{ hide=localStorage.getItem('hdHideMoney')!=='0'; }catch(e){}
+  const apply=()=>{ document.body.classList.toggle('money-hidden',hide); $$('[data-eye]').forEach(b=>{ b.setAttribute('aria-pressed',String(!hide)); b.title=hide?'Show amounts':'Hide amounts'; }); };
+  document.addEventListener('click',e=>{ if(!e.target.closest('[data-eye]')) return; hide=!hide; try{ localStorage.setItem('hdHideMoney',hide?'1':'0'); }catch(e){} apply(); });
+  apply();
+})();
+
+/* =====================================================================
+   SHARE PROGRESS REPORT
+   ===================================================================== */
+function reportURL(p){ return `${location.origin}/report?t=${p.share_token}`; }
+async function shareModal(p){
+  if(!p.share_token){
+    const token=(uuid()+uuid()).replace(/-/g,'');
+    const { error } = await sb.from('patients').update({share_token:token}).eq('id',p.id);
+    if(error) return fail(error);
+    p.share_token=token;
+  }
+  const url=reportURL(p), first=p.full_name.trim().split(/\s+/)[0];
+  openModal('Share progress report',`
+    <p style="margin-top:0">Anyone with this link can see ${esc(first)}'s progress report: first name, scan results, the chakra chart, the number of healings and any comments you choose to share. It never shows medical history, observations, private notes, phone numbers or fees.</p>
+    <div class="share-box"><input type="text" id="shareUrl" value="${esc(url)}" readonly aria-label="Report link"><button type="button" class="btn btn-o" id="copyShare">Copy</button></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+      <a class="btn btn-wa" target="_blank" rel="noopener" href="${waLink(p.whatsapp,`Hi ${first}, here is your healing progress report from ${D.practice_name} 🌿 ${url}`)}">Send to ${esc(first)} on WhatsApp</a>
+      <a class="btn btn-o" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(url)}">Share on WhatsApp</a>
+      <a class="btn btn-o" target="_blank" rel="noopener" href="${esc(url)}">Open report</a>
+    </div>
+    <div style="margin-top:26px;padding-top:18px;border-top:1px solid var(--line)">
+      <p style="margin:0 0 10px;color:var(--muted);font-size:.92rem">Want to take the link back? The old link stops working straight away.</p>
+      <button type="button" class="btn btn-stop" id="stopShare">⛔ Stop sharing</button>
+    </div>`,
+    `<button class="btn btn-p" value="cancel">Done</button>`);
+  $('#copyShare').onclick=async()=>{ try{ await navigator.clipboard.writeText(url); toast('Link copied'); }catch{ $('#shareUrl').select(); } };
+  $('#stopShare').onclick=async()=>{
+    if(!confirm('Stop sharing? The current link will stop working.')) return;
+    const { error } = await sb.from('patients').update({share_token:null}).eq('id',p.id); if(error) return fail(error);
+    p.share_token=null; closeModal(); toast('Sharing stopped'); renderPatient();
+  };
+}
+
+/* =====================================================================
+   MODAL PLUMBING
+   ===================================================================== */
+let lockY=0;
+function lockPage(){ if(document.documentElement.classList.contains('lock')) return; lockY=window.scrollY; document.body.style.top=`-${lockY}px`; document.documentElement.classList.add('lock'); }
+function unlockPage(){ if(!document.documentElement.classList.contains('lock')) return; document.documentElement.classList.remove('lock'); document.body.style.top=''; window.scrollTo(0,lockY); }
+function openModal(title, body, foot){
+  $('#mtitle').innerHTML=title; $('#mbody').innerHTML=body; $('#mfoot').innerHTML=foot||'';
+  const m=$('#modal'); if(!m.open){ lockPage(); m.showModal(); } $('#mbody').scrollTop=0;
+}
+function closeModal(){ $('#modal').close(); }
+$('#modal').addEventListener('close', unlockPage);
+$('#mform').addEventListener('keydown',e=>{ if(e.key==='Enter' && e.target.tagName!=='TEXTAREA' && e.target.tagName!=='BUTTON') e.preventDefault(); });
+
+/* ---- Add / edit patient ---- */
+function symRowHTML(s={}){
+  return `<div class="dyn dyn-organ sym"><input type="text" class="s-n" placeholder="Symptom" value="${esc(s.name||'')}" aria-label="Symptom">
+    <select class="s-i" aria-label="Intensity">${Array.from({length:11},(_,i)=>`<option value="${i}" ${+(s.intensity??5)===i?'selected':''}>Intensity ${i}</option>`).join('')}</select>
+    <input type="text" class="s-r" placeholder="Remarks" value="${esc(s.remarks||'')}" aria-label="Remarks"><button type="button" class="btn-danger rm">Remove</button></div>`;
+}
+function patientModal(p){
+  const e = p||{};
+  openModal(p?'Edit details':'Add patient', `
+    <div class="g2"><div class="fld"><label for="f_name">Full name *</label><input type="text" id="f_name" value="${esc(e.full_name||'')}"></div>
+      <div class="fld"><label for="f_wa">WhatsApp number *</label><input type="tel" id="f_wa" value="${esc(e.whatsapp||'')}"></div></div>
+    <div class="g3"><div class="fld"><label for="f_em">Email</label><input type="email" id="f_em" value="${esc(e.email||'')}"></div>
+      <div class="fld"><label for="f_dob">Date of birth</label><input type="date" id="f_dob" value="${esc(e.dob||'')}"></div>
+      <div class="fld"><label for="f_g">Gender</label><select id="f_g">${opts(['Female','Male','Other','Prefer not to say'],e.gender,'Select')}</select></div></div>
+    <div class="g2"><div class="fld"><label for="f_oc">Occupation</label><input type="text" id="f_oc" value="${esc(e.occupation||'')}"></div>
+      <div class="fld"><label for="f_ad">City</label><input type="text" id="f_ad" value="${esc(e.address||'')}"></div></div>
+    <div class="g3"><div class="fld"><label for="f_st">Status</label><select id="f_st">${opts(['Active','Inactive'],e.status||'Active')}</select></div>
+      <div class="fld"><label for="f_cat">Category</label><select id="f_cat">${opts(CATEGORIES,e.category||'Normal')}</select></div>
+      <div class="fld"><label for="f_fee">Case fees (₹)</label><input type="number" id="f_fee" min="0" value="${e.case_fees??''}"></div></div>
+    <div class="fld"><label for="f_goal">What they want to heal, release or strengthen</label><textarea id="f_goal">${esc(e.heal_goal||'')}</textarea></div>
+    <div class="fld"><label for="f_med">Medical history</label><textarea id="f_med">${esc(e.medical_history||'')}</textarea></div>
+    <div class="sec-t">Symptoms</div><div id="f_syms">${(e.symptoms&&e.symptoms.length?e.symptoms:[{}]).map(symRowHTML).join('')}</div>
+    <button type="button" class="add" id="f_addsym">+ Add symptom</button>
+    <div class="sec-t">Photo</div>
+    <input type="file" id="f_photo" accept="image/*"> ${e.photo_path?'<small style="color:var(--muted)">Choosing a new photo replaces the current one.</small>':''}
+    <div class="err-box hidden" id="f_err"></div>`,
+    `<button class="btn btn-o" value="cancel">Cancel</button><button class="btn btn-p" id="ok" value="">${p?'Save changes':'Add patient'}</button>`);
+  const wire=()=>$$('#f_syms .rm').forEach(b=>b.onclick=()=>b.closest('.sym').remove());
+  wire(); $('#f_addsym').onclick=()=>{ $('#f_syms').insertAdjacentHTML('beforeend',symRowHTML()); wire(); };
+  $('#ok').onclick=async ev=>{
+    ev.preventDefault();
+    const name=$('#f_name').value.trim(), wa=$('#f_wa').value.trim();
+    if(!name||!wa){ $('#f_err').textContent='Name and WhatsApp number are required.'; $('#f_err').classList.remove('hidden'); return; }
+    const btn=$('#ok'); btn.disabled=true;
+    const row={ full_name:name, whatsapp:wa, email:$('#f_em').value.trim()||null, dob:$('#f_dob').value||null, gender:$('#f_g').value||null,
+      occupation:$('#f_oc').value.trim()||null, address:$('#f_ad').value.trim()||null, status:$('#f_st').value, category:$('#f_cat').value,
+      case_fees:$('#f_fee').value===''?null:+$('#f_fee').value, heal_goal:$('#f_goal').value.trim()||null, medical_history:$('#f_med').value.trim()||null,
+      symptoms:$$('#f_syms .sym').map(d=>({name:$('.s-n',d).value.trim(),intensity:+$('.s-i',d).value,remarks:$('.s-r',d).value.trim()})).filter(s=>s.name) };
+    const id = p ? p.id : uuid();
+    const file=$('#f_photo').files[0];
+    if(file){
+      const path=`${UID}/${id}/${Date.now()}-${file.name.replace(/[^\w.]/g,'_')}`;
+      const up=await sb.storage.from('patient-photos').upload(path,file,{upsert:false});
+      if(up.error){ btn.disabled=false; return fail(up.error); }
+      if(p?.photo_path) await sb.storage.from('patient-photos').remove([p.photo_path]);
+      row.photo_path=path; delete S.photos[id];
+    }
+    let res;
+    if(p) res = await sb.from('patients').update(row).eq('id',id).select().single();
+    else  res = await sb.from('patients').insert({...row,id,source:'manual'}).select().single();
+    btn.disabled=false;
+    if(res.error) return fail(res.error);
+    if(p){ Object.assign(p,res.data); } else { S.patients.unshift(res.data); }
+    await loadPhotos(); closeModal(); toast(p?'Details saved':'Patient added');
+    p ? renderPatient() : openPatient(id);
+  };
+}
+
+/* ---- Schedule healing ---- */
+function healingModal(patientId, mode='schedule'){
+  if(!S.patients.length){ toast('Add a patient first'); return; }
+  const t=todayISO();
+  const pastRow=(d='',tm='')=>`<div class="past-row"><div><label>Date</label><input type="date" class="pr-d" value="${d}" max="${t}"></div>
+    <div class="pr-time"><label>Time</label>${timeSel('prt',tm)}</div><button type="button" class="btn-danger rm" aria-label="Remove">✕</button></div>`;
+  openModal(mode==='past'?'Record past healing':'Schedule healing', `
+    <div class="seg" role="tablist"><button type="button" data-mode="schedule" class="${mode==='schedule'?'on':''}">Schedule</button><button type="button" data-mode="past" class="${mode==='past'?'on':''}">Record past</button></div>
+    <div class="fld"><label for="h_p">Patient *</label><select id="h_p">${S.patients.filter(p=>p.status==='Active'||p.id===patientId).map(p=>`<option value="${p.id}" ${p.id===patientId?'selected':''}>${esc(p.full_name)}</option>`).join('')}</select></div>
+
+    <div id="m_sched" class="${mode==='past'?'hidden':''}">
+      <div class="g2"><div class="fld"><label for="h_d">Start date *</label><input type="date" id="h_d" value="${t}"></div>
+        <div class="fld" id="h_tw"><label>Time</label>${timeSel('ht','')}</div></div>
+      <div class="fld"><label>Repeat</label><div class="radios">
+        ${[['none','Does not repeat'],['daily','Every day'],['weekly','Every week'],['custom','Custom days']].map(([v,l],i)=>`<label><input type="radio" name="rep" value="${v}" ${i?'':'checked'}> ${l}</label>`).join('')}</div></div>
+      <div id="h_rep" class="hidden">
+        <div class="fld"><label>Ends</label><div class="radios"><label><input type="radio" name="end" value="count" checked> After a number of sessions</label><label><input type="radio" name="end" value="date"> On a date</label></div></div>
+        <div class="g2"><div class="fld" id="h_cw"><label for="h_c">Number of sessions</label><input type="number" inputmode="numeric" id="h_c" min="1" max="100" value="7"></div>
+          <div class="fld hidden" id="h_ew"><label for="h_e">End date</label><input type="date" id="h_e" value="${addDays(t,30)}"></div></div>
+        <div class="fld hidden" id="h_dw"><label>On these days</label><div class="days">${WEEKDAYS.map((d,i)=>`<label><input type="checkbox" value="${i}" class="h_day"> ${d.slice(0,3)}</label>`).join('')}</div></div>
+      </div>
+    </div>
+
+    <div id="m_past" class="${mode==='past'?'':'hidden'}">
+      <p style="margin:0 0 10px;color:var(--muted);font-size:.9rem">Add every session that already happened. They're saved as complete.</p>
+      <div id="pastRows">${pastRow(t)}</div>
+      <button type="button" class="add" id="addPast">+ Add another session</button>
+    </div>
+
+    <div class="fld" style="margin-top:14px"><label for="h_n">Notes</label><textarea id="h_n" placeholder="e.g. Distance healing, focus on solar plexus"></textarea></div>
+    <div class="preview" id="h_prev"></div>`,
+    `<button class="btn btn-o" value="cancel">Cancel</button><button class="btn btn-p" id="ok" value="">${mode==='past'?'Save healings':'Schedule'}</button>`);
+
+  let m=mode;
+  const wirePast=()=>$$('#pastRows .rm').forEach(b=>b.onclick=()=>{ if($$('#pastRows .past-row').length>1) b.closest('.past-row').remove(); upd(); });
+  $('#addPast').onclick=()=>{ const last=$$('#pastRows .pr-d').pop()?.value; $('#pastRows').insertAdjacentHTML('beforeend',pastRow(last?addDays(last,-1):t)); wirePast(); upd(); };
+  $$('.seg button').forEach(b=>b.onclick=()=>{ m=b.dataset.mode; $$('.seg button').forEach(x=>x.classList.toggle('on',x===b));
+    $('#m_sched').classList.toggle('hidden',m!=='schedule'); $('#m_past').classList.toggle('hidden',m!=='past');
+    $('#mtitle').textContent = m==='past'?'Record past healing':'Schedule healing'; $('#ok').textContent = m==='past'?'Save healings':'Schedule'; upd(); });
+
+  const gen=()=>{
+    const rep=$('input[name=rep]:checked').value, start=$('#h_d').value; if(!start) return [];
+    if(rep==='none') return [start];
+    const byCount=$('input[name=end]:checked').value==='count', n=Math.min(+$('#h_c').value||1,100), end=$('#h_e').value;
+    const days=$$('.h_day:checked').map(c=>+c.value), step=rep==='weekly'?7:1, out=[];
+    for(let d=start, i=0; i<800 && out.length<100; i++, d=addDays(d,step)){
+      if(!byCount && (!end || d>end)) break;
+      if(rep==='custom' && !days.includes(new Date(d+'T00:00:00').getDay())) continue;
+      out.push(d);
+      if(byCount && out.length>=n) break;
+    }
+    return out;
+  };
+  const pastList=()=>$$('#pastRows .past-row').map(r=>({d:$('.pr-d',r).value, t:readTime(r,'prt')})).filter(x=>x.d);
+  function upd(){
+    if(m==='past'){
+      const ps=pastList(), future=ps.some(x=>x.d>t);
+      $('#h_prev').innerHTML = future ? 'A past session can\'t have a future date. Use “Schedule” for that.' :
+        ps.length ? `${ps.length} completed session${ps.length>1?'s':''} will be saved.` : 'Pick at least one date.';
+      return;
+    }
+    const rep=$('input[name=rep]:checked').value;
+    $('#h_rep').classList.toggle('hidden',rep==='none');
+    $('#h_dw').classList.toggle('hidden',rep!=='custom');
+    const byCount=$('input[name=end]:checked').value==='count';
+    $('#h_cw').classList.toggle('hidden',!byCount); $('#h_ew').classList.toggle('hidden',byCount);
+    const ds=gen();
+    $('#h_prev').innerHTML = ds.length ? `${ds.length} session${ds.length>1?'s':''}: ${ds.slice(0,6).map(fmtDate).join(', ')}${ds.length>6?` … last on ${fmtDate(ds[ds.length-1])}`:''}` : (rep==='custom'?'Pick at least one day.':'Choose a start date.');
+  }
+  $('#mbody').addEventListener('input',upd); $('#mbody').addEventListener('change',upd); wirePast(); upd();
+
+  $('#ok').onclick=async ev=>{
+    ev.preventDefault();
+    const pid=$('#h_p').value, notes=$('#h_n').value.trim()||null;
+    let rows;
+    if(m==='past'){
+      const ps=pastList(); if(!ps.length || ps.some(x=>x.d>t)) return;
+      rows=ps.map(x=>({patient_id:pid, healing_date:x.d, healing_time:x.t||null, status:'Complete', notes}));
+    } else {
+      const ds=gen(); if(!ds.length) return;
+      const series = ds.length>1 ? uuid() : null;
+      rows=ds.map(d=>({patient_id:pid, healing_date:d, healing_time:readTime($('#h_tw'),'ht'), notes, series_id:series}));
+    }
+    $('#ok').disabled=true;
+    const { data, error } = await sb.from('healings').insert(rows).select();
+    if(error){ $('#ok').disabled=false; return fail(error); }
+    S.healings.push(...data); S.healings.sort((a,b)=>(a.healing_date+(a.healing_time||'')).localeCompare(b.healing_date+(b.healing_time||'')));
+    closeModal(); toast(m==='past'?`${data.length} past healing${data.length>1?'s':''} saved`:`${data.length} healing${data.length>1?'s':''} scheduled`); refresh();
+  };
+}
+
+/* ---- Edit a single healing ---- */
+function editHealingModal(id){
+  const h=S.healings.find(x=>x.id===id); const p=pById(h.patient_id);
+  const seriesLeft = h.series_id ? S.healings.filter(x=>x.series_id===h.series_id && x.status==='Pending' && x.healing_date>=h.healing_date).length : 0;
+  openModal(`Healing · ${esc(p.full_name)}`, `
+    <div class="g2"><div class="fld"><label for="e_d">Date</label><input type="date" id="e_d" value="${h.healing_date}"></div>
+      <div class="fld" id="e_tw"><label>Time</label>${timeSel('et',h.healing_time)}</div>
+</div>
+    <div class="fld"><label for="e_s">Status</label><select id="e_s">${opts(HSTATUS,h.status)}</select></div>
+    <div class="fld"><label for="e_n">Notes</label><textarea id="e_n">${esc(h.notes||'')}</textarea></div>
+    ${seriesLeft>1?`<label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="e_all"> Apply the time to all ${seriesLeft} pending sessions in this series from this date</label>`:''}`,
+    `<button class="btn-danger" id="e_del" style="margin-right:auto">Delete</button><button class="btn btn-o" value="cancel">Cancel</button><button class="btn btn-p" id="ok" value="">Save</button>`);
+  $('#ok').onclick=async ev=>{
+    ev.preventDefault();
+    const patch={healing_date:$('#e_d').value, healing_time:readTime($('#e_tw'),'et'), status:$('#e_s').value, notes:$('#e_n').value.trim()||null};
+    let { error } = await sb.from('healings').update(patch).eq('id',id); if(error) return fail(error);
+    Object.assign(h,patch);
+    if($('#e_all')?.checked){
+      const r = await sb.from('healings').update({healing_time:patch.healing_time}).eq('series_id',h.series_id).eq('status','Pending').gte('healing_date',h.healing_date);
+      if(r.error) return fail(r.error);
+      S.healings.forEach(x=>{ if(x.series_id===h.series_id && x.status==='Pending' && x.healing_date>=h.healing_date) x.healing_time=patch.healing_time; });
+    }
+    closeModal(); toast('Healing saved'); refresh();
+  };
+  $('#e_del').onclick=async ev=>{ ev.preventDefault(); if(!confirm('Delete this healing session?')) return;
+    const { error } = await sb.from('healings').delete().eq('id',id); if(error) return fail(error);
+    S.healings=S.healings.filter(x=>x.id!==id); closeModal(); toast('Healing deleted'); refresh(); };
+}
+
+/* ---- Scan form ---- */
+const obsOf = v => v.obs || [v.energy_obs, v.activation_obs].filter(Boolean).join(' · ');
+const lvlSel = (cls,list,val,ph,name) => `<select class="${cls}" aria-label="${ph} for ${esc(name)}">${opts(list,val,ph)}</select>`;
+const chakRow = (c,v={}) => `<div class="chak" data-c="${c}"><b>${c}</b>${lvlSel('c-e',ENERGY,v.energy,'Energy',c)}${lvlSel('c-a',ACTIV,v.activation,'Activation',c)}
+  <input type="text" class="obs c-o" placeholder="Observation (optional)" value="${esc(obsOf(v))}" aria-label="Observation for ${c}"></div>`;
+const minorRow = (m={}) => `<div class="dyn dyn-minor mrow"><input type="text" class="m-n" placeholder="Minor chakra" value="${esc(m.name||'')}" aria-label="Minor chakra name">
+  ${lvlSel('m-e',ENERGY,m.energy,'Energy','minor chakra')}${lvlSel('m-a',ACTIV,m.activation,'Activation','minor chakra')}<button type="button" class="btn-danger rm">Remove</button>
+  <input type="text" class="obs m-o" placeholder="Observation (optional)" value="${esc(obsOf(m))}" aria-label="Observation"></div>`;
+const organRow = (o={}) => `<div class="dyn dyn-organ orow"><input type="text" class="o-n" placeholder="Organ" value="${esc(o.name||'')}">
+  <select class="o-e" aria-label="Organ energy level">${opts(ENERGY,o.energy,'Energy level')}</select><input type="text" class="o-o" placeholder="Observation" value="${esc(o.obs||'')}"><button type="button" class="btn-danger rm">Remove</button></div>`;
+const emoRow = (em={}) => `<div class="dyn dyn-emo erow"><input type="text" class="em-n" placeholder="Emotion" value="${esc(em.name||'')}"><input type="text" class="em-o" placeholder="Observation" value="${esc(em.obs||'')}"><button type="button" class="btn-danger rm">Remove</button></div>`;
+
+function scanModal(p, sc){
+  const s = sc||{major_chakras:{},minor_chakras:[],organs:[],emotions:[]};
+  openModal(sc?'Edit scan':'New scan · '+esc(p.full_name), `
+    <div class="g3"><div class="fld"><label for="sc_d">Scan date</label><input type="date" id="sc_d" value="${s.scan_date||todayISO()}"></div></div>
+    <div class="g2">
+      <div class="fld"><label for="sc_a">Average aura</label><div style="display:flex;gap:8px"><input type="number" step="0.1" id="sc_a" value="${s.avg_aura??''}"><select id="sc_au" style="width:auto">${opts(UNITS,s.aura_unit||'Inches')}</select></div></div>
+      <div class="fld"><label for="sc_ac">Average activation</label><div style="display:flex;gap:8px"><input type="number" step="0.1" id="sc_ac" value="${s.avg_activation??''}"><select id="sc_acu" style="width:auto">${opts(UNITS,s.activation_unit||'Inches')}</select></div></div>
+    </div>
+    <div class="sec-t">Major chakras</div>
+    <p style="margin:-4px 0 10px;color:var(--muted);font-size:.88rem">Leave a chakra blank if you didn't scan it. <button type="button" class="link" id="allnorm">Set all blanks to Normal</button></p>
+    ${MAJOR.map(c=>chakRow(c,s.major_chakras[c]||{})).join('')}
+    <div class="sec-t">Minor chakras</div><div id="sc_min">${(s.minor_chakras||[]).map(minorRow).join('')}</div><button type="button" class="add" data-add="min">+ Add minor chakra</button>
+    <div class="sec-t">Internal organs</div><div id="sc_org">${(s.organs||[]).map(organRow).join('')}</div><button type="button" class="add" data-add="org">+ Add organ</button>
+    <div class="sec-t">Emotions</div><div id="sc_emo">${(s.emotions||[]).map(emoRow).join('')}</div><button type="button" class="add" data-add="emo">+ Add emotion</button>
+    <div class="sec-t">Notes</div><textarea id="sc_n">${esc(s.notes||'')}</textarea>`,
+    `${sc?'<button class="btn-danger" id="sc_del" style="margin-right:auto">Delete scan</button>':''}<button class="btn btn-o" value="cancel">Cancel</button><button class="btn btn-p" id="ok" value="">${sc?'Save scan':'Create scan'}</button>`);
+  const wire=()=>$$('#mbody .rm').forEach(b=>b.onclick=()=>b.closest('.dyn').remove());
+  wire();
+  $$('[data-add]').forEach(b=>b.onclick=()=>{ const k=b.dataset.add; $('#sc_'+k).insertAdjacentHTML('beforeend',{min:minorRow,org:organRow,emo:emoRow}[k]()); wire(); $('#sc_'+k).lastElementChild.querySelector('input').focus(); });
+  $('#allnorm').onclick=()=>$$('.chak').forEach(r=>{ const e=$('select.c-e',r), a=$('select.c-a',r); if(!e.value) e.value='Normal'; if(!a.value) a.value='Normal'; });
+  $('#ok').onclick=async ev=>{
+    ev.preventDefault();
+    const major={}; $$('.chak').forEach(r=>{ const o={energy:$('select.c-e',r).value, activation:$('select.c-a',r).value, obs:$('.c-o',r).value.trim()};
+      if(o.energy||o.activation||o.obs) major[r.dataset.c]=o; });
+    const num=v=>v===''?null:+v;
+    const row={ patient_id:p.id, scan_date:$('#sc_d').value||todayISO(), avg_aura:num($('#sc_a').value), aura_unit:$('#sc_au').value, avg_activation:num($('#sc_ac').value), activation_unit:$('#sc_acu').value,
+      major_chakras:major,
+      minor_chakras:$$('.mrow').map(r=>({name:$('.m-n',r).value.trim(),energy:$('select.m-e',r).value,activation:$('select.m-a',r).value,obs:$('.m-o',r).value.trim()})).filter(x=>x.name),
+      organs:$$('.orow').map(r=>({name:$('.o-n',r).value.trim(),energy:$('.o-e',r).value,obs:$('.o-o',r).value.trim()})).filter(x=>x.name),
+      emotions:$$('.erow').map(r=>({name:$('.em-n',r).value.trim(),obs:$('.em-o',r).value.trim()})).filter(x=>x.name),
+      notes:$('#sc_n').value.trim()||null };
+    $('#ok').disabled=true;
+    const res = sc ? await sb.from('scans').update(row).eq('id',sc.id).select().single() : await sb.from('scans').insert(row).select().single();
+    if(res.error){ $('#ok').disabled=false; return fail(res.error); }
+    if(sc) Object.assign(sc,res.data); else p._scans.unshift(res.data);
+    p._scans.sort((a,b)=>b.scan_date.localeCompare(a.scan_date));
+    closeModal(); toast(sc?'Scan saved':'Scan created'); S.tab='scans'; renderPatient();
+  };
+  if(sc) $('#sc_del').onclick=async ev=>{ ev.preventDefault(); if(!confirm('Delete this scan?')) return;
+    const { error } = await sb.from('scans').delete().eq('id',sc.id); if(error) return fail(error);
+    p._scans=p._scans.filter(x=>x.id!==sc.id); closeModal(); toast('Scan deleted'); renderPatient(); };
+}
+function scanView(p, sc){
+  const pill=(v,pre)=>v?`<span class="pill ${pre}-${v.split(' ')[0]}">${esc(v)}</span>`:'';
+  const major=MAJOR.filter(c=>sc.major_chakras?.[c]).map(c=>{const v=sc.major_chakras[c]; return `<div class="view-block"><b>${c}</b> ${pill(v.energy,'e')} ${pill(v.activation,'a')}
+    ${obsOf(v)?`<div>${esc(obsOf(v))}</div>`:''}</div>`;}).join('');
+  const list=(arr,f)=>arr&&arr.length?arr.map(f).join(''):'<p style="color:var(--muted)">None recorded.</p>';
+  openModal(`Scan · ${fmtDate(sc.scan_date)}`, `
+    <p><b>Average aura:</b> ${sc.avg_aura??'—'} ${sc.avg_aura!=null?esc(sc.aura_unit):''} &nbsp; <b>Average activation:</b> ${sc.avg_activation??'—'} ${sc.avg_activation!=null?esc(sc.activation_unit):''}</p>
+    <div class="sec-t">Major chakras</div>${major||'<p style="color:var(--muted)">None recorded.</p>'}
+    <div class="sec-t">Minor chakras</div>${list(sc.minor_chakras,m=>`<div class="view-block"><b>${esc(m.name)}</b> ${pill(m.energy,'e')} ${pill(m.activation,'a')} ${obsOf(m)?`<div>${esc(obsOf(m))}</div>`:''}</div>`)}
+    <div class="sec-t">Internal organs</div>${list(sc.organs,o=>`<div class="view-block"><b>${esc(o.name)}</b> ${pill(o.energy,'e')} ${o.obs?`<div>${esc(o.obs)}</div>`:''}</div>`)}
+    <div class="sec-t">Emotions</div>${list(sc.emotions,e=>`<div class="view-block"><b>${esc(e.name)}</b>${e.obs?` — ${esc(e.obs)}`:''}</div>`)}
+    ${sc.notes?`<div class="sec-t">Notes</div><div class="view-block" style="white-space:pre-wrap">${esc(sc.notes)}</div>`:''}`,
+    `<button class="btn btn-o" value="cancel">Close</button><button class="btn btn-p" id="ok" value="">Edit scan</button>`);
+  $('#ok').onclick=ev=>{ ev.preventDefault(); scanModal(p,sc); };
+}
+
+/* =====================================================================
+   DESK SETTINGS · EXPORT · DELETE
+   ===================================================================== */
+$('#settingsBtn').onclick = settingsModal;
+function settingsModal(){
+  openModal('Desk settings', `
+    <div class="g2"><div class="fld"><label for="ds_name">Your name *</label><input type="text" id="ds_name" maxlength="80" value="${esc(D.healer_name)}"></div>
+      <div class="fld"><label for="ds_wa">Your WhatsApp number *</label><input type="tel" id="ds_wa" maxlength="20" value="${esc(D.whatsapp||'')}"></div></div>
+    <div class="g2"><div class="fld"><label for="ds_prac">Practice name *</label><input type="text" id="ds_prac" maxlength="100" value="${esc(D.practice_name)}"></div>
+      <div class="fld"><label for="ds_city">City</label><input type="text" id="ds_city" maxlength="80" value="${esc(D.city||'')}"></div></div>
+    <div class="fld"><label for="ds_slug">Intake form link</label>
+      <div class="slug-row"><span>${esc(location.host.replace(/^www\./,''))}/i/</span><input type="text" id="ds_slug" maxlength="40" autocapitalize="off" spellcheck="false" value="${esc(D.slug)}"></div>
+      <div class="hint" id="ds_slughint">Changing this stops the old link from working.</div></div>
+    <label class="agree"><input type="checkbox" id="ds_open" ${D.intake_open?'checked':''}> <span>Accept new intake forms</span></label>
+    <div class="sec-t">Your data</div>
+    <p style="margin:0 0 10px;color:var(--muted);font-size:.92rem">Download everything on your desk (clients, healings, scans, payments, feedback) as a JSON file.</p>
+    <button type="button" class="btn btn-o" id="ds_export">Download my data</button>
+    <div class="danger-zone"><p>Permanently delete your desk, every client record and photo, and your Healer's Desk login. This can't be undone.</p>
+      <button type="button" class="btn btn-stop" id="ds_delete">Delete my desk</button></div>
+    <p style="margin:22px 0 0;font-size:.85rem;color:var(--muted)">Signed in as ${esc(D.contact_email||'')} · <a href="/policy" target="_blank" rel="noopener">Policies</a> · Help: <a href="mailto:healersdesk@gmail.com">healersdesk@gmail.com</a></p>
+    <div class="err-box hidden" id="ds_err"></div>`,
+    `<button class="btn btn-o" value="cancel">Cancel</button><button class="btn btn-p" id="ok" value="">Save settings</button>`);
+  $('#ds_slug').oninput=()=>{ $('#ds_slug').value=$('#ds_slug').value.toLowerCase().replace(/[^a-z0-9-]/g,''); if($('#ds_slug').value===D.slug){ $('#ds_slughint').textContent='Changing this stops the old link from working.'; $('#ds_slughint').classList.remove('bad'); } else checkSlug('#ds_slughint','#ds_slug'); };
+  $('#ok').onclick=async ev=>{
+    ev.preventDefault(); const err=$('#ds_err'); err.classList.add('hidden');
+    const patch={ healer_name:$('#ds_name').value.trim(), whatsapp:$('#ds_wa').value.trim(), practice_name:$('#ds_prac').value.trim(), city:$('#ds_city').value.trim()||null, slug:$('#ds_slug').value.trim(), intake_open:$('#ds_open').checked };
+    const bad=!patch.healer_name?'Please enter your name.':patch.whatsapp.replace(/\D/g,'').length<10?'Please enter a valid WhatsApp number.':!patch.practice_name?'Please enter your practice name.':!slugOK(patch.slug)?'Please choose a valid intake link.':'';
+    if(bad){ err.textContent=bad; err.classList.remove('hidden'); return; }
+    $('#ok').disabled=true;
+    const { data, error } = await sb.from('desks').update(patch).eq('id',UID).select().single();
+    $('#ok').disabled=false;
+    if(error){ err.textContent=/duplicate|unique/i.test(error.message)?'That intake link is already taken.':error.message; err.classList.remove('hidden'); return; }
+    D=data; closeModal(); toast('Settings saved');
+    const h=new Date().getHours(); $('#greet').textContent=`${h<12?'Good morning':h<17?'Good afternoon':'Good evening'}, ${first(D.healer_name)} · ${D.practice_name}`;
+    refresh();
+  };
+  $('#ds_export').onclick=exportData;
+  $('#ds_delete').onclick=deleteDesk;
+}
+async function exportData(){
+  const [sc, fb] = await Promise.all([ sb.from('scans').select('*'), sb.from('feedback').select('*') ]);
+  const out={ exported_at:new Date().toISOString(), desk:D,
+    clients:S.patients.map(({_scans,_feedback,...p})=>p), healings:S.healings, payments:S.payments, scans:sc.data||[], feedback:fb.data||[] };
+  const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`healers-desk-${D.slug}-${todayISO()}.json`;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  toast('Your data is downloading');
+}
+async function deleteDesk(){
+  const typed=prompt(`This permanently deletes your desk and all ${S.patients.length} client record(s).\n\nType DELETE to confirm.`);
+  if(typed!=='DELETE') return;
+  $('#ds_delete').disabled=true; $('#ds_delete').textContent='Deleting…';
+  try{
+    // 1) remove every stored photo in this healer's folder
+    const { data:folders } = await sb.storage.from('patient-photos').list(UID,{limit:1000});
+    for(const f of (folders||[])){
+      const { data:files } = await sb.storage.from('patient-photos').list(`${UID}/${f.name}`,{limit:1000});
+      const paths=(files||[]).map(x=>`${UID}/${f.name}/${x.name}`);
+      if(paths.length) await sb.storage.from('patient-photos').remove(paths);
+    }
+    // 2) delete the desk, all client tables and the login
+    const { error } = await sb.rpc('delete_my_desk'); if(error) throw error;
+    await sb.auth.signOut().catch(()=>{});
+    closeModal(); showLogin('Your desk and all its data have been deleted. Thank you for using Healer\'s Desk.');
+  }catch(e){ fail(e); $('#ds_delete').disabled=false; $('#ds_delete').textContent='Delete my desk'; }
+}
+
+/* =====================================================================
+   INSTALL AS AN APP
+   ===================================================================== */
+if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('/desk-sw.js',{scope:'/desk'}).catch(()=>{})); }
+const standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone===true;
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferredPrompt=e; $('#andTip').classList.remove('hidden'); });
+$('#installBtn').onclick=async()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt=null; $('#andTip').classList.add('hidden'); };
+window.addEventListener('appinstalled',()=>{ $('#andTip').classList.add('hidden'); toast('App installed'); });
+(function(){
+  const iOS=/iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+  let dismissed=false; try{ dismissed=localStorage.getItem('hdIosTipDismissed')==='1'; }catch(e){}
+  if(iOS && !standalone && !dismissed) $('#iosTip').classList.remove('hidden');
+  $('#iosTipX').onclick=()=>{ $('#iosTip').classList.add('hidden'); try{ localStorage.setItem('hdIosTipDismissed','1'); }catch(e){} };
+})();
+
+boot();
+</script>
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Begin your healing — Healer's Desk</title>
+<meta name="description" content="Share a little about yourself so your healer can prepare for your first session.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --violet:#3B2366; --violet-2:#5B3F8C; --mist:#EEE8F6; --ivory:#FCFAF6;
+  --gold:#B8903F; --gold-soft:#F3EAD7; --ink:#2A2233; --muted:#6D6478;
+  --line:#E2DAEC; --rose:#B5536B; --sage:#5F7F5B;
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Figtree",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;touch-action:manipulation}
+body{margin:0;background:var(--ivory);color:var(--ink);font:16px/1.55 var(--sans);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.wrap{max-width:640px;margin:0 auto;padding:28px 20px 64px}
+header{text-align:center;margin-bottom:28px}
+header img{width:84px;height:84px;object-fit:contain}
+.practice{font:600 1.05rem var(--sans);color:var(--gold);margin:12px 0 0;letter-spacing:.2px}
+.state{text-align:center;color:var(--muted);padding:40px 10px}
+.powered{display:inline-flex;align-items:center;gap:6px}.powered img{width:18px;height:18px}
+h1{font:600 2.3rem/1.1 var(--serif);color:var(--violet);margin:14px 0 8px}
+.lede{color:var(--muted);max-width:30rem;margin:0 auto}
+.note{background:var(--gold-soft);border-radius:14px;padding:14px 16px;font-size:.92rem;color:#5a4a2a;margin:22px 0 0}
+
+/* progress: the form really is a sequence */
+.steps{display:flex;gap:8px;margin:30px 0 8px}
+.st-i{flex:1;min-width:0}
+.st-i span{display:block;height:4px;border-radius:4px;background:var(--line);transition:background .3s}
+.st-i.on span{background:var(--gold)}
+.st-i em{display:block;font-style:normal;font-size:.76rem;line-height:1.25;color:var(--muted);margin-top:7px}
+.st-i.cur em{color:var(--violet);font-weight:600}
+.step-label{font-size:.85rem;color:var(--muted);margin-bottom:18px}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px 22px}
+.card h2{font:600 1.7rem/1.2 var(--serif);color:var(--violet);margin:0 0 4px}
+.card .sub{color:var(--muted);margin:0 0 22px;font-size:.95rem}
+.field{margin-bottom:18px}
+label.lbl{display:block;font-weight:500;margin-bottom:6px}
+.req{color:var(--rose)}
+.hint{font-size:.85rem;color:var(--muted);margin-top:4px}
+input[type=text],input[type=email],input[type=tel],input[type=date],select,textarea{
+  width:100%;font:inherit;color:inherit;padding:12px 14px;border:1px solid var(--line);
+  border-radius:12px;background:#fff;outline:none;transition:border-color .2s, box-shadow .2s}
+textarea{min-height:96px;resize:vertical}
+input[type=date]{min-width:0;max-width:100%;display:block;min-height:48px}
+@supports (-webkit-touch-callout:none){input[type=date]{-webkit-appearance:none;appearance:none;text-align:left;line-height:1.4}}
+input::-webkit-date-and-time-value{text-align:left}
+.row2>*{min-width:0}
+input:focus,select:focus,textarea:focus{border-color:var(--violet-2);box-shadow:0 0 0 3px rgba(91,63,140,.15)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:520px){.row2{grid-template-columns:1fr}}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip span{display:inline-block;padding:9px 16px;border:1px solid var(--line);border-radius:999px;cursor:pointer;background:#fff;transition:all .15s;user-select:none}
+.chip input:checked+span{background:var(--violet);border-color:var(--violet);color:#fff}
+.chip input:focus-visible+span{box-shadow:0 0 0 3px rgba(184,144,63,.45)}
+
+/* symptoms */
+.sym{border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;background:#FDFCFF}
+.sym-top{display:flex;gap:10px;align-items:center}
+.sym-top input{flex:1}
+.x{border:0;background:none;color:var(--rose);font:inherit;font-size:.9rem;cursor:pointer;padding:6px}
+.range-row{display:flex;align-items:center;gap:12px;margin:12px 0 10px}
+.range-row output{min-width:2.2em;text-align:center;font-weight:600;color:var(--violet);font-size:1.1rem}
+input[type=range]{flex:1;accent-color:var(--gold);height:28px}
+.scale-ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:-4px}
+
+/* impact 1-10 */
+.impact{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.impact label{position:relative}
+.impact input{position:absolute;opacity:0}
+.impact span{display:flex;align-items:center;justify-content:center;height:42px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-weight:500;background:#fff}
+.impact input:checked+span{background:var(--gold);border-color:var(--gold);color:#fff}
+.impact input:focus-visible+span{box-shadow:0 0 0 3px rgba(91,63,140,.3)}
+
+.photo{display:flex;align-items:center;gap:16px}
+.photo .prev{width:84px;height:84px;border-radius:14px;background:var(--mist) center/cover no-repeat;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--violet-2);font-size:1.8rem}
+.btn-file{display:inline-block;padding:10px 16px;border:1px dashed var(--violet-2);border-radius:12px;color:var(--violet);cursor:pointer;font-weight:500}
+
+.consent{background:var(--mist);border-radius:14px;padding:16px;font-size:.92rem;color:#433a52}
+.consent p{margin:0 0 10px}
+.check{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-weight:500;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--violet);margin-top:2px;flex-shrink:0}
+
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:24px}
+.btn{font:inherit;font-weight:600;border-radius:999px;padding:13px 26px;cursor:pointer;border:1px solid transparent}
+.btn-primary{background:var(--violet);color:#fff}
+.btn-primary:hover{background:var(--violet-2)}
+.btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn:focus-visible,.btn-file:focus-within{outline:3px solid var(--gold);outline-offset:2px}
+.add{background:none;border:1px dashed var(--gold);color:#8a6a2a;border-radius:12px;padding:10px 14px;font:inherit;font-weight:500;cursor:pointer;width:100%}
+
+.err{color:var(--rose);font-size:.88rem;margin-top:6px;display:none}
+.field.bad .err{display:block}
+.field.bad input,.field.bad textarea{border-color:var(--rose)}
+.banner{display:none;background:#FBECEF;color:#7a2c3f;border-radius:12px;padding:12px 14px;margin-top:16px;font-size:.92rem}
+
+.step{display:none}
+.step.active{display:block;animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.step.active{animation:none}}
+
+.done{text-align:center;padding:36px 22px}
+.done .lotus{font-size:2.6rem}
+.done h2{font:600 2rem var(--serif);color:var(--violet);margin:10px 0}
+.done a.btn{display:inline-block;text-decoration:none;margin-top:18px;background:#25D366;color:#fff}
+footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:34px}
+footer a{color:var(--violet-2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="/assets/mark.svg" alt="" width="84" height="84">
+    <p class="practice" id="practiceName">&nbsp;</p>
+    <h1>Begin your healing</h1>
+    <p class="lede">Share a little about yourself so <span data-h>your healer</span> can understand what you're carrying and prepare for your session. It takes about five minutes.</p>
+    <p class="note">🌿 Everything you share stays confidential and is seen only by <span data-h>your healer</span>. Energy healing works alongside medical care, not in place of it, so please continue any treatment your doctor has prescribed.</p>
+  </header>
+
+  <div class="state" id="loading">Loading the form…</div>
+  <div id="formArea" style="display:none">
+    <div class="steps" aria-hidden="true"><div class="st-i on cur"><span></span><em>About you</em></div><div class="st-i"><span></span><em>What brings you</em></div><div class="st-i"><span></span><em>Your health</em></div><div class="st-i"><span></span><em>Almost done</em></div></div>
+    <div class="step-label" id="stepLabel">Step 1 of 4</div>
+
+    <form id="intake" novalidate>
+      <!-- STEP 1 -->
+      <section class="step active card" data-step="1">
+        <h2>About you</h2>
+        <p class="sub">So we know how to reach you.</p>
+        <div class="field" data-req>
+          <label class="lbl" for="full_name">Full name <span class="req">*</span></label>
+          <input type="text" id="full_name" autocomplete="name">
+          <div class="err">Please enter your full name.</div>
+        </div>
+        <div class="row2">
+          <div class="field" data-req data-type="phone">
+            <label class="lbl" for="whatsapp">WhatsApp number <span class="req">*</span></label>
+            <input type="tel" id="whatsapp" autocomplete="tel" inputmode="tel" placeholder="98XXXXXXXX">
+            <div class="err">Enter a valid phone number.</div>
+          </div>
+          <div class="field" data-req data-type="email">
+            <label class="lbl" for="email">Email <span class="req">*</span></label>
+            <input type="email" id="email" autocomplete="email">
+            <div class="err">Enter a valid email address.</div>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label class="lbl" for="dob">Date of birth</label>
+            <input type="date" id="dob">
+          </div>
+          <div class="field">
+            <label class="lbl" for="gender">Gender</label>
+            <select id="gender">
+              <option value="">Select</option><option>Female</option><option>Male</option><option>Other</option><option>Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label class="lbl" for="occupation">Occupation</label>
+          <input type="text" id="occupation">
+        </div>
+        <div class="field">
+          <label class="lbl" for="address">City</label>
+          <input type="text" id="address" autocomplete="address-level2" placeholder="e.g. Pune">
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step card" data-step="2">
+        <h2>What brings you here</h2>
+        <p class="sub">There are no wrong answers. Share as much or as little as feels right.</p>
+        <div class="field" id="concernField">
+          <label class="lbl">What would you like support with right now? <span class="req">*</span></label>
+          <div class="chips">
+            <label class="chip"><input type="checkbox" name="concern" value="Physical ailments"><span>Physical ailments</span></label>
+            <label class="chip"><input type="checkbox" name="concern" value="Emotional blockages"><span>Emotional blockages</span></label>
+            <label class="chip"><input type="checkbox" name="concern" value="Chronic stress"><span>Chronic stress</span></label>
+            <label class="chip"><input type="checkbox" name="concern" value="Anxiety"><span>Anxiety</span></label>
+            <label class="chip"><input type="checkbox" name="concern" value="Others" id="concernOthers"><span>Something else</span></label>
+          </div>
+          <input type="text" id="concern_other" placeholder="Tell us briefly" style="display:none;margin-top:10px">
+          <div class="err">Choose at least one.</div>
+        </div>
+        <div class="field" data-req>
+          <label class="lbl" for="heal_goal">What is one thing you'd like to heal, release or strengthen in your life right now? <span class="req">*</span></label>
+          <textarea id="heal_goal"></textarea>
+          <div class="err">Please share a few words.</div>
+        </div>
+        <div class="field">
+          <label class="lbl">Your symptoms</label>
+          <p class="hint" style="margin:0 0 10px">Add each symptom and rate how strong it feels, from 0 (none) to 10 (severe).</p>
+          <div id="symptoms"></div>
+          <button type="button" class="add" id="addSym">+ Add a symptom</button>
+        </div>
+        <div class="field" id="impactField">
+          <label class="lbl">Overall, how much is this affecting your daily energy and peace of mind? <span class="req">*</span></label>
+          <div class="impact" role="radiogroup" aria-label="Impact from 1 to 10" id="impact"></div>
+          <div class="scale-ends" style="margin-top:6px"><span>Barely noticeable</span><span>Completely overwhelming</span></div>
+          <div class="err">Pick a number from 1 to 10.</div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step card" data-step="3">
+        <h2>Your health</h2>
+        <p class="sub">This helps <span data-h>your healer</span> keep your sessions safe and suited to you.</p>
+        <div class="field" data-req>
+          <label class="lbl" for="medical_history">Any medical history, ongoing treatment, or physical or mental health conditions <span data-h>your healer</span> should know about? <span class="req">*</span></label>
+          <textarea id="medical_history" placeholder="Write “None” if there's nothing to share"></textarea>
+          <div class="err">Please fill this in, or write “None”.</div>
+        </div>
+        <div class="field">
+          <label class="lbl">A recent photograph</label>
+          <p class="hint" style="margin:0 0 10px">Used only for distance healing sessions. A clear, recent photo of your face and upper body works best.</p>
+          <div class="photo">
+            <div class="prev" id="photoPrev" aria-hidden="true">✦</div>
+            <label class="btn-file">Choose photo<input type="file" id="photo" accept="image/*" hidden></label>
+          </div>
+          <div class="hint" id="photoName"></div>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section class="step card" data-step="4">
+        <h2>Almost done</h2>
+        <p class="sub">One last question and your consent.</p>
+        <div class="field" id="heardField">
+          <label class="lbl">How did you hear about <span data-p>this practice</span>? <span class="req">*</span></label>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="heard" value="Social media"><span>Social media</span></label>
+            <label class="chip"><input type="radio" name="heard" value="Friends & family"><span>Friends &amp; family</span></label>
+            <label class="chip"><input type="radio" name="heard" value="Google search"><span>Google search</span></label>
+            <label class="chip"><input type="radio" name="heard" value="Other" id="heardOtherRadio"><span>Other</span></label>
+          </div>
+          <input type="text" id="heard_other" placeholder="Where did you find us?" style="display:none;margin-top:10px">
+          <div class="err">Please choose one.</div>
+        </div>
+        <div class="field" id="consentField">
+          <div class="consent">
+            <p>I understand that energy healing (including Pranic Healing) is meant to complement conventional medicine, not replace it. It is not a medical diagnosis or treatment. If my symptoms persist, I will consult a medical doctor.</p>
+            <p>I release <span data-h>your healer</span> and <span data-p>this practice</span> from any liability arising from the healing services I receive.</p>
+            <p style="margin:0">I consent to <span data-h>your healer</span> collecting and storing the information and photo I share, including health details, to support my healing. It is stored securely on Healer's Desk as described in its <a href="/policy#privacy" target="_blank" rel="noopener">Privacy Policy</a>, and I can ask <span data-h>your healer</span> to correct or delete it at any time.</p>
+            <label class="check"><input type="checkbox" id="consent"> I have read and agree to the above</label>
+          </div>
+          <div class="err">Please tick the box to continue.</div>
+        </div>
+        <div class="banner" id="submitErr"></div>
+      </section>
+
+      <div class="nav">
+        <button type="button" class="btn btn-ghost" id="back" style="visibility:hidden">Back</button>
+        <button type="button" class="btn btn-primary" id="next">Continue</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card done" id="done" style="display:none" tabindex="-1">
+    <div class="lotus">🪷</div>
+    <h2>Thank you, <span id="doneName"></span></h2>
+    <p>Your details have reached <span data-h>your healer</span>. You'll get a WhatsApp message shortly to schedule your session.</p>
+    <a class="btn" id="waLink" target="_blank" rel="noopener">Message <span data-h>your healer</span> on WhatsApp</a>
+  </div>
+
+  <footer><span class="powered"><img src="/assets/mark.svg" alt="">Powered by <a href="/">Healer's Desk</a></span> · <a href="/policy#privacy">Privacy</a></footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="/config.js"></script>
+<script>
+(function(){
+  const C = window.HD_CONFIG || {};
+  const sb = window.supabase.createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY, { auth:{ persistSession:false, autoRefreshToken:false } });
+  const pathSlug = (location.pathname.match(/^\/i\/([a-z0-9-]+)/i)||[])[1];
+  const SLUG = (pathSlug || new URLSearchParams(location.search).get('d') || '').toLowerCase();
+  let DESK = null;
+  const firstOf = n => String(n||'').trim().split(/\s+/)[0] || '';
+  const waNum = p => { let d=String(p||'').replace(/\D/g,''); if(d.length===10) d='91'+d; if(d.length===11 && d.startsWith('0')) d='91'+d.slice(1); return d; };
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  let step = 1; const TOTAL = 4;
+  let photoBlob = null;
+
+  // impact 1-10
+  const imp = $('#impact');
+  for(let i=1;i<=10;i++){
+    imp.insertAdjacentHTML('beforeend',`<label><input type="radio" name="impact" value="${i}"><span>${i}</span></label>`);
+  }
+
+  // symptoms
+  function addSymptom(){
+    const d = document.createElement('div'); d.className='sym';
+    d.innerHTML = `<div class="sym-top"><input type="text" class="s-name" placeholder="e.g. Headache, poor sleep" aria-label="Symptom"><button type="button" class="x">Remove</button></div>
+      <div class="range-row"><input type="range" class="s-int" min="0" max="10" value="5" aria-label="Intensity"><output>5</output></div>
+      <div class="scale-ends"><span>None</span><span>Severe</span></div>
+      <input type="text" class="s-rem" placeholder="Remarks (optional): since when, how often…" style="margin-top:10px" aria-label="Remarks">`;
+    const r = d.querySelector('.s-int'), o = d.querySelector('output');
+    r.addEventListener('input',()=>o.textContent=r.value);
+    d.querySelector('.x').onclick=()=>d.remove();
+    $('#symptoms').appendChild(d);
+    return d;
+  }
+  addSymptom();
+  $('#addSym').onclick=()=>addSymptom().querySelector('.s-name').focus();
+
+  // conditional "other" fields
+  $('#concernOthers').addEventListener('change',e=>{$('#concern_other').style.display=e.target.checked?'block':'none'});
+  $$('input[name=heard]').forEach(r=>r.addEventListener('change',()=>{$('#heard_other').style.display=$('#heardOtherRadio').checked?'block':'none'}));
+
+  // photo — resized in the browser so large phone photos upload quickly
+  $('#photo').addEventListener('change', async e=>{
+    const f = e.target.files[0]; if(!f) return;
+    try{
+      photoBlob = await resize(f, 1200);
+      $('#photoPrev').style.backgroundImage = `url(${URL.createObjectURL(photoBlob)})`;
+      $('#photoPrev').textContent='';
+      $('#photoName').textContent = f.name;
+    }catch(err){ photoBlob=f; $('#photoName').textContent=f.name; }
+  });
+  function resize(file, max){
+    return new Promise((res,rej)=>{
+      const img = new Image();
+      img.onload=()=>{
+        const s = Math.min(1, max/Math.max(img.width,img.height));
+        const c = document.createElement('canvas'); c.width=Math.round(img.width*s); c.height=Math.round(img.height*s);
+        c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+        c.toBlob(b=>b?res(b):rej(), 'image/jpeg', .85);
+      };
+      img.onerror=rej; img.src=URL.createObjectURL(file);
+    });
+  }
+
+  // validation
+  const setBad=(el,bad)=>{el.classList.toggle('bad',bad); return !bad;};
+  function validate(n){
+    let ok = true;
+    const sec = $(`.step[data-step="${n}"]`);
+    sec.querySelectorAll('.field[data-req]').forEach(f=>{
+      const inp = f.querySelector('input,textarea'); const v = inp.value.trim();
+      let bad = !v;
+      if(!bad && f.dataset.type==='email') bad = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      if(!bad && f.dataset.type==='phone') bad = v.replace(/\D/g,'').length < 10;
+      ok = setBad(f,bad) && ok;
+    });
+    if(n===2){
+      ok = setBad($('#concernField'), !$$('input[name=concern]:checked').length) && ok;
+      ok = setBad($('#impactField'), !$('input[name=impact]:checked')) && ok;
+    }
+    if(n===4){
+      ok = setBad($('#heardField'), !$('input[name=heard]:checked')) && ok;
+      ok = setBad($('#consentField'), !$('#consent').checked) && ok;
+    }
+    if(!ok){ const first = sec.querySelector('.bad'); first && first.scrollIntoView({behavior:'smooth',block:'center'}); }
+    return ok;
+  }
+  document.addEventListener('input',e=>{const f=e.target.closest('.field.bad'); if(f) f.classList.remove('bad');});
+  document.addEventListener('change',e=>{const f=e.target.closest('.field.bad'); if(f) f.classList.remove('bad');});
+
+  function show(n){
+    step=n;
+    $$('.step').forEach(s=>s.classList.toggle('active', +s.dataset.step===n));
+    $$('.st-i').forEach((s,i)=>{ s.classList.toggle('on', i<n); s.classList.toggle('cur', i===n-1); });
+    $('#stepLabel').textContent = `Step ${n} of ${TOTAL}`;
+    $('#back').style.visibility = n>1?'visible':'hidden';
+    $('#next').textContent = n===TOTAL ? `Send to ${firstOf(DESK.healer_name)}` : 'Continue';
+    window.scrollTo({top: $('#formArea').offsetTop-10, behavior:'smooth'});
+  }
+  $('#back').onclick=()=>show(step-1);
+  $('#next').onclick=()=>{
+    if(!validate(step)) return;
+    if(step<TOTAL) show(step+1); else submit();
+  };
+
+  async function submit(){
+    const btn = $('#next'); btn.disabled=true; btn.textContent='Sending…';
+    $('#submitErr').style.display='none';
+    try{
+      const id = crypto.randomUUID ? crypto.randomUUID() : ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,c=>(c^crypto.getRandomValues(new Uint8Array(1))[0]&15>>c/4).toString(16));
+      let photo_path = null;
+      if(photoBlob){
+        const path = `${DESK.id}/${id}/${Date.now()}.jpg`;
+        const up = await sb.storage.from('patient-photos').upload(path, photoBlob, {contentType:'image/jpeg', upsert:false});
+        if(!up.error) photo_path = path; // a failed photo upload shouldn't block the form
+      }
+      const symptoms = $$('#symptoms .sym').map(d=>({
+        name: d.querySelector('.s-name').value.trim(),
+        intensity: +d.querySelector('.s-int').value,
+        remarks: d.querySelector('.s-rem').value.trim()
+      })).filter(s=>s.name);
+      const heard = $('input[name=heard]:checked').value;
+      const row = {
+        id,
+        full_name: $('#full_name').value.trim(),
+        whatsapp: $('#whatsapp').value.trim(),
+        email: $('#email').value.trim(),
+        dob: $('#dob').value || null,
+        gender: $('#gender').value || null,
+        occupation: $('#occupation').value.trim() || null,
+        address: $('#address').value.trim() || null,
+        primary_concerns: $$('input[name=concern]:checked').map(i=>i.value),
+        concern_other: $('#concern_other').value.trim() || null,
+        heal_goal: $('#heal_goal').value.trim(),
+        symptoms,
+        impact_score: +$('input[name=impact]:checked').value,
+        medical_history: $('#medical_history').value.trim(),
+        photo_path,
+        heard_from: heard,
+        heard_other: heard==='Other' ? ($('#heard_other').value.trim()||null) : null,
+        consent: true
+      };
+      const { error } = await sb.rpc('submit_intake', { p_slug: SLUG, p: row });
+      if(error) throw error;
+      const first = row.full_name.split(' ')[0];
+      $('#doneName').textContent = first;
+      if(DESK.whatsapp) $('#waLink').href = `https://wa.me/${waNum(DESK.whatsapp)}?text=${encodeURIComponent(`Hi ${firstOf(DESK.healer_name)}, I'm ${row.full_name}. I've just filled in your intake form for ${DESK.practice_name}.`)}`; else $('#waLink').style.display='none';
+      $('#formArea').style.display='none';
+      const done = $('#done'); done.style.display='block'; done.focus();
+      window.scrollTo({top:0,behavior:'smooth'});
+    }catch(err){
+      console.error(err);
+      const b = $('#submitErr');
+      b.innerHTML = `Your form couldn't be sent. Check your internet connection and try again${DESK.whatsapp?`, or <a href="https://wa.me/${waNum(DESK.whatsapp)}" target="_blank" rel="noopener">message ${esc(firstOf(DESK.healer_name))} on WhatsApp</a>`:''}.`;
+      b.style.display='block';
+      btn.disabled=false; btn.textContent=`Send to ${firstOf(DESK.healer_name)}`;
+    }
+  }
+  // ---- load the healer's desk ----
+  const esc = v => String(v ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  (async function(){
+    const stop = msg => { $('#loading').innerHTML = msg; };
+    if(!SLUG) return stop('This intake link is incomplete. Please ask your healer for the full link.');
+    try{
+      const { data, error } = await sb.rpc('get_desk_public', { p_slug: SLUG });
+      if(error) throw error;
+      if(!data) return stop('We couldn\'t find this healer\'s form. Please check the link with your healer.');
+      DESK = data;
+    }catch(e){ console.error(e); return stop('The form couldn\'t load. Check your internet connection and refresh the page.'); }
+    const hn = DESK.healer_name, pn = DESK.practice_name;
+    $$('[data-h]').forEach(s=>s.textContent=hn);
+    $$('[data-p]').forEach(s=>s.textContent=pn);
+    $('#practiceName').textContent = pn;
+    document.title = `Begin your healing — ${pn}`;
+    if(!DESK.intake_open) return stop(`${esc(pn)} isn't accepting new intake forms right now.${DESK.whatsapp?` You can <a href="https://wa.me/${waNum(DESK.whatsapp)}" target="_blank" rel="noopener">message ${esc(firstOf(hn))} on WhatsApp</a>.`:''}`);
+    $('#loading').style.display='none'; $('#formArea').style.display='';
+  })();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Healing progress — Healer's Desk</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Figtree:wght@400;500;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--violet:#3B2366;--violet-2:#5B3F8C;--mist:#EEE8F6;--mist-2:#F6F2FB;--ivory:#FCFAF6;--gold:#B8903F;--gold-soft:#F3EAD7;--ink:#2A2233;--muted:#6D6478;--line:#E2DAEC;
+  --rose-soft:#F8E3E8;--sage-soft:#E4EEE1;--sky-soft:#E1EBF5;--serif:"Cormorant Garamond",Georgia,serif;--num:"Playfair Display",Georgia,serif;--sans:"Figtree",system-ui,-apple-system,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ivory);color:var(--ink);font:16px/1.55 var(--sans);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.wrap{max-width:860px;margin:0 auto;padding:28px 20px 60px}
+header{text-align:center;margin-bottom:26px}
+header img{width:80px;height:80px;object-fit:contain}
+.practice{font:600 1.05rem var(--sans);color:var(--gold);margin:10px 0 0}
+.powered{display:inline-flex;align-items:center;gap:6px}.powered img{width:18px;height:18px}
+h1{font:600 2.4rem/1.1 var(--serif);color:var(--violet);margin:12px 0 6px}
+h2{font:600 1.55rem var(--serif);color:var(--violet);margin:0 0 12px}
+.lede{color:var(--muted);margin:0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);background:#fff;border:1px solid var(--line);border-radius:18px;margin-bottom:20px;overflow:hidden}
+.stat{padding:18px;border-right:1px solid var(--line);text-align:center}
+.stat:last-child{border-right:0}
+.stat b{display:block;font:600 2rem/1.1 var(--num);color:var(--violet);font-feature-settings:"lnum" 1}
+.stat span{font-size:.86rem;color:var(--muted)}
+@media (max-width:520px){.stat b{font-size:1.7rem}.stat{padding:14px 8px}}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:20px}
+.chart{height:290px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.84rem;color:var(--muted);margin:0 0 14px}
+.legend span{display:inline-flex;align-items:center;gap:6px}.legend i{width:12px;height:12px;border-radius:4px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);font-size:.84rem;text-align:center;white-space:nowrap}
+th{color:var(--muted);font-weight:600;background:var(--mist-2)}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:#fff;font-weight:500}
+th:first-child{background:var(--mist-2)}
+.cell{display:flex;flex-direction:column;gap:3px;align-items:center}
+.pill{display:inline-block;font-size:.74rem;padding:2px 8px;border-radius:999px}
+.e-Congested,.a-Over{background:var(--rose-soft);color:#8b3348}
+.e-Normal,.a-Normal{background:var(--sage-soft);color:#3d5a39}
+.e-Depleted,.a-Under{background:var(--sky-soft);color:#2f5680}
+.cmt{border-left:3px solid var(--gold);padding:4px 0 4px 14px;margin:0 0 14px}.cmt p{margin:0 0 4px}.cmt small{color:var(--muted)}
+.note{background:var(--gold-soft);color:#5a4a2a;border-radius:14px;padding:14px 16px;font-size:.9rem}
+.cta{display:flex;gap:10px;justify-content:center;margin:26px auto 0;max-width:480px}
+.cta a,.cta button{flex:1 1 0;min-width:0;text-align:center;line-height:1.25;display:inline-flex;align-items:center;justify-content:center;font:600 1rem var(--sans);padding:12px 10px;border-radius:999px;cursor:pointer;text-decoration:none;border:0}
+.cta a{background:#25D366;color:#fff}
+.cta button{background:var(--violet);color:#fff}
+.cta button[aria-expanded=true]{background:#fff;color:var(--violet);border:1.5px solid var(--violet)}
+#fb{margin-top:18px}
+.fbs{border-bottom:1px solid var(--line);padding:12px 0}
+.fbs:last-of-type{border-bottom:0}
+.fbs-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.fbs-top small{color:var(--muted);white-space:nowrap}
+.rng{display:flex;align-items:center;gap:12px;margin-top:8px}
+.rng input{flex:1;accent-color:var(--gold);height:28px}
+.rng output{min-width:2.4em;text-align:center;font:600 1.15rem var(--num);color:var(--violet)}
+.ends{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted)}
+.imp{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;margin-top:8px}
+.imp label{position:relative}.imp input{position:absolute;opacity:0}
+.imp span{display:flex;align-items:center;justify-content:center;height:40px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-weight:600;background:#fff}
+.imp input:checked+span{background:var(--gold);border-color:var(--gold);color:#fff}
+.imp input:focus-visible+span{box-shadow:0 0 0 3px rgba(91,63,140,.3)}
+.lbl{font-weight:600;display:block}
+textarea{width:100%;font:16px/1.5 var(--sans);padding:12px 14px;border:1px solid var(--line);border-radius:12px;min-height:90px;resize:vertical;margin-top:8px;box-sizing:border-box}
+.send{display:block;width:100%;margin-top:16px;background:var(--violet);color:#fff;border:0;font:600 1rem var(--sans);padding:14px;border-radius:999px;cursor:pointer}
+.send:disabled{opacity:.6}
+.fb-err{color:#8b3348;background:var(--rose-soft);padding:10px 12px;border-radius:10px;margin-top:10px;font-size:.9rem;display:none}
+.thanks{text-align:center;padding:20px 10px}
+.msg{text-align:center;padding:60px 20px;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:28px}
+footer a{color:var(--violet-2)}
+@media print{.cta{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="/assets/mark.svg" alt="" width="80" height="80">
+    <p class="practice" id="practice">&nbsp;</p>
+    <h1 id="title">Healing progress</h1>
+    <p class="lede" id="sub">Loading your report…</p>
+  </header>
+  <main id="out"></main>
+  <footer id="foot"><span class="powered"><img src="/assets/mark.svg" alt="">Powered by <a href="/">Healer's Desk</a></span> · <a href="/policy#privacy">Privacy</a></footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+<script src="/config.js"></script>
+<script>
+(async function(){
+  const C=window.HD_CONFIG||{};
+  const firstOf=n=>String(n||'').trim().split(/\s+/)[0]||'';
+  const waNum=p=>{let d=String(p||'').replace(/\D/g,''); if(d.length===10) d='91'+d; if(d.length===11&&d.startsWith('0')) d='91'+d.slice(1); return d;};
+  const MAJOR=["Crown","Forehead","Ajna","Throat","Front Heart","Back Heart","Front Solar","Back Solar","Front Spleen","Back Spleen","Navel","Meng Mein","Sex","Basic"];
+  const TO_IN={Inches:1,Centimeters:1/2.54,Feet:12,Meters:39.3701};
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmt=s=>s?new Date(s+'T00:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'—';
+  const out=document.getElementById('out'), sub=document.getElementById('sub');
+  const fail=m=>{ sub.textContent=''; out.innerHTML=`<div class="msg">${m}</div>`; };
+  const token=new URLSearchParams(location.search).get('t');
+  if(!token) return fail('This report link is incomplete. Please ask your healer for a new link.');
+  let data, sb;
+  try{
+    sb=window.supabase.createClient(C.SUPABASE_URL,C.SUPABASE_ANON_KEY,{auth:{persistSession:false,autoRefreshToken:false}});
+    const r=await sb.rpc('get_shared_report',{p_token:token});
+    if(r.error) throw r.error; data=r.data;
+  }catch(e){ console.error(e); return fail('This report couldn\'t load. Check your internet connection and try again.'); }
+  if(!data) return fail('This report link is no longer active. Please ask your healer for a new link.');
+  const HN=data.healer_name||'your healer', HF=firstOf(data.healer_name)||'your healer', PN=data.practice_name||'';
+  document.getElementById('practice').textContent=PN;
+
+  const scans=data.scans||[];
+  document.getElementById('title').textContent=`${data.first_name}'s healing progress`;
+  document.title=`${data.first_name}'s healing progress · ${PN}`;
+  sub.textContent=data.first_healing?`Healing journey since ${fmt(data.first_healing)}`:`Your healing journey with ${PN}`;
+  const bal=s=>MAJOR.filter(c=>{const v=(s.major_chakras||{})[c]; return v&&v.energy==='Normal'&&v.activation==='Normal';}).length;
+  const short=s=>({Congested:'Congested',Normal:'Normal',Depleted:'Depleted','Over Activated':'Over','Under Activated':'Under'}[s]||'');
+  const cls=(s,pre)=>s?pre+'-'+s.split(' ')[0]:'';
+  const last=scans[scans.length-1], first=scans[0];
+
+  out.innerHTML=`
+    <div class="stats">
+      <div class="stat"><b>${data.healings_done||0}</b><span>Healings completed</span></div>
+      <div class="stat"><b>${scans.length}</b><span>Energy scans</span></div>
+      <div class="stat"><b>${last?bal(last):'—'}<small style="font-size:.5em;color:var(--muted)"> / 14</small></b><span>Balanced chakras${scans.length>1?` (was ${bal(first)})`:''}</span></div>
+    </div>
+    ${scans.length?`
+    <div class="panel"><h2>Your energy over time</h2><div class="chart"><canvas id="c" aria-label="Aura size, activation and balanced chakras across scans"></canvas></div></div>
+    <div class="panel"><h2>Chakras at each scan</h2>
+      <div class="legend"><span><i style="background:var(--rose-soft)"></i>Congested / over active</span><span><i style="background:var(--sage-soft)"></i>Balanced</span><span><i style="background:var(--sky-soft)"></i>Depleted / under active</span></div>
+      <div class="scroll"><table><thead><tr><th>Chakra</th>${scans.map(s=>`<th>${fmt(s.scan_date)}</th>`).join('')}</tr></thead><tbody>
+      ${MAJOR.map(c=>`<tr><td>${c}</td>${scans.map(s=>{const v=(s.major_chakras||{})[c]||{};return `<td><div class="cell">${v.energy?`<span class="pill ${cls(v.energy,'e')}">${short(v.energy)}</span>`:'<span style="color:var(--line)">·</span>'}${v.activation?`<span class="pill ${cls(v.activation,'a')}">${short(v.activation)}</span>`:''}</div></td>`;}).join('')}</tr>`).join('')}
+      <tr><td><b>Balanced</b></td>${scans.map(s=>`<td><b>${bal(s)} / 14</b></td>`).join('')}</tr>
+      </tbody></table></div></div>`:`<div class="panel msg" style="padding:30px">Your scan results will appear here after your first energy scan.</div>`}
+    ${(data.comments||[]).length?`<div class="panel"><h2>Notes from ${esc(HN)}</h2>${data.comments.map(c=>`<div class="cmt"><p>${esc(c.text).replace(/\n/g,'<br>')}</p>${c.date?`<small>${fmt(c.date)}</small>`:''}</div>`).join('')}</div>`:''}
+    <p class="note">🌿 Energy healing works alongside medical care, not in place of it. Please keep following any treatment your doctor has advised.</p>
+    <div class="cta">${data.healer_whatsapp?`<a href="https://wa.me/${esc(waNum(data.healer_whatsapp))}?text=${encodeURIComponent(`Hi ${HF}, I've seen my progress report. I'd like to book my next session.`)}" target="_blank" rel="noopener">Book your next session</a>`:''}
+      <button type="button" id="fbBtn" aria-expanded="false" aria-controls="fb">Send feedback</button></div>
+    <div class="panel" id="fb" hidden>
+      <h2>How are you feeling now?</h2>
+      <p style="margin:-4px 0 6px;color:var(--muted)">Your answers go only to ${esc(HN)} and help plan your next healing.</p>
+      ${(data.symptoms||[]).length?`<div style="margin-top:14px"><span class="lbl">Your symptoms today</span><span style="font-size:.88rem;color:var(--muted)">0 = gone, 10 = severe</span>
+        ${data.symptoms.map((x,i)=>`<div class="fbs"><div class="fbs-top"><b>${esc(x.name)}</b><small>When you started: ${x.intensity??'—'}/10</small></div>
+          <div class="rng"><input type="range" min="0" max="10" value="${x.intensity??5}" data-sym="${i}" aria-label="${esc(x.name)} now"><output>${x.intensity??5}</output></div>
+          <div class="ends"><span>Gone</span><span>Severe</span></div></div>`).join('')}</div>`:''}
+      <div style="margin-top:18px"><span class="lbl">Overall, how much is this affecting your daily energy and peace of mind now?</span>
+        ${data.impact_score?`<span style="font-size:.88rem;color:var(--muted)">When you started: ${data.impact_score}/10</span>`:''}
+        <div class="imp" role="radiogroup" aria-label="Impact from 1 to 10">${[...Array(10)].map((_,i)=>`<label><input type="radio" name="imp" value="${i+1}"><span>${i+1}</span></label>`).join('')}</div>
+        <div class="ends" style="margin-top:4px"><span>Barely</span><span>Overwhelming</span></div></div>
+      <div style="margin-top:18px"><label class="lbl" for="fbNote">Anything you'd like to share with ${esc(HF)}? (optional)</label>
+        <textarea id="fbNote" maxlength="2000" placeholder="e.g. Sleeping better, still some tension in the shoulders"></textarea></div>
+      <button type="button" class="send" id="fbSend">Send to ${esc(HF)}</button>
+      <div class="fb-err" id="fbErr" role="alert"></div>
+    </div>`;
+
+  // ---- feedback ----
+  const fbBox=document.getElementById('fb'), fbBtn=document.getElementById('fbBtn');
+  fbBtn.onclick=()=>{ const open=fbBox.hidden; fbBox.hidden=!open; fbBtn.setAttribute('aria-expanded',String(open)); fbBtn.textContent=open?'Close feedback':'Send feedback'; if(open) fbBox.scrollIntoView({behavior:'smooth',block:'start'}); };
+  fbBox.querySelectorAll('input[type=range]').forEach(r=>r.addEventListener('input',()=>{ r.nextElementSibling.textContent=r.value; }));
+  document.getElementById('fbSend').onclick=async()=>{
+    const btn=document.getElementById('fbSend'), err=document.getElementById('fbErr');
+    const syms=[...fbBox.querySelectorAll('[data-sym]')].map(r=>({name:data.symptoms[+r.dataset.sym].name, now:+r.value}));
+    const imp=fbBox.querySelector('input[name=imp]:checked');
+    const note=document.getElementById('fbNote').value.trim();
+    if(!syms.length && !imp && !note){ err.textContent='Please answer at least one question.'; err.style.display='block'; return; }
+    btn.disabled=true; btn.textContent='Sending…'; err.style.display='none';
+    const { error } = await sb.rpc('submit_feedback',{p_token:token, p_symptoms:syms, p_impact:imp?+imp.value:null, p_note:note||null});
+    if(error){ console.error(error); btn.disabled=false; btn.textContent=`Send to ${HF}`;
+      err.textContent=/Too many/i.test(error.message)?'You\'ve already sent feedback several times today. Please try again tomorrow.':'Your feedback couldn\'t be sent. Please check your connection and try again.';
+      err.style.display='block'; return; }
+    fbBox.innerHTML=`<div class="thanks"><div style="font-size:2.2rem">🙏</div><h2>Thank you, ${esc(data.first_name)}</h2><p style="color:var(--muted);margin:0">${esc(HN)} has received your feedback.</p></div>`;
+    fbBtn.remove();
+  };
+
+  if(scans.length){
+    const inch=(v,u)=>v==null?null:+(v*(TO_IN[u]||1)).toFixed(1);
+    new Chart(document.getElementById('c'),{type:'line',
+      data:{labels:scans.map(s=>fmt(s.scan_date)),datasets:[
+        {label:'Aura size (inches)',data:scans.map(s=>inch(s.avg_aura,s.aura_unit)),borderColor:'#5B3F8C',backgroundColor:'#5B3F8C',tension:.3,spanGaps:true,yAxisID:'y'},
+        {label:'Activation (inches)',data:scans.map(s=>inch(s.avg_activation,s.activation_unit)),borderColor:'#B8903F',backgroundColor:'#B8903F',tension:.3,spanGaps:true,yAxisID:'y'},
+        {label:'Balanced chakras (of 14)',data:scans.map(bal),borderColor:'#5F7F5B',backgroundColor:'#5F7F5B',borderDash:[5,4],tension:.3,yAxisID:'y1'}]},
+      options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom'}},
+        scales:{y:{beginAtZero:true,title:{display:true,text:'Inches'}},y1:{position:'right',min:0,max:14,grid:{drawOnChartArea:false},title:{display:true,text:'Balanced'}}}}});
+  }
+})();
+</script>
+</body>
+</html>

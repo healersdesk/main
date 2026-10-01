@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Healer's Desk — a private workspace for energy healers</title>
+<meta name="description" content="Healer's Desk is a calm, private workspace for energy healers: client intake forms, chakra scans, healing schedules, energy exchange and shareable progress reports. Sign in with Google.">
+<meta name="theme-color" content="#3B2366">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/desk/icons/apple-touch-icon.png">
+<meta property="og:title" content="Healer's Desk">
+<meta property="og:description" content="A calm, private workspace for energy healers.">
+<meta property="og:url" content="https://www.healersdesk.com">
+<meta property="og:image" content="https://www.healersdesk.com/desk/icons/icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --violet:#3B2366; --violet-2:#5B3F8C; --lav:#8C73B8; --mist:#EEE8F6; --mist-2:#F6F2FB; --ivory:#FCFAF6;
+  --gold:#B8903F; --gold-2:#E2C27A; --gold-soft:#F3EAD7; --ink:#2A2233; --muted:#6D6478; --line:#E2DAEC;
+  --rose-soft:#F8E3E8; --sage-soft:#E4EEE1; --sky-soft:#E1EBF5;
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Figtree",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--ivory);color:var(--ink);font:17px/1.6 var(--sans);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+a{color:var(--violet-2)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+h1,h2,h3{font-family:var(--serif);color:var(--violet);font-weight:600;margin:0}
+
+/* top */
+.top{display:flex;align-items:center;gap:14px;padding:20px 0}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto}
+.brand img{width:42px;height:42px}
+.brand b{font:600 1.55rem var(--serif);color:var(--violet)}
+.top .gbtn.sm{white-space:nowrap}
+.top a.lnk{color:var(--ink);text-decoration:none;font-weight:500;font-size:.95rem}
+.top a.lnk:hover{color:var(--violet-2)}
+@media (max-width:600px){.top .hide-s{display:none}}
+
+/* buttons */
+.gbtn{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:var(--violet);color:#fff;border:0;border-radius:999px;padding:14px 26px;font:600 1rem var(--sans);cursor:pointer;text-decoration:none;transition:background .2s,transform .2s}
+.gbtn:hover{background:var(--violet-2)}
+.gbtn:active{transform:translateY(1px)}
+.gbtn:disabled{opacity:.6;cursor:wait}
+.gbtn .g{width:26px;height:26px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center}
+.gbtn .g svg{width:16px;height:16px}
+.gbtn.sm{padding:9px 18px;font-size:.92rem}
+.gbtn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;align-items:center;padding:46px 0 70px}
+@media (max-width:900px){.hero{grid-template-columns:1fr;gap:40px;padding-top:24px}}
+.hero h1{font-size:clamp(2.7rem,6vw,4.4rem);line-height:1.02;letter-spacing:-.01em;margin:0 0 20px}
+.hero p.lede{font-size:1.15rem;color:#4A4057;max-width:34rem;margin:0 0 30px}
+.hero .fine{font-size:.88rem;color:var(--muted);margin:14px 0 0}
+.hero .fine a{color:var(--muted)}
+
+/* hero visual: a client card as it looks inside the desk */
+.stage{position:relative}
+.aura{position:absolute;inset:-6% -4%;border-radius:50%;background:radial-gradient(closest-side,rgba(226,194,122,.32),rgba(140,115,184,.16) 55%,transparent 75%);filter:blur(4px);animation:breathe 9s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(.96);opacity:.85}50%{transform:scale(1.04);opacity:1}}
+@media (prefers-reduced-motion:reduce){.aura{animation:none}}
+.card{position:relative;background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 30px 60px -30px rgba(59,35,102,.35)}
+.c-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.c-av{width:52px;height:52px;border-radius:16px;background:var(--mist);display:flex;align-items:center;justify-content:center;font:600 1.4rem var(--serif);color:var(--violet-2)}
+.c-head b{display:block;font:600 1.5rem/1.1 var(--serif);color:var(--violet)}
+.c-head small{color:var(--muted)}
+.c-tag{margin-left:auto;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--sage-soft);color:#3d5a39}
+.c-scans{display:grid;grid-template-columns:auto repeat(3,1fr);gap:6px 8px;font-size:.82rem;align-items:center}
+.c-scans .h{color:var(--muted);font-weight:600;text-align:center}
+.c-scans .n{font-weight:500}
+.pill{display:inline-block;text-align:center;font-size:.74rem;padding:3px 0;border-radius:999px}
+.co{background:var(--rose-soft);color:#8b3348}.no{background:var(--sage-soft);color:#3d5a39}.de{background:var(--sky-soft);color:#2f5680}
+.c-foot{display:flex;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:.86rem;color:var(--muted)}
+.c-foot b{color:var(--violet);font:600 1.3rem var(--serif);display:block}
+.c-foot div{flex:1}
+.float{position:absolute;background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 14px;font-size:.85rem;box-shadow:0 14px 30px -18px rgba(59,35,102,.4)}
+.float.f1{right:-10px;top:-22px}
+.float.f2{left:-18px;bottom:-26px}
+.float b{color:var(--violet)}
+@media (max-width:520px){.float.f1{right:6px}.float.f2{left:6px}}
+
+/* sections */
+section.band{padding:72px 0;border-top:1px solid var(--line)}
+.sec-h{max-width:40rem;margin:0 0 36px}
+.sec-h h2{font-size:clamp(2rem,4vw,2.8rem);line-height:1.08;margin-bottom:12px}
+.sec-h p{color:var(--muted);margin:0}
+
+.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+@media (max-width:860px){.tools{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.tools{grid-template-columns:1fr}}
+.tool{background:#fff;padding:24px 22px}
+.tool svg{width:30px;height:30px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:12px}
+.tool h3{font-size:1.45rem;margin-bottom:6px}
+.tool p{margin:0;color:#4A4057;font-size:.97rem}
+
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;counter-reset:s}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding-top:56px}
+.step::before{counter-increment:s;content:counter(s);position:absolute;top:0;left:0;width:42px;height:42px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);display:flex;align-items:center;justify-content:center;font:600 1.3rem var(--serif)}
+.step h3{font-size:1.5rem;margin-bottom:6px}
+.step p{margin:0;color:#4A4057}
+.step code{background:var(--mist);padding:1px 7px;border-radius:6px;font-size:.88em;color:var(--violet)}
+
+.trust{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start}
+@media (max-width:860px){.trust{grid-template-columns:1fr}}
+.trust ul{list-style:none;margin:0;padding:0}
+.trust li{padding:14px 0 14px 34px;border-bottom:1px solid var(--line);position:relative;color:#4A4057}
+.trust li:last-child{border-bottom:0}
+.trust li::before{content:"";position:absolute;left:4px;top:21px;width:14px;height:14px;border-radius:50%;border:1.5px solid var(--gold);background:var(--gold-soft)}
+.trust li b{color:var(--ink)}
+
+.closing{text-align:center;padding:84px 0;background:var(--violet);color:#EDE6F7;border-radius:28px;margin:10px 0 60px;position:relative;overflow:hidden}
+.closing h2{color:#fff;font-size:clamp(2.1rem,4.5vw,3.2rem);margin-bottom:12px}
+.closing p{margin:0 auto 28px;max-width:32rem;color:#D9CFEA}
+.closing .gbtn{background:#fff;color:var(--violet)}
+.closing .gbtn:hover{background:var(--gold-soft)}
+.closing .gbtn .g{background:var(--mist)}
+.closing img{width:64px;height:64px;margin-bottom:10px;filter:brightness(0) invert(1);opacity:.9}
+
+footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:.92rem;color:var(--muted)}
+.f-in{display:flex;gap:20px 34px;flex-wrap:wrap;align-items:flex-start}
+.f-in .brand{margin-right:auto}
+.f-in nav{display:flex;flex-direction:column;gap:4px}
+.f-in nav b{color:var(--ink);font-weight:600;margin-bottom:2px}
+.f-in a{color:var(--muted);text-decoration:none}
+.f-in a:hover{color:var(--violet-2);text-decoration:underline}
+.copy{margin-top:22px;font-size:.84rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><img src="/assets/mark.svg" alt="" width="42" height="42"><b>Healer's Desk</b></a>
+    <a class="lnk hide-s" href="#tools">What's inside</a>
+    <a class="lnk hide-s" href="/policy">Policies</a>
+    <button class="gbtn sm signin" type="button" data-label="Sign in">Sign in</button>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <h1>A quiet, private desk for your healing practice.</h1>
+        <p class="lede">Intake forms, chakra scans, healing schedules, energy exchange and progress reports your clients can open on their phone. Everything you track for each person, kept in one calm place.</p>
+        <button class="gbtn signin" type="button" data-label="Continue with Google"><span class="g"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg></span><span class="t">Continue with Google</span></button>
+        <p class="fine">Your own desk is created the first time you sign in. By continuing you agree to our <a href="/policy#terms">Terms</a> and <a href="/policy#privacy">Privacy Policy</a>.</p>
+      </div>
+
+      <div class="stage" aria-hidden="true">
+        <div class="aura"></div>
+        <div class="card">
+          <div class="c-head"><div class="c-av">AR</div><div><b>Ananya R.</b><small>6 healings · since 4 Aug</small></div><span class="c-tag">Active</span></div>
+          <div class="c-scans">
+            <span></span><span class="h">4 Aug</span><span class="h">18 Aug</span><span class="h">1 Sep</span>
+            <span class="n">Crown</span><span class="pill de">Depleted</span><span class="pill no">Normal</span><span class="pill no">Normal</span>
+            <span class="n">Ajna</span><span class="pill co">Congested</span><span class="pill co">Congested</span><span class="pill no">Normal</span>
+            <span class="n">Throat</span><span class="pill no">Normal</span><span class="pill no">Normal</span><span class="pill no">Normal</span>
+            <span class="n">Front Solar</span><span class="pill co">Congested</span><span class="pill de">Depleted</span><span class="pill no">Normal</span>
+            <span class="n">Navel</span><span class="pill de">Depleted</span><span class="pill de">Depleted</span><span class="pill no">Normal</span>
+          </div>
+          <div class="c-foot"><div><b>9 → 13</b>Balanced chakras</div><div><b>7 → 3</b>Sleep issues, 0–10</div></div>
+        </div>
+        <div class="float f1">🌿 <b>New intake</b> from your link</div>
+        <div class="float f2">💬 Feedback: <b>“Sleeping better”</b></div>
+      </div>
+    </div>
+
+    <section class="band" id="tools">
+      <div class="sec-h"><h2>Everything a healer keeps track of</h2><p>Shaped around the way sessions actually happen: a first form, a scan, a run of healings, and a gentle check on how the client feels.</p></div>
+      <div class="tools">
+        <div class="tool"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg><h3>Your own intake link</h3><p>Share one link on WhatsApp. New clients fill in concerns, symptoms with intensity, medical history, a photo for distance healing, and give consent.</p></div>
+        <div class="tool"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg><h3>Energy scans</h3><p>Record aura and activation, all 14 major chakras, minor chakras, organs and emotions. See each client's chakras change across scans.</p></div>
+        <div class="tool"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><h3>Healing schedule</h3><p>Schedule a single session or a series: daily, weekly or on chosen days. Mark sessions complete from your phone in one tap.</p></div>
+        <div class="tool"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/></svg><h3>Energy exchange</h3><p>Set case fees, record payments by UPI, cash or transfer, see what's pending and send a kind WhatsApp reminder. Amounts hide with one tap.</p></div>
+        <div class="tool"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 8-8"/><path d="M14 8h6v6"/></svg><h3>Progress reports</h3><p>Send clients a private link with their chakra chart, healings completed and your notes. They can reply with how they feel. Stop sharing any time.</p></div>
+        <div class="tool"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg><h3>An app on your phone</h3><p>Add My Healing Desk to your Home Screen on iPhone or Android. It opens full screen, like any other app.</p></div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="sec-h"><h2>Ready in a few minutes</h2></div>
+      <div class="steps">
+        <div class="step"><h3>Sign in with Google</h3><p>No passwords to remember. Your private desk is created the first time you sign in.</p></div>
+        <div class="step"><h3>Name your practice</h3><p>Add your name, WhatsApp number and choose your link, like <code>healersdesk.com/i/your-name</code>.</p></div>
+        <div class="step"><h3>Share your link</h3><p>Clients fill in the form, and they appear on My Healing Desk ready for their first scan.</p></div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="trust">
+        <div class="sec-h" style="margin:0"><h2>Your clients' trust, protected</h2><p>People share health details and personal struggles with you. Healer's Desk is built so that information stays between you and them.</p></div>
+        <ul>
+          <li><b>Only you see your desk.</b> Every record is locked to your Google account at the database level; no other healer can see it.</li>
+          <li><b>Photos stay private.</b> Client photos sit in private storage and open only through short-lived links inside your desk.</li>
+          <li><b>Reports show only what's safe.</b> Shared links never include medical history, private notes, phone numbers or fees.</li>
+          <li><b>Your data is yours.</b> Download everything as a file, or delete your desk and all its records yourself, any time.</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="closing">
+      <img src="/assets/mark.svg" alt="">
+      <h2>Open your healing desk</h2>
+      <p>Free to start. Sign in with Google and set up your practice in a couple of minutes.</p>
+      <button class="gbtn signin" type="button" data-label="Continue with Google"><span class="g"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg></span><span class="t">Continue with Google</span></button>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="f-in">
+      <a class="brand" href="/"><img src="/assets/mark.svg" alt="" width="36" height="36" style="width:36px;height:36px"><b style="font-size:1.35rem">Healer's Desk</b></a>
+      <nav><b>Contact</b><a href="mailto:healersdesk@gmail.com">healersdesk@gmail.com</a><a href="tel:+919509831551">+91-950-983-1551</a><a href="https://wa.me/919509831551" target="_blank" rel="noopener">WhatsApp us</a></nav>
+      <nav><b>Policies</b><a href="/policy#privacy">Privacy Policy</a><a href="/policy#terms">Terms &amp; Conditions</a><a href="/policy#refund">Refund &amp; Cancellation</a></nav>
+    </div>
+    <p class="copy">© 2026 Healer's Desk. Energy healing complements medical care; it does not replace it.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="/config.js"></script>
+<script>
+(async function(){
+  const C = window.HD_CONFIG || {};
+  const btns = [...document.querySelectorAll('.signin')];
+  const ready = C.SUPABASE_URL && C.SUPABASE_ANON_KEY && !C.SUPABASE_ANON_KEY.startsWith('PASTE') && window.supabase;
+  if(!ready){ btns.forEach(b=>b.onclick=()=>location.href='/desk'); return; }
+  const sb = window.supabase.createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY, { auth:{ flowType:'pkce', detectSessionInUrl:false } });
+  let session = null;
+  try{ session = (await sb.auth.getSession()).data.session; }catch(e){}
+  btns.forEach(b=>{
+    if(session){ const t=b.querySelector('.t'), g=b.querySelector('.g'); if(g) g.remove(); (t||b).textContent = b.classList.contains('sm') ? 'My Healing Desk' : 'Open My Healing Desk'; b.onclick=()=>location.href='/desk'; return; }
+    b.onclick = async()=>{
+      btns.forEach(x=>x.disabled=true);
+      const { error } = await sb.auth.signInWithOAuth({ provider:'google', options:{ redirectTo: location.origin + '/desk', queryParams:{ prompt:'select_account' } } });
+      if(error){ btns.forEach(x=>x.disabled=false); alert('Google sign-in could not start: '+error.message); }
+    };
+  });
+})();
+</script>
+</body>
+</html>
