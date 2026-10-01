@@ -2,35 +2,104 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/admin", "destination": "/desk", "permanent": true },
-    { "source": "/admin/:path*", "destination": "/desk", "permanent": true },
-    { "source": "/privacy", "destination": "/policy#privacy", "permanent": false },
-    { "source": "/terms", "destination": "/policy#terms", "permanent": false },
-    { "source": "/refund", "destination": "/policy#refund", "permanent": false }
+    {
+      "source": "/admin",
+      "destination": "/desk",
+      "permanent": true
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "/desk",
+      "permanent": true
+    },
+    {
+      "source": "/privacy",
+      "destination": "/policy#privacy",
+      "permanent": false
+    },
+    {
+      "source": "/terms",
+      "destination": "/policy#terms",
+      "permanent": false
+    },
+    {
+      "source": "/refund",
+      "destination": "/policy#refund",
+      "permanent": false
+    }
   ],
   "rewrites": [
-    { "source": "/i/:slug", "destination": "/intake" }
+    {
+      "source": "/i/:slug",
+      "destination": "/intake"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
       ]
     },
     {
       "source": "/desk-sw.js",
       "headers": [
-        { "key": "Cache-Control", "value": "no-cache" },
-        { "key": "Service-Worker-Allowed", "value": "/desk" }
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        },
+        {
+          "key": "Service-Worker-Allowed",
+          "value": "/desk"
+        }
       ]
     },
     {
       "source": "/config.js",
-      "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/assets/brand/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
     }
-  ]
+  ],
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 60
+    }
+  }
 }

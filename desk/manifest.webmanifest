@@ -2,15 +2,17 @@
   "name": "Healer's Desk · My Healing Desk",
   "short_name": "Healer's Desk",
   "description": "Your clients, energy scans, healings and energy exchange in one calm place.",
+  "id": "/desk",
   "start_url": "/desk",
   "scope": "/desk",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#FCFAF6",
-  "theme_color": "#3B2366",
+  "background_color": "#FBFAFE",
+  "theme_color": "#FBFAFE",
   "icons": [
     { "src": "/desk/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "/desk/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/desk/icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
     { "src": "/desk/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

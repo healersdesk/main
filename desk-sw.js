@@ -1,8 +1,8 @@
 // Healer's Desk — app helper for "My Healing Desk".
 // Always loads the newest version from the internet; only when you're offline
 // does it show the last saved copy of the desk screen. Client data is never cached.
-const CACHE = 'healersdesk-v1';
-const SHELL = ['/desk', '/config.js', '/desk/manifest.webmanifest', '/desk/icons/icon-192.png', '/assets/mark.svg'];
+const CACHE = 'healersdesk-v2';
+const SHELL = ['/desk', '/config.js', '/desk/manifest.webmanifest', '/desk/icons/icon-192.png', '/assets/brand/logo-full-600.png', '/assets/brand/icon-128.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).catch(() => {}));
@@ -14,7 +14,7 @@ self.addEventListener('activate', e => {
 });
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
-  if (e.request.method !== 'GET' || url.origin !== location.origin) return;
+  if (e.request.method !== 'GET' || url.origin !== location.origin || url.pathname.startsWith('/api/')) return;
   e.respondWith(
     fetch(e.request)
       .then(res => { if (res.ok && SHELL.includes(url.pathname)) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(e.request, copy)); } return res; })
