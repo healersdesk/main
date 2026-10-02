@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="hd-version" content="3.1">
+<script>(function(){try{var r=document.documentElement,q=matchMedia('(prefers-color-scheme: dark)');function a(){var p=localStorage.getItem('hdTheme')||'auto',d=p==='dark'||(p==='auto'&&q.matches);r.setAttribute('data-theme',d?'dark':'light');r.setAttribute('data-pref',p);var m=document.querySelector('meta[name=theme-color]');if(m)m.content=d?'#110C28':'#FBFAFE';}a();window.hdApplyTheme=a;q.addEventListener&&q.addEventListener('change',a);}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Policies — Privacy, Terms, Refunds · Healer's Desk</title>
 <meta name="description" content="Healer's Desk Privacy Policy, Terms and Conditions of Use, and Refund and Cancellation Policy.">
@@ -11,15 +13,21 @@
 <meta name="theme-color" content="#FBFAFE">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,500;0,600;0,700;1,500&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   /* Healer's Desk — colours taken from the logo */
+  color-scheme:light;
   --v-950:#1B0F4D; --v-900:#2A1577; --v-800:#34198E; --v-700:#4A22B6; --v-600:#6332DA; --v-500:#8448F5; --v-400:#A47CFA;
   --l-300:#C5AEFC; --l-200:#DCCBFE; --l-100:#EEE6FF; --l-50:#F7F3FF;
   --g-200:#F6E2CC; --g-300:#EFCFAE; --g-400:#E4B48A; --g-500:#C78E57; --g-600:#A66E3C; --g-700:#7E5129;
   --bg:#FBFAFE; --surface:#FFFFFF; --ink:#1E1645; --ink-2:#463D6E; --muted:#7B7398; --line:#ECE6FA; --line-2:#DED4F6;
-  --sage:#2F7A55; --sage-bg:#E4F4EB; --rose:#B1365E; --rose-bg:#FCE8EF; --sky:#3459B5; --sky-bg:#E6EDFC; --amber:#94621F; --amber-bg:#FBF0DF;
+  --glass:rgba(251,250,254,.86); --glass-2:rgba(255,255,255,.92); --placeholder:#A9A1C2;
+  --cream:var(--cream); --gold-line:var(--gold-line); --err-ink:#7D2443; --toast:#1B0F4D;
+  --sage:#2F7A55; --sage-bg:#E4F4EB; --sage-line:var(--sage-line); --rose:#B1365E; --rose-bg:#FCE8EF; --rose-line:var(--rose-line);
+  --sky:#3459B5; --sky-bg:#E6EDFC; --amber:#94621F; --amber-bg:#FBF0DF; --grey-bg:#EFEDF4; --grey:#6B6582;
+  --rose-soft:var(--rose-bg); --sage-soft:var(--sage-bg); --sky-soft:var(--sky-bg); --violet:var(--v-600);
+  --head:var(--v-900); --num:var(--v-800); --link:var(--v-700); --accent:var(--v-600);
   --grad-v:linear-gradient(135deg,#8C4BFF 0%,#5A2BD2 48%,#2E1784 100%);
   --grad-g:linear-gradient(135deg,#F4DCC1 0%,#DDAA7A 52%,#C58650 100%);
   --grad-wash:radial-gradient(1200px 600px at 100% -10%,rgba(164,124,250,.18),transparent 60%),radial-gradient(900px 500px at -10% 10%,rgba(239,207,174,.22),transparent 60%);
@@ -27,9 +35,30 @@
   --sh-2:0 24px 48px -24px rgba(52,25,142,.38);
   --sh-btn:0 8px 20px -10px rgba(74,34,182,.65);
   --r-sm:12px; --r:16px; --r-lg:22px;
-  --serif:"Playfair Display",Georgia,"Times New Roman",serif; --sans:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Bitter",Georgia,"Times New Roman",serif; --sans:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
   --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%236332DA' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.5 7.5 10 12l4.5-4.5'/%3E%3C/svg%3E");
 }
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --v-950:#0B0720; --v-900:#EDE6FF; --v-800:#DCCFFF; --v-700:#C6B2FF; --v-600:#B49BFF; --v-500:#9F80FF; --v-400:#8A66F5;
+  --l-300:#5B47A8; --l-200:#3E3180; --l-100:#2C2260; --l-50:#211A47;
+  --g-200:#3A2B1C; --g-300:#6B4F33; --g-400:#E4B48A; --g-500:#D9A574; --g-600:#E8BE94; --g-700:#F3D7B6;
+  --bg:#110C28; --surface:#1B1539; --ink:#EEE9FF; --ink-2:#CBC3E8; --muted:#9C93BF; --line:#2D2553; --line-2:#3B3268;
+  --glass:rgba(17,12,40,.82); --glass-2:rgba(27,21,57,.9); --placeholder:#7D74A3;
+  --cream:#2A2116; --gold-line:#4A3826; --err-ink:#FFC2D4; --toast:#EDE6FF;
+  --sage:#7ED9AA; --sage-bg:#163A2C; --sage-line:#24563F; --rose:#FF93B4; --rose-bg:#3E1529; --rose-line:#5E2440;
+  --sky:#9DBBFF; --sky-bg:#18294F; --amber:#F2C47F; --amber-bg:#3A2A12; --grey-bg:#2A2546; --grey:#B4ADCF;
+  --head:#F1EBFF; --num:#DCCFFF; --link:#C6B2FF; --accent:#B49BFF;
+  --grad-wash:radial-gradient(1200px 600px at 100% -10%,rgba(132,72,245,.22),transparent 60%),radial-gradient(900px 500px at -10% 10%,rgba(199,142,87,.12),transparent 60%);
+  --sh-1:0 1px 2px rgba(0,0,0,.35),0 10px 24px -14px rgba(0,0,0,.7);
+  --sh-2:0 26px 50px -24px rgba(0,0,0,.75);
+  --sh-btn:0 10px 22px -10px rgba(132,72,245,.55);
+  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23B49BFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.5 7.5 10 12l4.5-4.5'/%3E%3C/svg%3E");
+}
+.logo-d{display:none!important}
+:root[data-theme="dark"] .logo-l{display:none!important}
+:root[data-theme="dark"] .logo-d{display:block!important}
+:root[data-theme="dark"] input::-webkit-calendar-picker-indicator{filter:invert(80%) sepia(30%) saturate(1500%) hue-rotate(210deg)}
 
 :root{--violet:var(--v-900);--violet-2:var(--v-600);--mist:var(--l-100);--mist-2:var(--l-50);--ivory:var(--bg);--gold:var(--g-500);--gold-soft:var(--g-200)}
 *{box-sizing:border-box}
@@ -37,7 +66,7 @@ html{scroll-behavior:smooth;scroll-padding-top:calc(110px + env(safe-area-inset-
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--bg);background-image:var(--grad-wash);background-attachment:fixed;-webkit-font-smoothing:antialiased;color:var(--ink);font:16.5px/1.7 var(--sans);padding-bottom:env(safe-area-inset-bottom,0px)}
 a{color:var(--violet-2)}
-.bar{position:sticky;top:0;z-index:10;background:rgba(252,250,246,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.bar{position:sticky;top:0;z-index:10;background:var(--glass);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
 .bar-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:12px 22px}
 .brand{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:auto}
 .brand img{height:34px;width:auto;display:block}
@@ -58,7 +87,7 @@ aside a:hover{color:var(--violet-2);text-decoration:underline}
 main{min-width:0;max-width:44rem}
 .intro h1{font:600 clamp(2.4rem,5vw,3.3rem)/1.05 var(--serif);color:var(--violet);margin:0 0 12px}
 .intro p{color:var(--muted);margin:0 0 6px}
-.summary{background:linear-gradient(120deg,var(--g-200),#FFF7EE);border:1px solid #F1DCC4;color:var(--g-700);border-radius:16px;padding:16px 20px;margin:26px 0 10px}
+.summary{background:linear-gradient(120deg,var(--g-200),var(--cream));border:1px solid var(--gold-line);color:var(--g-700);border-radius:16px;padding:16px 20px;margin:26px 0 10px}
 .summary p{margin:0 0 6px}.summary p:last-child{margin:0}
 .doc{border-top:1px solid var(--line);margin-top:46px;padding-top:34px}
 .doc > h2{font:600 2.3rem/1.1 var(--serif);color:var(--violet);margin:0 0 4px}
@@ -67,15 +96,15 @@ h3{font:600 1.45rem/1.25 var(--serif);color:var(--violet);margin:30px 0 8px}
 p{margin:0 0 14px}
 ul{margin:0 0 14px;padding-left:22px}
 li{margin:5px 0}
-.contact{background:#fff;border:1px solid var(--line);box-shadow:var(--sh-1);border-radius:16px;padding:16px 20px;margin:12px 0 0}
+.contact{background:var(--surface);border:1px solid var(--line);box-shadow:var(--sh-1);border-radius:16px;padding:16px 20px;margin:12px 0 0}
 .contact p{margin:0 0 4px}
 .top-link{display:inline-block;margin-top:18px;font-size:.88rem;color:var(--muted)}
 footer{border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.88rem;padding:26px 20px 40px}
 footer a{color:var(--muted)}
-@media print{.bar,aside,.top-link{display:none}.wrap{display:block}body{background:#fff}}
+@media print{.bar,aside,.top-link{display:none}.wrap{display:block}body{background:var(--surface)}}
 
 .wrap{padding-left:18px;padding-right:18px}
-@media (max-width:860px){aside{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;box-shadow:var(--sh-1)}}
+@media (max-width:860px){aside{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px;box-shadow:var(--sh-1)}}
 h3{font-size:1.3rem}
 .doc > h2{font-size:2rem}
 @media (min-width:860px){.doc > h2{font-size:2.4rem}}
@@ -83,7 +112,7 @@ h3{font-size:1.3rem}
 </head>
 <body id="top">
 <header class="bar"><div class="bar-in">
-  <a class="brand" href="/"><img src="/assets/brand/logo-full-600.png" srcset="/assets/brand/logo-full-600.png 1x, /assets/brand/logo-full-1200.png 2x" alt="Healer's Desk" width="128" height="34"></a>
+  <a class="brand" href="/"><img class="logo-l" src="/assets/brand/logo-full-600.png" srcset="/assets/brand/logo-full-600.png 1x, /assets/brand/logo-full-1200.png 2x" alt="Healer's Desk" width="128" height="34"><img class="logo-d" src="/assets/brand/logo-full-dark-600.png" srcset="/assets/brand/logo-full-dark-600.png 1x, /assets/brand/logo-full-dark-1200.png 2x" alt="Healer's Desk" width="128" height="34"></a>
   <nav aria-label="Policies"><a href="#privacy">Privacy</a><a href="#terms">Terms</a><a href="#refund">Refunds</a><a href="/desk">My Healing Desk</a></nav>
 </div></header>
 
@@ -114,7 +143,7 @@ h3{font-size:1.3rem}
       <p class="eff">Effective 1 October 2026 · Updated to include Google Calendar</p>
 
       <h3 id="p-who">1. Who we are</h3>
-      <p>Healer's Desk ("Healer's Desk", "we", "us") is a web app that helps energy healers manage client intake forms, energy scans, healing sessions, payment records and progress reports. You can reach us at <a href="mailto:healersdesk@gmail.com">healersdesk@gmail.com</a> or +91-950-983-1551.</p>
+      <p>Healer's Desk ("Healer's Desk", "we", "us") is a web app that helps energy healers manage client intake forms, energy scans, healing sessions, payment records and progress reports. You can reach us at <a href="mailto:healersdesk@gmail.com">healersdesk@gmail.com</a>.</p>
       <p>This policy is written to meet the requirements of India's Information Technology Act, 2000, the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011, and the Digital Personal Data Protection Act, 2023, as they apply.</p>
 
       <h3 id="p-roles">2. Healers and their clients</h3>
@@ -145,13 +174,13 @@ h3{font-size:1.3rem}
       <ul>
         <li>To provide Healer's Desk: show each healer their own desk, deliver intake forms to the right healer, and display progress reports that a healer chooses to share.</li>
         <li>To sign healers in securely and keep accounts safe.</li>
-        <li>To answer support requests and send important service notices (for example, a change to these policies).</li>
+        <li>To email a healer when a new intake form arrives (healers can switch this off in Desk settings), answer support requests, and send important service notices (for example, a change to these policies).</li>
         <li>To comply with the law and respond to valid legal requests.</li>
       </ul>
       <p>We do not sell personal information, rent it, use client records for advertising, or contact a healer's clients for our own purposes. Healer's Desk staff do not view client records, except when a healer asks us for help with a specific problem, or when required to investigate abuse or comply with the law.</p>
 
       <h3 id="p-calendar">5. Google Calendar</h3>
-      <p>Connecting Google Calendar is optional. If a healer connects it, Healer's Desk asks Google for permission to create a separate calendar called "Healer's Desk" in that healer's Google account, and to add, change and delete events in that calendar only. Healer's Desk cannot see, read or change any other calendar or event in the healer's Google account.</p>
+      <p>Google Calendar access is requested when a healer signs in with Google, and the healer can decline it on Google's screen. If a healer allows it, Healer's Desk asks Google for permission to create a separate calendar called "Healer's Desk" in that healer's Google account, and to add, change and delete events in that calendar only. Healer's Desk cannot see, read or change any other calendar or event in the healer's Google account.</p>
       <p>For each healing session, the event contains the client's name, the date and time, any session notes the healer wrote, and a link back to My Healing Desk. Events are created, updated or deleted when the healer schedules, edits, completes, cancels or deletes a session. The healer can change the session length and reminder, and can disconnect at any time from Desk settings (and choose to remove the "Healer's Desk" calendar). Disconnecting revokes our access with Google. You can also remove access from your Google Account at myaccount.google.com/permissions.</p>
       <p><b>Google API Services User Data Policy.</b> Healer's Desk's use and transfer to any other app of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</a>, including the Limited Use requirements. We use Google data only to show and keep the healer's own sessions up to date in their calendar. We do not sell it, use it for advertising, use it to train AI models, or let people read it except with the healer's permission for support, for security, or where the law requires.</p>
 
@@ -159,7 +188,8 @@ h3{font-size:1.3rem}
       <p>We use trusted service providers to run Healer's Desk. They process information only to provide their service to us:</p>
       <ul>
         <li><b>Supabase</b>, for the database, sign-in and private photo storage.</li>
-        <li><b>Vercel</b>, for hosting the website.</li>
+        <li><b>Vercel</b>, for hosting the website and its small server functions.</li>
+        <li><b>Google (Gmail)</b>, for sending email notifications to healers from our Healer's Desk account.</li>
         <li><b>Google</b>, for "Sign in with Google" and, if you connect it, Google Calendar.</li>
         <li><b>jsDelivr</b> and <b>Google Fonts</b>, which deliver the app's code libraries and fonts to your browser and may see your IP address when they do.</li>
       </ul>
@@ -200,7 +230,6 @@ h3{font-size:1.3rem}
       <div class="contact">
         <p><b>Grievance Officer, Healer's Desk</b></p>
         <p>Email: <a href="mailto:healersdesk@gmail.com">healersdesk@gmail.com</a></p>
-        <p>Phone / WhatsApp: <a href="tel:+919509831551">+91-950-983-1551</a></p>
       </div>
       <a class="top-link" href="#top">Back to top ↑</a>
     </section>
@@ -261,10 +290,10 @@ h3{font-size:1.3rem}
       <p>You can stop using Healer's Desk at any time and delete your desk from Desk settings. We may end or suspend your access if you seriously or repeatedly break these Terms, or if required by law. Sections that by their nature should continue (such as ownership, liability and governing law) survive after your use ends.</p>
 
       <h3 id="t-law">11. Governing law and disputes</h3>
-      <p>These Terms are governed by the laws of India. We encourage you to contact us first so we can try to resolve any concern informally. Any dispute that cannot be resolved this way will be subject to the exclusive jurisdiction of the courts at New Delhi, India.</p>
+      <p>These Terms are governed by the laws of India. We encourage you to contact us first so we can try to resolve any concern informally. Any dispute that cannot be resolved this way will be subject to the jurisdiction of the competent courts in India.</p>
 
       <h3>12. Changes and contact</h3>
-      <p>We may update these Terms. We will change the effective date and, for significant changes, tell you in the app or by email before they apply. Continuing to use Healer's Desk after that means you accept the updated Terms. Questions: <a href="mailto:healersdesk@gmail.com">healersdesk@gmail.com</a> · <a href="tel:+919509831551">+91-950-983-1551</a>.</p>
+      <p>We may update these Terms. We will change the effective date and, for significant changes, tell you in the app or by email before they apply. Continuing to use Healer's Desk after that means you accept the updated Terms. Questions: <a href="mailto:healersdesk@gmail.com">healersdesk@gmail.com</a>.</p>
       <a class="top-link" href="#top">Back to top ↑</a>
     </section>
 
@@ -311,12 +340,11 @@ h3{font-size:1.3rem}
       <div class="contact">
         <p><b>Healer's Desk</b></p>
         <p>Email: <a href="mailto:healersdesk@gmail.com">healersdesk@gmail.com</a></p>
-        <p>Phone / WhatsApp: <a href="tel:+919509831551">+91-950-983-1551</a></p>
       </div>
       <a class="top-link" href="#top">Back to top ↑</a>
     </section>
   </main>
 </div>
-<footer>© 2026 Healer's Desk · <a href="/">www.healersdesk.com</a> · <a href="mailto:healersdesk@gmail.com">healersdesk@gmail.com</a> · +91-950-983-1551</footer>
+<footer>© 2026 Healer's Desk · <a href="/">www.healersdesk.com</a> · <a href="mailto:healersdesk@gmail.com">healersdesk@gmail.com</a></footer>
 </body>
 </html>

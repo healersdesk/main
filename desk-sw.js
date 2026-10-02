@@ -1,7 +1,7 @@
 // Healer's Desk — app helper for "My Healing Desk".
 // Always loads the newest version from the internet; only when you're offline
 // does it show the last saved copy of the desk screen. Client data is never cached.
-const CACHE = 'healersdesk-v2';
+const CACHE = 'healersdesk-v3';
 const SHELL = ['/desk', '/config.js', '/desk/manifest.webmanifest', '/desk/icons/icon-192.png', '/assets/brand/logo-full-600.png', '/assets/brand/icon-128.png'];
 
 self.addEventListener('install', e => {

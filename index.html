@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="hd-version" content="3.1">
+<script>(function(){try{var r=document.documentElement,q=matchMedia('(prefers-color-scheme: dark)');function a(){var p=localStorage.getItem('hdTheme')||'auto',d=p==='dark'||(p==='auto'&&q.matches);r.setAttribute('data-theme',d?'dark':'light');r.setAttribute('data-pref',p);var m=document.querySelector('meta[name=theme-color]');if(m)m.content=d?'#110C28':'#FBFAFE';}a();window.hdApplyTheme=a;q.addEventListener&&q.addEventListener('change',a);}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Healer's Desk — a private workspace for energy healers</title>
 <meta name="description" content="Healer's Desk is a calm, private workspace for energy healers: client intake forms, chakra scans, healing schedules synced to Google Calendar, energy exchange and shareable progress reports. Sign in with Google.">
@@ -17,15 +19,21 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,500;0,600;0,700;1,500&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   /* Healer's Desk — colours taken from the logo */
+  color-scheme:light;
   --v-950:#1B0F4D; --v-900:#2A1577; --v-800:#34198E; --v-700:#4A22B6; --v-600:#6332DA; --v-500:#8448F5; --v-400:#A47CFA;
   --l-300:#C5AEFC; --l-200:#DCCBFE; --l-100:#EEE6FF; --l-50:#F7F3FF;
   --g-200:#F6E2CC; --g-300:#EFCFAE; --g-400:#E4B48A; --g-500:#C78E57; --g-600:#A66E3C; --g-700:#7E5129;
   --bg:#FBFAFE; --surface:#FFFFFF; --ink:#1E1645; --ink-2:#463D6E; --muted:#7B7398; --line:#ECE6FA; --line-2:#DED4F6;
-  --sage:#2F7A55; --sage-bg:#E4F4EB; --rose:#B1365E; --rose-bg:#FCE8EF; --sky:#3459B5; --sky-bg:#E6EDFC; --amber:#94621F; --amber-bg:#FBF0DF;
+  --glass:rgba(251,250,254,.86); --glass-2:rgba(255,255,255,.92); --placeholder:#A9A1C2;
+  --cream:var(--cream); --gold-line:var(--gold-line); --err-ink:#7D2443; --toast:#1B0F4D;
+  --sage:#2F7A55; --sage-bg:#E4F4EB; --sage-line:var(--sage-line); --rose:#B1365E; --rose-bg:#FCE8EF; --rose-line:var(--rose-line);
+  --sky:#3459B5; --sky-bg:#E6EDFC; --amber:#94621F; --amber-bg:#FBF0DF; --grey-bg:#EFEDF4; --grey:#6B6582;
+  --rose-soft:var(--rose-bg); --sage-soft:var(--sage-bg); --sky-soft:var(--sky-bg); --violet:var(--v-600);
+  --head:var(--v-900); --num:var(--v-800); --link:var(--v-700); --accent:var(--v-600);
   --grad-v:linear-gradient(135deg,#8C4BFF 0%,#5A2BD2 48%,#2E1784 100%);
   --grad-g:linear-gradient(135deg,#F4DCC1 0%,#DDAA7A 52%,#C58650 100%);
   --grad-wash:radial-gradient(1200px 600px at 100% -10%,rgba(164,124,250,.18),transparent 60%),radial-gradient(900px 500px at -10% 10%,rgba(239,207,174,.22),transparent 60%);
@@ -33,9 +41,30 @@
   --sh-2:0 24px 48px -24px rgba(52,25,142,.38);
   --sh-btn:0 8px 20px -10px rgba(74,34,182,.65);
   --r-sm:12px; --r:16px; --r-lg:22px;
-  --serif:"Playfair Display",Georgia,"Times New Roman",serif; --sans:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Bitter",Georgia,"Times New Roman",serif; --sans:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
   --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%236332DA' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.5 7.5 10 12l4.5-4.5'/%3E%3C/svg%3E");
 }
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --v-950:#0B0720; --v-900:#EDE6FF; --v-800:#DCCFFF; --v-700:#C6B2FF; --v-600:#B49BFF; --v-500:#9F80FF; --v-400:#8A66F5;
+  --l-300:#5B47A8; --l-200:#3E3180; --l-100:#2C2260; --l-50:#211A47;
+  --g-200:#3A2B1C; --g-300:#6B4F33; --g-400:#E4B48A; --g-500:#D9A574; --g-600:#E8BE94; --g-700:#F3D7B6;
+  --bg:#110C28; --surface:#1B1539; --ink:#EEE9FF; --ink-2:#CBC3E8; --muted:#9C93BF; --line:#2D2553; --line-2:#3B3268;
+  --glass:rgba(17,12,40,.82); --glass-2:rgba(27,21,57,.9); --placeholder:#7D74A3;
+  --cream:#2A2116; --gold-line:#4A3826; --err-ink:#FFC2D4; --toast:#EDE6FF;
+  --sage:#7ED9AA; --sage-bg:#163A2C; --sage-line:#24563F; --rose:#FF93B4; --rose-bg:#3E1529; --rose-line:#5E2440;
+  --sky:#9DBBFF; --sky-bg:#18294F; --amber:#F2C47F; --amber-bg:#3A2A12; --grey-bg:#2A2546; --grey:#B4ADCF;
+  --head:#F1EBFF; --num:#DCCFFF; --link:#C6B2FF; --accent:#B49BFF;
+  --grad-wash:radial-gradient(1200px 600px at 100% -10%,rgba(132,72,245,.22),transparent 60%),radial-gradient(900px 500px at -10% 10%,rgba(199,142,87,.12),transparent 60%);
+  --sh-1:0 1px 2px rgba(0,0,0,.35),0 10px 24px -14px rgba(0,0,0,.7);
+  --sh-2:0 26px 50px -24px rgba(0,0,0,.75);
+  --sh-btn:0 10px 22px -10px rgba(132,72,245,.55);
+  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23B49BFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.5 7.5 10 12l4.5-4.5'/%3E%3C/svg%3E");
+}
+.logo-d{display:none!important}
+:root[data-theme="dark"] .logo-l{display:none!important}
+:root[data-theme="dark"] .logo-d{display:block!important}
+:root[data-theme="dark"] input::-webkit-calendar-picker-indicator{filter:invert(80%) sepia(30%) saturate(1500%) hue-rotate(210deg)}
 
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:80px}
@@ -43,10 +72,10 @@ html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:80p
 body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--sans);-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom,0px)}
 a{color:var(--v-600)}
 .wrap{max-width:1120px;margin:0 auto;padding:0 18px}
-h1,h2,h3{font-family:var(--serif);color:var(--v-900);font-weight:600;margin:0;letter-spacing:-.015em}
+h1,h2,h3{font-family:var(--serif);color:var(--head);font-weight:600;margin:0;letter-spacing:-.015em}
 
 /* header */
-.top{position:sticky;top:0;z-index:20;background:rgba(251,250,254,.82);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;padding-top:env(safe-area-inset-top,0px);transition:border-color .2s}
+.top{position:sticky;top:0;z-index:20;background:var(--glass);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;padding-top:env(safe-area-inset-top,0px);transition:border-color .2s}
 .top.scrolled{border-bottom-color:var(--line)}
 .top-in{display:flex;align-items:center;gap:12px;min-height:64px}
 .brand{display:block;margin-right:auto}
@@ -60,7 +89,7 @@ h1,h2,h3{font-family:var(--serif);color:var(--v-900);font-weight:600;margin:0;le
 .gbtn:hover{box-shadow:0 14px 30px -12px rgba(74,34,182,.85)}
 .gbtn:active{transform:scale(.98)}
 .gbtn:disabled{opacity:.6;cursor:wait}
-.gbtn .g{width:30px;height:30px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.gbtn .g{width:30px;height:30px;border-radius:50%;background:var(--surface);display:inline-flex;align-items:center;justify-content:center;flex:none}
 .gbtn .g svg{width:17px;height:17px}
 .gbtn.sm{min-height:42px;padding:8px 16px;font-size:.9rem;white-space:nowrap}
 .gbtn:focus-visible{outline:3px solid var(--g-400);outline-offset:3px}
@@ -69,7 +98,7 @@ h1,h2,h3{font-family:var(--serif);color:var(--v-900);font-weight:600;margin:0;le
 .hero-bg{background:var(--grad-wash)}
 .hero{display:grid;grid-template-columns:1fr;gap:34px;padding:28px 0 56px}
 .hero h1{font-size:clamp(2.4rem,9vw,4.3rem);line-height:1.04;margin:0 0 18px}
-.hero h1 em{font-style:italic;font-weight:500;background:linear-gradient(120deg,#D29A63 0%,#B47A43 60%,#93602F 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1 em{font-style:italic;font-weight:600;background:linear-gradient(120deg,#D29A63 0%,#B47A43 60%,#93602F 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero p.lede{font-size:1.08rem;color:var(--ink-2);max-width:34rem;margin:0 0 26px}
 .hero .gbtn{width:100%}
 .hero .fine{font-size:.85rem;color:var(--muted);margin:14px 0 0}
@@ -81,10 +110,10 @@ h1,h2,h3{font-family:var(--serif);color:var(--v-900);font-weight:600;margin:0;le
 .aura{position:absolute;inset:-4% -8% 0;border-radius:50%;background:radial-gradient(closest-side,rgba(239,207,174,.45),rgba(164,124,250,.22) 55%,transparent 76%);filter:blur(6px);animation:breathe 9s ease-in-out infinite}
 @keyframes breathe{0%,100%{transform:scale(.96);opacity:.85}50%{transform:scale(1.04);opacity:1}}
 @media (prefers-reduced-motion:reduce){.aura{animation:none}}
-.card{position:relative;background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:26px;padding:18px;box-shadow:var(--sh-2)}
+.card{position:relative;background:var(--glass-2);border:1px solid var(--line);border-radius:26px;padding:18px;box-shadow:var(--sh-2)}
 .c-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
 .c-av{width:48px;height:48px;border-radius:16px;background:var(--l-100);display:flex;align-items:center;justify-content:center;font:600 1.15rem var(--serif);color:var(--v-700)}
-.c-head b{display:block;font:600 1.3rem/1.1 var(--serif);color:var(--v-900)}
+.c-head b{display:block;font:600 1.3rem/1.1 var(--serif);color:var(--head)}
 .c-head small{color:var(--muted);font-size:.82rem}
 .c-tag{margin-left:auto;font-size:.74rem;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--sage-bg);color:var(--sage)}
 .c-scans{display:grid;grid-template-columns:auto repeat(3,1fr);gap:6px 6px;font-size:.78rem;align-items:center}
@@ -95,7 +124,7 @@ h1,h2,h3{font-family:var(--serif);color:var(--v-900);font-weight:600;margin:0;le
 .c-foot{display:flex;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted)}
 .c-foot b{color:var(--v-800);font:600 1.25rem var(--serif);display:block}
 .c-foot div{flex:1}
-.float{position:absolute;background:#fff;border:1px solid var(--line);border-radius:16px;padding:9px 13px;font-size:.8rem;box-shadow:var(--sh-2);display:flex;align-items:center;gap:8px;white-space:nowrap}
+.float{position:absolute;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:9px 13px;font-size:.8rem;box-shadow:var(--sh-2);display:flex;align-items:center;gap:8px;white-space:nowrap}
 .float b{color:var(--v-800)}
 .float img{width:18px;height:18px}
 .float.f1{right:0;top:12px}
@@ -112,13 +141,13 @@ section.band{padding:56px 0;border-top:1px solid var(--line)}
 .tools{display:grid;grid-template-columns:1fr;gap:12px}
 @media (min-width:600px){.tools{grid-template-columns:1fr 1fr}}
 @media (min-width:920px){.tools{grid-template-columns:repeat(3,1fr);gap:16px}}
-.tool{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--sh-1)}
+.tool{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--sh-1)}
 .tool .ic{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--l-100),var(--g-200));display:flex;align-items:center;justify-content:center;margin-bottom:14px}
 .tool .ic svg{width:24px;height:24px;stroke:var(--v-700);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .tool .ic img{width:24px;height:24px}
 .tool h3{font-size:1.3rem;margin-bottom:6px}
 .tool p{margin:0;color:var(--ink-2);font-size:.96rem}
-.tool.feat{background:linear-gradient(140deg,#fff 30%,var(--l-50));border-color:var(--line-2)}
+.tool.feat{background:linear-gradient(140deg,var(--surface) 30%,var(--l-50));border-color:var(--line-2)}
 
 .steps{display:grid;grid-template-columns:1fr;gap:22px;counter-reset:s}
 @media (min-width:760px){.steps{grid-template-columns:repeat(3,1fr);gap:28px}}
@@ -131,7 +160,7 @@ section.band{padding:56px 0;border-top:1px solid var(--line)}
 
 .trust{display:grid;grid-template-columns:1fr;gap:20px}
 @media (min-width:880px){.trust{grid-template-columns:1fr 1fr;gap:48px}}
-.trust ul{list-style:none;margin:0;padding:0;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--sh-1);padding:4px 18px}
+.trust ul{list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--sh-1);padding:4px 18px}
 .trust li{padding:14px 0 14px 32px;border-bottom:1px solid var(--line);position:relative;color:var(--ink-2)}
 .trust li:last-child{border-bottom:0}
 .trust li::before{content:"";position:absolute;left:2px;top:20px;width:16px;height:16px;border-radius:50%;background:var(--grad-g)}
@@ -143,7 +172,7 @@ section.band{padding:56px 0;border-top:1px solid var(--line)}
 .closing img{width:76px;height:76px;border-radius:22px;margin-bottom:14px;box-shadow:0 14px 30px -12px rgba(0,0,0,.5)}
 .closing h2{color:#fff;font-size:clamp(2rem,7vw,3.1rem);margin-bottom:10px}
 .closing p{margin:0 auto 26px;max-width:32rem;color:#DCD0F6}
-.closing .gbtn{background:#fff;color:var(--v-800);width:100%;max-width:340px}
+.closing .gbtn{background:var(--surface);color:var(--v-800);width:100%;max-width:340px}
 .closing .gbtn .g{background:var(--l-100)}
 @media (min-width:760px){.closing{padding:80px 24px}}
 
@@ -161,9 +190,9 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:.92rem;col
 </head>
 <body>
 <header class="top" id="top"><div class="wrap top-in">
-  <a class="brand" href="/"><img src="/assets/brand/logo-full-600.png" srcset="/assets/brand/logo-full-600.png 1x, /assets/brand/logo-full-1200.png 2x" alt="Healer's Desk" width="158" height="42"></a>
+  <a class="brand" href="/"><img class="logo-l" src="/assets/brand/logo-full-600.png" srcset="/assets/brand/logo-full-600.png 1x, /assets/brand/logo-full-1200.png 2x" alt="Healer's Desk" width="158" height="42"><img class="logo-d" src="/assets/brand/logo-full-dark-600.png" srcset="/assets/brand/logo-full-dark-600.png 1x, /assets/brand/logo-full-dark-1200.png 2x" alt="Healer's Desk" width="158" height="42"></a>
   <a class="lnk" href="#tools">What's inside</a>
-  <a class="lnk" href="/policy">Policies</a>
+  <a class="lnk" href="#trust">Your data</a>
   <button class="gbtn sm signin" type="button"><span class="t">Sign in</span></button>
 </div></header>
 
@@ -173,7 +202,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:.92rem;col
       <h1>A quiet, private desk for your <em>healing practice.</em></h1>
       <p class="lede">Intake forms, chakra scans, healing schedules that land in your Google Calendar, energy exchange, and progress reports your clients open on their phone. Everything you track for each person, in one calm place.</p>
       <button class="gbtn signin" type="button"><span class="g"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg></span><span class="t">Continue with Google</span></button>
-      <p class="fine">Your own desk is created the first time you sign in. By continuing you agree to our <a href="/policy#terms">Terms</a> and <a href="/policy#privacy">Privacy Policy</a>.</p>
+      <p class="fine">Your own desk is created the first time you sign in, and Google will ask to add a "Healer's Desk" calendar for your sessions. By continuing you agree to our <a href="/policy#terms">Terms</a> and <a href="/policy#privacy">Privacy Policy</a>.</p>
     </div>
     <div class="stage" aria-hidden="true">
       <div class="aura"></div>
@@ -213,14 +242,14 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:.92rem;col
     <div class="sec-h"><h2>Ready in a few minutes</h2></div>
     <div class="steps">
       <div class="step"><h3>Sign in with Google</h3><p>No passwords to remember. Your private desk is created the first time you sign in.</p></div>
-      <div class="step"><h3>Name your practice</h3><p>Add your name, WhatsApp number and choose your link, like <code>healersdesk.com/i/your-name</code>.</p></div>
+      <div class="step"><h3>Name your practice</h3><p>Add your name, WhatsApp number and choose your link, like <code>healersdesk.com/intake/your-name</code>.</p></div>
       <div class="step"><h3>Share your link</h3><p>Clients fill in the form and appear on My Healing Desk, ready for their first scan.</p></div>
     </div>
   </section>
 
-  <section class="band">
+  <section class="band" id="trust">
     <div class="trust">
-      <div class="sec-h" style="margin:0"><h2>Your clients' trust, protected</h2><p>People share health details and personal struggles with you. Healer's Desk is built so that information stays between you and them.</p></div>
+      <div class="sec-h" style="margin:0"><h2>Your clients' trust, protected</h2><p>People share health details and personal struggles with you. Healer's Desk is built so that information stays between you and them.</p><p style="margin-top:12px;color:var(--ink);font-weight:600">Your data is yours. Nobody else can see it.</p></div>
       <ul>
         <li><b>Only you see your desk.</b> Every record is locked to your Google account at the database level; no other healer can see it.</li>
         <li><b>Photos stay private.</b> Client photos sit in private storage and open only through short-lived links inside your desk.</li>
@@ -241,8 +270,8 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:.92rem;col
 <footer>
   <div class="wrap">
     <div class="f-in">
-      <div class="fb"><img src="/assets/brand/logo-full-600.png" alt="Healer's Desk" width="143" height="38"></div>
-      <nav><b>Contact</b><a href="mailto:healersdesk@gmail.com">healersdesk@gmail.com</a><a href="tel:+919509831551">+91-950-983-1551</a><a href="https://wa.me/919509831551" target="_blank" rel="noopener">WhatsApp us</a></nav>
+      <div class="fb"><img class="logo-l" src="/assets/brand/logo-full-600.png" srcset="/assets/brand/logo-full-600.png 1x, /assets/brand/logo-full-1200.png 2x" alt="Healer's Desk" width="143" height="38"><img class="logo-d" src="/assets/brand/logo-full-dark-600.png" srcset="/assets/brand/logo-full-dark-600.png 1x, /assets/brand/logo-full-dark-1200.png 2x" alt="Healer's Desk" width="143" height="38"></div>
+      <nav><b>Contact</b><a href="mailto:healersdesk@gmail.com">healersdesk@gmail.com</a></nav>
       <nav><b>Policies</b><a href="/policy#privacy">Privacy Policy</a><a href="/policy#terms">Terms &amp; Conditions</a><a href="/policy#refund">Refund &amp; Cancellation</a></nav>
     </div>
     <p class="copy">© 2026 Healer's Desk. Energy healing complements medical care; it does not replace it.</p>
@@ -265,7 +294,8 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:.92rem;col
     if(session){ const t=b.querySelector('.t'), g=b.querySelector('.g'); if(g) g.remove(); (t||b).textContent = b.classList.contains('sm') ? 'My Desk' : 'Open My Healing Desk'; b.onclick=()=>location.href='/desk'; return; }
     b.onclick = async()=>{
       btns.forEach(x=>x.disabled=true);
-      const { error } = await sb.auth.signInWithOAuth({ provider:'google', options:{ redirectTo: location.origin + '/desk', queryParams:{ prompt:'select_account' } } });
+      let linked=false; try{ linked=localStorage.getItem('hdGcal')==='1'; }catch(e){}
+      const { error } = await sb.auth.signInWithOAuth({ provider:'google', options:{ redirectTo: location.origin + '/desk', scopes:'https://www.googleapis.com/auth/calendar.app.created', queryParams: linked ? { prompt:'select_account' } : { access_type:'offline', prompt:'consent select_account' } } });
       if(error){ btns.forEach(x=>x.disabled=false); alert('Google sign-in could not start: '+error.message); }
     };
   });

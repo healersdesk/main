@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="hd-version" content="3.1">
 <script>(function(){try{var r=document.documentElement,q=matchMedia('(prefers-color-scheme: dark)');function a(){var p=localStorage.getItem('hdTheme')||'auto',d=p==='dark'||(p==='auto'&&q.matches);r.setAttribute('data-theme',d?'dark':'light');r.setAttribute('data-pref',p);var m=document.querySelector('meta[name=theme-color]');if(m)m.content=d?'#110C28':'#FBFAFE';}a();window.hdApplyTheme=a;q.addEventListener&&q.addEventListener('change',a);}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>My Healing Desk — Healer's Desk</title>
@@ -241,20 +242,26 @@ table{width:100%;border-collapse:collapse}
 /* ---------- client page ---------- */
 .back{background:none;border:0;color:var(--v-700);cursor:pointer;padding:6px 0;margin-bottom:10px;font-weight:600;min-height:40px}
 .p-head{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"photo quick" "info info" "ctl ctl";gap:12px 14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px;box-shadow:var(--sh-1);position:relative;overflow:hidden}
-.p-head::before{content:"";position:absolute;inset:0 0 auto 0;height:70px;background:linear-gradient(120deg,var(--l-100),var(--g-200));opacity:.55;pointer-events:none}
+.p-head::before{content:"";position:absolute;inset:0 0 auto 0;height:58px;background:linear-gradient(120deg,var(--l-100),var(--g-200));opacity:.35;pointer-events:none}
 .p-head>*{position:relative}
 .p-head .p-photo{grid-area:photo}.p-head .p-info{grid-area:info}.p-head .p-quick{grid-area:quick;justify-self:end;align-self:start}.p-head .p-ctl{grid-area:ctl}
-.p-quick{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
-.p-photo{width:84px;height:84px;border-radius:24px;background:var(--l-100) center/cover no-repeat;display:flex;align-items:center;justify-content:center;font:600 2rem var(--serif);color:var(--v-700);flex-shrink:0;cursor:zoom-in;border:3px solid var(--surface);box-shadow:var(--sh-1)}
+.p-quick{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.p-quick .btn,.p-quick select{min-width:120px}
+.btn-wa-soft{background:var(--sage-bg);color:var(--sage);border-color:var(--sage-line)}
+.btn-wa-soft:hover{border-color:var(--sage)}
+.p-ctl .btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.p-photo{width:72px;height:72px;border-radius:22px;background:var(--l-100) center/cover no-repeat;display:flex;align-items:center;justify-content:center;font:600 2rem var(--serif);color:var(--v-700);flex-shrink:0;cursor:zoom-in;border:3px solid var(--surface);box-shadow:var(--sh-1)}
 .p-info{min-width:0}
-.p-info h1{font-size:1.7rem;line-height:1.15}
+.p-info h1{font-size:1.55rem;line-height:1.15}
+.p-info .meta{line-height:1.5}
 .p-info .meta{color:var(--muted);font-size:.92rem}
-.p-ctl{display:grid;grid-template-columns:auto 1fr;gap:8px}
+.p-ctl{display:flex;gap:8px;padding-top:4px;border-top:1px solid var(--line);padding-top:12px}
 .p-ctl .btn{white-space:normal;text-align:center;line-height:1.2}
 @media (min-width:760px){
   .p-head{grid-template-columns:auto 1fr auto;grid-template-areas:"photo info quick" "photo info ctl";padding:20px 22px;gap:10px 20px}
   .p-quick{flex-direction:row;align-items:center}
-  .p-head .p-ctl{justify-self:end;display:flex}
+  .p-quick .btn,.p-quick select{min-width:0}
+  .p-head .p-ctl{justify-self:end;display:flex;border-top:0;padding-top:0}
   .p-photo{width:100px;height:100px}
   .p-info h1{font-size:2.1rem}
 }
@@ -355,7 +362,9 @@ html.lock body{position:fixed;left:0;right:0}
 .preview li{padding:3px 0;border-bottom:1px dashed var(--gold-line)}
 .preview li:last-child{border-bottom:0}
 .preview li em{font-style:normal;font-weight:700}
-.vtoggle{display:inline-flex;background:var(--l-100);border-radius:999px;padding:4px;margin-bottom:14px}
+.hbar{display:flex;flex-wrap:wrap;align-items:flex-start;gap:0 12px;margin-bottom:14px}
+.hbar .filters{flex:1 1 520px;margin-bottom:10px}
+.vtoggle{display:inline-flex;background:var(--l-100);border-radius:999px;padding:4px;margin-left:auto;flex:none}
 .vtoggle button{border:0;background:none;padding:8px 16px;border-radius:999px;font-weight:600;color:var(--muted);cursor:pointer;min-height:38px;display:inline-flex;align-items:center;gap:6px}
 .vtoggle button.on{background:var(--surface);color:var(--link);box-shadow:0 2px 8px -2px rgba(52,25,142,.25)}
 .vtoggle svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -485,7 +494,7 @@ body.money-hidden .mv-r{display:none}
 <!-- ================= APP ================= -->
 <div id="app" class="hidden">
   <header class="top"><div class="top-in">
-    <div class="brand"><img class="logo-l" src="/assets/brand/logo-full-600.png" srcset="/assets/brand/logo-full-600.png 1x, /assets/brand/logo-full-1200.png 2x" alt="Healer's Desk" width="158" height="42"><img class="logo-d" src="/assets/brand/logo-full-dark-600.png" srcset="/assets/brand/logo-full-dark-600.png 1x, /assets/brand/logo-full-dark-1200.png 2x" alt="Healer's Desk" width="158" height="42"></div>
+    <a class="brand" href="/" title="Healer's Desk home"><img class="logo-l" src="/assets/brand/logo-full-600.png" srcset="/assets/brand/logo-full-600.png 1x, /assets/brand/logo-full-1200.png 2x" alt="Healer's Desk" width="158" height="42"><img class="logo-d" src="/assets/brand/logo-full-dark-600.png" srcset="/assets/brand/logo-full-dark-600.png 1x, /assets/brand/logo-full-dark-1200.png 2x" alt="Healer's Desk" width="158" height="42"></a>
     <button class="icon-btn" id="settingsBtn" aria-label="Desk settings" title="Desk settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
     <button class="icon-btn" id="logout" aria-label="Sign out" title="Sign out"><svg viewBox="0 0 24 24"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/></svg></button>
   </div></header>
@@ -552,14 +561,16 @@ body.money-hidden .mv-r{display:none}
         <div class="stat"><b id="hs-month" class="sage">0</b><span>Completed this month</span></div>
         <div class="stat"><b id="hs-over" class="rose">0</b><span>Past, still pending</span></div>
       </div>
-      <div class="vtoggle" role="tablist" aria-label="View">
-        <button type="button" data-hv="list" class="on" role="tab"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>List</button>
-        <button type="button" data-hv="cal" role="tab"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Calendar</button>
-      </div>
+      <div class="hbar">
       <div class="filters">
         <input type="search" id="hq" placeholder="Search by subject" aria-label="Search healings">
         <select id="hrange" aria-label="When"><option value="today">Today</option><option value="tomorrow">Tomorrow</option><option value="week">Next 7 days</option><option value="upcoming" selected>All upcoming</option><option value="past">Past</option><option value="all">All dates</option></select>
         <select id="hstatus" aria-label="Status"><option value="">All statuses</option><option>Pending</option><option>Complete</option><option>Cancelled</option></select>
+      </div>
+      <div class="vtoggle" role="tablist" aria-label="View">
+        <button type="button" data-hv="list" class="on" role="tab"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>List</button>
+        <button type="button" data-hv="cal" role="tab"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Calendar</button>
+      </div>
       </div>
       <div id="hcal" class="hidden"></div>
       <div class="day-title hidden" id="hdaytitle"></div>
@@ -1000,14 +1011,14 @@ function renderPatient(){
       <div class="p-quick">
         <select id="pstat" class="st st-${esc(p.status)}" aria-label="Status">${opts(['Active','Inactive'],p.status)}</select>
         <button class="btn btn-o btn-sm" id="pedit">Edit details</button>
+        <a class="btn btn-sm btn-wa-soft" href="${waLink(p.whatsapp,`Hi ${first(p.full_name)}, this is ${first(D.healer_name)} from ${D.practice_name}.`)}" target="_blank" rel="noopener">WhatsApp</a>
       </div>
       <div class="p-info"><h1>${esc(p.full_name)}</h1>
         <div class="meta">${[p.dob?age(p.dob)+' yrs':'', p.gender, p.occupation].filter(Boolean).map(esc).join(' · ')||'&nbsp;'}</div>
         <div class="meta">${esc(p.whatsapp)}${p.email?' · '+esc(p.email):''}</div>
       </div>
       <div class="p-ctl">
-        <a class="btn btn-wa" href="${waLink(p.whatsapp,`Hi ${first(p.full_name)}, this is ${first(D.healer_name)} from ${D.practice_name}.`)}" target="_blank" rel="noopener">WhatsApp</a>
-        <button class="btn btn-p" id="pshare">Share Progress Report</button>
+        <button class="btn btn-p btn-sm" id="pshare"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>Share progress report</button>
       </div>
     </div>
     <div class="tabs" role="tablist">
@@ -1591,14 +1602,15 @@ function settingsModal(){
     <div class="g2"><div class="fld"><label for="ds_prac">Practice name / Center name *</label><input type="text" id="ds_prac" maxlength="100" value="${esc(D.practice_name)}"></div>
       <div class="fld"><label for="ds_city">City</label><input type="text" id="ds_city" maxlength="80" value="${esc(D.city||'')}"></div></div>
     <div class="fld"><label for="ds_slug">Intake form link</label>
-      <div class="slug-row"><span>${esc(location.host.replace(/^www\./,''))}/intake/</span><input type="text" id="ds_slug" maxlength="40" autocapitalize="off" spellcheck="false" value="${esc(D.slug)}"></div>
+      <div class="share-box"><div class="slug-row" style="flex:1;min-width:0"><span>${esc(location.host.replace(/^www\./,''))}/intake/</span><input type="text" id="ds_slug" maxlength="40" autocapitalize="off" spellcheck="false" value="${esc(D.slug)}"></div>
+        <button type="button" class="btn btn-o" id="ds_copy">Copy link</button></div>
       <div class="hint" id="ds_slughint">Changing this stops the old link from working.</div></div>
     <label class="agree"><input type="checkbox" id="ds_open" ${D.intake_open?'checked':''}> <span>Accept new intake forms</span></label>
     <label class="agree"><input type="checkbox" id="ds_notify" ${D.notify_intake!==false?'checked':''}> <span>Email me at <b>${esc(D.contact_email||'my sign-in email')}</b> when a new intake form arrives</span></label>
     <div class="sec-t">Appearance</div>
     <div class="seg-theme" id="ds_theme" role="radiogroup" aria-label="Theme">${['auto','light','dark'].map(v=>`<button type="button" data-th="${v}" class="${(localStorage.getItem('hdTheme')||'auto')===v?'on':''}" role="radio">${{auto:'Auto',light:'Light',dark:'Dark'}[v]}</button>`).join('')}</div>
     <p class="hint">Auto follows your phone or computer setting.</p>
-    <div class="sec-t">Google Calendar</div>
+    <div class="sec-t" style="display:flex;align-items:center;gap:8px"><img src="/assets/brand/calendar.svg" alt="" width="22" height="22">Google Calendar</div>
     ${calCardHTML()}
     <div class="sec-t">Your data</div>
     <p style="margin:0 0 10px;color:var(--muted);font-size:.92rem">Download everything on your desk (clients, healings, scans, payments, feedback) as a JSON file.</p>
@@ -1627,6 +1639,7 @@ function settingsModal(){
     refresh();
   };
   wireCalCard();
+  $('#ds_copy').onclick=async()=>{ const url=intakeURL(); try{ await navigator.clipboard.writeText(url); toast('Intake form link copied'); }catch{ prompt('Copy this link', url); } };
   $$('[data-th]').forEach(b=>b.onclick=()=>{ try{localStorage.setItem('hdTheme',b.dataset.th);}catch{} window.hdApplyTheme&&hdApplyTheme(); $$('[data-th]').forEach(x=>x.classList.toggle('on',x===b)); themeCharts(); refresh(); });
   $('#ds_out').onclick=async()=>{ closeModal(); await sb.auth.signOut(); showLogin(); };
   $('#ds_export').onclick=exportData;
