@@ -1,8 +1,15 @@
-# Healer's Desk — v2 (new brand, mobile-first, Google Calendar)
+# Healer's Desk — v3
 
-**www.healersdesk.com** · Help: healersdesk@gmail.com · +91-950-983-1551
+**www.healersdesk.com** · Help: healersdesk@gmail.com
 
-## What's new
+## What's new in v3
+- Google sign-in also asks for Google Calendar permission, so the calendar connects automatically.
+- Dark mode (Settings → Appearance: Auto / Light / Dark, Auto by default).
+- Email alert to each healer's own sign-in email when a new intake form arrives (sent through Google Apps Script from healersdesk@gmail.com).
+- Healings tab: List or month Calendar view. "Today" / "Tomorrow" labels everywhere.
+- Bitter font for headings, bigger logo, more breathing space on phones, sign-out moved into Settings on phones.
+
+## What was new in v2
 - New logo everywhere (long logo in headers, square logo as favicon and phone app icon).
 - New light, premium violet-and-gold theme, built phone-first (cards instead of wide tables, big thumb-friendly buttons, one consistent style for every dropdown, date and number field).
 - **Google Calendar sync**: each healer can connect their Google Calendar from Desk settings. Healings are added to a calendar called **"Healer's Desk"** in their Google Calendar and update automatically when a session is scheduled, moved, completed, cancelled or deleted.
@@ -16,7 +23,8 @@
 | `api/` | **New.** Small server programs for Google Calendar (run on Vercel automatically) |
 | `assets/brand/` | Logos, icons, favicon sizes, social share image |
 | `favicon.ico`, `apple-touch-icon.png` | Browser tab icon and iPhone home-screen icon |
-| `supabase/02-google-calendar.sql` | **New.** Database update — run once |
+| `supabase/02-google-calendar.sql` | Database update 2 (calendar) — already run |
+| `supabase/03-email-alerts.sql` | **New.** Database update 3 (email alerts) — run once, before uploading |
 | `config.example.js` | Example only. Keep your existing `config.js` on GitHub |
 
 ## Update steps (short version — the chat has the 10-year-old version)
@@ -38,6 +46,8 @@
    | `GOOGLE_CLIENT_SECRET` | from Google Cloud → Clients |
    | `HD_SECRET` | any long random text (40+ letters and numbers). Never change it later. |
    | `SITE_URL` | `https://www.healersdesk.com` |
+   | `APPS_SCRIPT_URL` | the Web app URL from your Apps Script deployment (ends in `/exec`) |
+   | `APPS_SCRIPT_SECRET` | the same long secret you put in the Apps Script's Script Properties |
    Then Deployments → ⋯ on the latest → **Redeploy**.
 5. Open My Healing Desk → ⚙️ Settings → **Connect Google Calendar**.
 

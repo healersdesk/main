@@ -92,6 +92,46 @@ async function createCalendar(token, tz, practice) {
   return g.data.id;
 }
 
+/* ---------- link a Google refresh token to a healer's desk ---------- */
+async function linkCalendar({ uid, refreshToken, accessToken, tz, email }) {
+  const desk = (await rest(`desks?id=eq.${uid}&select=id,practice_name`))[0];
+  if (!desk) return { linked: false, reason: 'nodesk' };
+  const old = (await rest(`calendar_connections?healer_id=eq.${uid}&select=calendar_id,timezone,last_error`))[0];
+  let calId = old && old.calendar_id;
+  if (calId) { const g = await gcal(accessToken, `calendars/${encodeURIComponent(calId)}`); if (g.status !== 200) calId = null; }
+  const zone = (old && old.timezone) || tz || 'Asia/Kolkata';
+  if (!calId) {
+    calId = await createCalendar(accessToken, zone, desk.practice_name);
+    await rest(`healings?healer_id=eq.${uid}&gcal_event_id=not.is.null`, { method: 'PATCH', body: JSON.stringify({ gcal_event_id: null }) });
+  }
+  await rest('calendar_connections?on_conflict=healer_id', {
+    method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
+    body: JSON.stringify({ healer_id: uid, google_email: email || null, refresh_token_enc: encrypt(refreshToken),
+      calendar_id: calId, timezone: zone, connected_at: new Date().toISOString(), last_error: null })
+  });
+  return { linked: true, fresh: !old || old.last_error === 'reconnect' };
+}
+
+/* ---------- email (Google Apps Script, sent from healersdesk@gmail.com) ---------- */
+async function sendEmail({ to, subject, html, text }) {
+  const url = env('APPS_SCRIPT_URL'), secret = env('APPS_SCRIPT_SECRET');
+  const r = await fetch(url, {
+    method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, redirect: 'follow',
+    body: JSON.stringify({ secret, to, subject, html, text })
+  });
+  const out = await r.text();
+  let j = null; try { j = JSON.parse(out); } catch {}
+  if (!r.ok || !j || !j.ok) throw new Error(`Email not sent: ${(j && j.error) || out.slice(0, 200)}`);
+}
+async function healerEmail(uid) {
+  try {
+    const r = await fetch(`${SB()}/auth/v1/admin/users/${uid}`, { headers: sbHeaders() });
+    if (r.ok) { const u = await r.json(); if (u && u.email) return u.email; }
+  } catch {}
+  const d = (await rest(`desks?id=eq.${uid}&select=contact_email`))[0];
+  return d && d.contact_email;
+}
+
 /* ---------- misc ---------- */
 const isUuid = (s) => typeof s === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s);
 async function pool(items, n, fn) {
@@ -106,4 +146,4 @@ async function readBody(req) {
   try { return JSON.parse(Buffer.concat(chunks).toString() || '{}'); } catch { return {}; }
 }
 
-module.exports = { env, SITE, SCOPES, CAL_SCOPE, REDIRECT, rest, getUser, encrypt, decrypt, sign, verify, googleToken, accessTokenFor, gcal, createCalendar, isUuid, pool, send, readBody };
+module.exports = { env, SITE, SCOPES, CAL_SCOPE, REDIRECT, rest, getUser, encrypt, decrypt, sign, verify, googleToken, accessTokenFor, gcal, createCalendar, linkCalendar, sendEmail, healerEmail, isUuid, pool, send, readBody };

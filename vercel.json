@@ -26,11 +26,16 @@
       "source": "/refund",
       "destination": "/policy#refund",
       "permanent": false
+    },
+    {
+      "source": "/i/:slug",
+      "destination": "/intake/:slug",
+      "permanent": true
     }
   ],
   "rewrites": [
     {
-      "source": "/i/:slug",
+      "source": "/intake/:slug",
       "destination": "/intake"
     }
   ],

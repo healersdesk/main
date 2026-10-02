@@ -8,7 +8,5 @@ window.HD_CONFIG = {
   SUPABASE_URL: 'https://vlhfgjkbuwhcfchjwnbh.supabase.co',
   SUPABASE_ANON_KEY: 'PASTE_YOUR_SUPABASE_ANON_KEY_HERE',
   SITE_URL: 'https://www.healersdesk.com',
-  SUPPORT_EMAIL: 'healersdesk@gmail.com',
-  SUPPORT_PHONE: '+91-950-983-1551',
-  SUPPORT_WHATSAPP: '919509831551'
+  SUPPORT_EMAIL: 'healersdesk@gmail.com'
 };

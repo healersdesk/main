@@ -384,4 +384,13 @@ revoke all on function public.set_calendar_prefs(int,int) from public;
 grant execute on function public.get_calendar_status() to authenticated;
 grant execute on function public.set_calendar_prefs(int,int) to authenticated;
 
+-- ---------------------------------------------------------------------
+-- 6. EMAIL ALERTS (same as 03-email-alerts.sql)
+-- ---------------------------------------------------------------------
+-- healers can switch intake emails on/off in Desk settings (on by default)
+alter table public.desks add column if not exists notify_intake boolean not null default true;
+
+-- remembers that the "new intake form" email was already sent for this client
+alter table public.patients add column if not exists notified_at timestamptz;
+
 -- Done. 🌿
