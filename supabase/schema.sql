@@ -236,7 +236,7 @@ create or replace function public.get_shared_report(p_token text)
 returns json language plpgsql stable security definer set search_path = public as $$
 declare pt public.patients; d public.desks; res json;
 begin
-  if p_token is null or length(p_token) < 20 then return null; end if;
+  if p_token is null or length(p_token) < 8 then return null; end if;
   select * into pt from public.patients where share_token = p_token;
   if pt.id is null then return null; end if;
   select * into d from public.desks where id = pt.healer_id;
@@ -266,7 +266,7 @@ create or replace function public.submit_feedback(p_token text, p_symptoms jsonb
 returns void language plpgsql security definer set search_path = public as $$
 declare pt public.patients; syms jsonb;
 begin
-  if p_token is null or length(p_token) < 20 then raise exception 'Invalid link'; end if;
+  if p_token is null or length(p_token) < 8 then raise exception 'Invalid link'; end if;
   select * into pt from public.patients where share_token = p_token;
   if pt.id is null then raise exception 'This report link is no longer active.'; end if;
   if (select count(*) from public.feedback where patient_id = pt.id and created_at > now() - interval '1 day') >= 5 then
@@ -392,5 +392,30 @@ alter table public.desks add column if not exists notify_intake boolean not null
 
 -- remembers that the "new intake form" email was already sent for this client
 alter table public.patients add column if not exists notified_at timestamptz;
+
+-- ---------------------------------------------------------------------
+-- 7. CRYSTALS (same as 04-crystals-and-short-links.sql)
+-- ---------------------------------------------------------------------
+-- 1. CRYSTALS — each healer's crystals & tools and when they were cleansed / recharged
+create table if not exists public.crystals (
+  id             uuid primary key default gen_random_uuid(),
+  healer_id      uuid not null default auth.uid() references public.desks(id) on delete cascade,
+  name           text not null check (char_length(name) between 1 and 80),
+  category       text not null check (category in ('Laser healing crystal','Activator','Knife','Disintegrator','Extractor',
+                   'Black tourmaline','KS activator','Laying pebbles/tumbles','Bracelet','Pendant/ring','Pyramid/tower',
+                   'Cleansing spray','Salt & oils','Others')),
+  patient_id     uuid references public.patients(id) on delete set null,   -- empty = the healer's own
+  last_cleansed  date,
+  cycle_days     int not null default 7 check (cycle_days between 1 and 365),
+  history        jsonb not null default '[]'::jsonb,
+  notes          text check (char_length(notes) <= 1000),
+  created_at     timestamptz not null default now()
+);
+create index if not exists crystals_healer_idx on public.crystals(healer_id);
+alter table public.crystals enable row level security;
+drop policy if exists "crystals: own" on public.crystals;
+create policy "crystals: own" on public.crystals
+  for all to authenticated using (healer_id = auth.uid())
+  with check (healer_id = auth.uid() and (patient_id is null or public.owns_patient(patient_id)));
 
 -- Done. 🌿

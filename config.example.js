@@ -8,5 +8,6 @@ window.HD_CONFIG = {
   SUPABASE_URL: 'https://vlhfgjkbuwhcfchjwnbh.supabase.co',
   SUPABASE_ANON_KEY: 'PASTE_YOUR_SUPABASE_ANON_KEY_HERE',
   SITE_URL: 'https://www.healersdesk.com',
+  APP_URL: 'https://app.healersdesk.com',
   SUPPORT_EMAIL: 'healersdesk@gmail.com'
 };

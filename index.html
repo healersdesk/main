@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="hd-version" content="3.1">
+<meta name="hd-version" content="4.0">
 <script>(function(){try{var r=document.documentElement,q=matchMedia('(prefers-color-scheme: dark)');function a(){var p=localStorage.getItem('hdTheme')||'auto',d=p==='dark'||(p==='auto'&&q.matches);r.setAttribute('data-theme',d?'dark':'light');r.setAttribute('data-pref',p);var m=document.querySelector('meta[name=theme-color]');if(m)m.content=d?'#110C28':'#FBFAFE';}a();window.hdApplyTheme=a;q.addEventListener&&q.addEventListener('change',a);}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Healer's Desk — a private workspace for energy healers</title>
@@ -193,7 +193,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:.92rem;col
   <a class="brand" href="/"><img class="logo-l" src="/assets/brand/logo-full-600.png" srcset="/assets/brand/logo-full-600.png 1x, /assets/brand/logo-full-1200.png 2x" alt="Healer's Desk" width="158" height="42"><img class="logo-d" src="/assets/brand/logo-full-dark-600.png" srcset="/assets/brand/logo-full-dark-600.png 1x, /assets/brand/logo-full-dark-1200.png 2x" alt="Healer's Desk" width="158" height="42"></a>
   <a class="lnk" href="#tools">What's inside</a>
   <a class="lnk" href="#trust">Your data</a>
-  <button class="gbtn sm signin" type="button"><span class="t">Sign in</span></button>
+  <button class="gbtn sm signin" type="button"><span class="t">My Desk</span></button>
 </div></header>
 
 <div class="hero-bg"><div class="wrap">
@@ -278,26 +278,13 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:.92rem;col
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="/config.js"></script>
 <script>
-(function(){ const t=document.getElementById('top'); const f=()=>t.classList.toggle('scrolled',scrollY>8); addEventListener('scroll',f,{passive:true}); f(); })();
-(async function(){
-  const C = window.HD_CONFIG || {};
-  const btns = [...document.querySelectorAll('.signin')];
-  const ready = C.SUPABASE_URL && C.SUPABASE_ANON_KEY && !C.SUPABASE_ANON_KEY.startsWith('PASTE') && window.supabase;
-  if(!ready){ btns.forEach(b=>b.onclick=()=>location.href='/desk'); return; }
-  const sb = window.supabase.createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY, { auth:{ flowType:'pkce', detectSessionInUrl:false } });
-  let session = null;
-  try{ session = (await sb.auth.getSession()).data.session; }catch(e){}
-  btns.forEach(b=>{
-    if(session){ const t=b.querySelector('.t'), g=b.querySelector('.g'); if(g) g.remove(); (t||b).textContent = b.classList.contains('sm') ? 'My Desk' : 'Open My Healing Desk'; b.onclick=()=>location.href='/desk'; return; }
-    b.onclick = async()=>{
-      btns.forEach(x=>x.disabled=true);
-      let linked=false; try{ linked=localStorage.getItem('hdGcal')==='1'; }catch(e){}
-      const { error } = await sb.auth.signInWithOAuth({ provider:'google', options:{ redirectTo: location.origin + '/desk', scopes:'https://www.googleapis.com/auth/calendar.app.created', queryParams: linked ? { prompt:'select_account' } : { access_type:'offline', prompt:'consent select_account' } } });
-      if(error){ btns.forEach(x=>x.disabled=false); alert('Google sign-in could not start: '+error.message); }
-    };
+(function(){
+  var C = window.HD_CONFIG || {};
+  var APP = (C.APP_URL || 'https://app.healersdesk.com').replace(/\/$/, '');
+  document.querySelectorAll('.signin').forEach(function(b){
+    b.onclick = function(){ location.href = APP + '/desk' + (b.classList.contains('sm') ? '' : '?signin=google'); };
   });
 })();
 </script>

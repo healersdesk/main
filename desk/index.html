@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="hd-version" content="3.1">
+<meta name="hd-version" content="4.0">
 <script>(function(){try{var r=document.documentElement,q=matchMedia('(prefers-color-scheme: dark)');function a(){var p=localStorage.getItem('hdTheme')||'auto',d=p==='dark'||(p==='auto'&&q.matches);r.setAttribute('data-theme',d?'dark':'light');r.setAttribute('data-pref',p);var m=document.querySelector('meta[name=theme-color]');if(m)m.content=d?'#110C28':'#FBFAFE';}a();window.hdApplyTheme=a;q.addEventListener&&q.addEventListener('change',a);}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>My Healing Desk — Healer's Desk</title>
@@ -403,7 +403,8 @@ html.lock body{position:fixed;left:0;right:0}
 .past-row .pr-time{grid-column:1 / 2;grid-row:2}
 @media (min-width:560px){.past-row{grid-template-columns:1fr 1.3fr auto}.past-row .pr-time{grid-column:auto;grid-row:auto}}
 .tsel{display:grid;grid-template-columns:1.4fr 1fr;gap:6px}
-.share-box{display:flex;gap:8px}
+.share-box{display:flex;gap:8px;align-items:center}
+.copy-btn{width:48px;height:48px;border-radius:14px}
 .share-box input{flex:1;min-width:0}
 .danger-zone{margin-top:24px;padding-top:16px;border-top:1px solid var(--line)}
 .danger-zone p{color:var(--muted);font-size:.9rem;margin:0 0 10px}
@@ -420,6 +421,36 @@ html.lock body{position:fixed;left:0;right:0}
 .cal-chip.warn{border-color:var(--rose-line);background:var(--rose-bg);color:var(--rose)}
 .cal-chip img{width:16px;height:16px}
 
+
+/* ---------- crystals ---------- */
+.crys-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:700px){.crys-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1280px){.crys-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.crys{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:14px 16px;box-shadow:var(--sh-1);display:flex;flex-direction:column;gap:8px;min-width:0}
+.crys.compact{box-shadow:none;background:var(--l-50)}
+.crys-h{display:flex;align-items:center;gap:12px}
+.crys-h .grow{min-width:0}
+.crys-h b{display:block;font:600 1.1rem/1.25 var(--serif);color:var(--head);overflow-wrap:anywhere}
+.crys-h .tag{margin-top:4px}
+.crys-ic{width:42px;height:42px;border-radius:14px;flex:none;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--l-100),var(--g-200))}
+.crys-ic svg{width:22px;height:22px;stroke:var(--link);fill:none;stroke-width:1.6;stroke-linejoin:round}
+.crys-row{display:flex;justify-content:space-between;gap:12px;font-size:.9rem}
+.crys-row span:first-child{color:var(--muted)}
+.crys-row span:last-child{text-align:right}
+.crys-bar{height:7px;border-radius:7px;background:var(--l-100);overflow:hidden;margin-top:4px}
+.crys-bar i{display:block;height:100%;background:var(--sage);border-radius:7px}
+.crys-bar.soon i{background:var(--g-500)} .crys-bar.over i{background:var(--rose)}
+.crys-due{font-weight:700;font-size:.88rem}
+.crys-due.ok{color:var(--sage)} .crys-due.soon{color:var(--g-600)} .crys-due.over{color:var(--rose)}
+.crys-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+.chips-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip-btn{border:1.5px solid var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:6px 12px;font-weight:600;font-size:.82rem;cursor:pointer;min-height:34px}
+.chip-btn.on{background:var(--l-100);border-color:var(--v-400);color:var(--link)}
+.crys-hist{margin:0;padding-left:22px;color:var(--ink-2)}
+.crys-hist li{padding:3px 0}
+.ndot{position:absolute;top:8px;right:calc(50% - 20px);width:9px;height:9px;border-radius:50%;background:var(--rose);border:2px solid var(--surface)}
+.bnav button{position:relative}
+
 /* ---------- toast, install tips ---------- */
 .toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translate(-50%,8px);max-width:calc(100% - 32px);width:max-content;background:var(--toast);color:var(--bg);padding:12px 18px;border-radius:16px;z-index:100;font-weight:500;font-size:.92rem;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;box-shadow:var(--sh-2);text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
@@ -431,7 +462,7 @@ html.lock body{position:fixed;left:0;right:0}
 .bnav{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:14px 10px calc(8px + env(safe-area-inset-bottom,0px));pointer-events:none}
 .bnav::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,var(--bg) 0%,var(--glass) 55%,transparent 100%);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);-webkit-mask-image:linear-gradient(to top,#000 62%,transparent);mask-image:linear-gradient(to top,#000 62%,transparent)}
 .bnav-in{position:relative}
-.bnav-in{pointer-events:auto;max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--glass-2);backdrop-filter:saturate(1.6) blur(18px);-webkit-backdrop-filter:saturate(1.6) blur(18px);border:1px solid var(--line);border-radius:24px;padding:6px;box-shadow:0 16px 36px -18px rgba(42,21,119,.45)}
+.bnav-in{pointer-events:auto;max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:var(--glass-2);backdrop-filter:saturate(1.6) blur(18px);-webkit-backdrop-filter:saturate(1.6) blur(18px);border:1px solid var(--line);border-radius:24px;padding:6px;box-shadow:0 16px 36px -18px rgba(42,21,119,.45)}
 .bnav button{background:none;border:0;border-radius:18px;padding:7px 2px 6px;cursor:pointer;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;min-height:58px;transition:background .2s,color .2s}
 .bnav .bt{height:24px;display:flex;align-items:center;justify-content:center;font:600 1.25rem/1 var(--serif);font-variant-numeric:tabular-nums;color:var(--v-700)}
 .bnav svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
@@ -452,6 +483,24 @@ body.money-hidden .eye .eo{display:none} body.money-hidden .eye .ec{display:bloc
 body.money-hidden .mv-r{display:none}
 .mv-m{display:none} body.money-hidden .mv-m{display:inline}
 .mv{white-space:nowrap}
+/* ---------- desktop: navigation as a left sidebar ---------- */
+@media (min-width:1024px){
+  .bnav{top:calc(75px + env(safe-area-inset-top,0px));bottom:auto;right:auto;width:236px;padding:18px 0 18px 20px;pointer-events:auto}
+  .bnav::before{display:none}
+  .bnav-in{display:flex;flex-direction:column;gap:4px;max-width:none;padding:10px;border-radius:22px;background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:var(--sh-1)}
+  .bnav button{flex-direction:row;justify-content:flex-start;gap:12px;min-height:48px;padding:10px 14px;border-radius:14px;text-align:left}
+  .bnav button:not(.on):hover{background:var(--l-50);color:var(--ink)}
+  .bnav .bt{order:2;margin-left:auto;height:auto;font-size:.95rem;font-family:var(--sans);font-weight:700;min-width:24px;justify-content:flex-end}
+  .bnav .bt svg{width:22px;height:22px}
+  .bnav button:has(.bt svg) .bt,.bnav button:has(.emo) .bt{order:0;margin-left:0;min-width:22px;justify-content:center}
+  .bnav .bl{font-size:.95rem;text-align:left}
+  .bnav button.on .bt{color:var(--g-300)}
+  .ndot{position:static;margin-left:auto;order:3}
+  main{margin-left:256px;margin-right:0;max-width:1180px;padding:30px 32px 48px}
+  .top-in{max-width:none;padding-left:28px;padding-right:28px}
+  .toast{bottom:28px;left:calc(50% + 118px)}
+  .app-foot{margin-left:0}
+}
 </style>
 </head>
 <body>
@@ -494,7 +543,7 @@ body.money-hidden .mv-r{display:none}
 <!-- ================= APP ================= -->
 <div id="app" class="hidden">
   <header class="top"><div class="top-in">
-    <a class="brand" href="/" title="Healer's Desk home"><img class="logo-l" src="/assets/brand/logo-full-600.png" srcset="/assets/brand/logo-full-600.png 1x, /assets/brand/logo-full-1200.png 2x" alt="Healer's Desk" width="158" height="42"><img class="logo-d" src="/assets/brand/logo-full-dark-600.png" srcset="/assets/brand/logo-full-dark-600.png 1x, /assets/brand/logo-full-dark-1200.png 2x" alt="Healer's Desk" width="158" height="42"></a>
+    <a class="brand" href="https://www.healersdesk.com/" title="Healer's Desk home"><img class="logo-l" src="/assets/brand/logo-full-600.png" srcset="/assets/brand/logo-full-600.png 1x, /assets/brand/logo-full-1200.png 2x" alt="Healer's Desk" width="158" height="42"><img class="logo-d" src="/assets/brand/logo-full-dark-600.png" srcset="/assets/brand/logo-full-dark-600.png 1x, /assets/brand/logo-full-dark-1200.png 2x" alt="Healer's Desk" width="158" height="42"></a>
     <button class="icon-btn" id="settingsBtn" aria-label="Desk settings" title="Desk settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
     <button class="icon-btn" id="logout" aria-label="Sign out" title="Sign out"><svg viewBox="0 0 24 24"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/></svg></button>
   </div></header>
@@ -515,6 +564,7 @@ body.money-hidden .mv-r{display:none}
         <div class="panel"><h2>Upcoming healings</h2><div id="upcoming"></div></div>
         <div class="panel"><h2>New intake forms</h2><div id="recent"></div></div>
       </div>
+      <div class="panel hidden" id="crysPanel" style="margin-top:22px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><h2 style="margin:0">Crystals to cleanse</h2><button class="link" data-goto="crystals" style="margin-left:auto">View all ›</button></div><div id="crysDue"></div></div>
       <div class="panel hidden" id="fbPanel" style="margin-top:22px"><h2>New feedback 💬</h2><div id="fbList"></div></div>
       <div class="panel" style="margin-top:22px">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><h2 style="margin:0">Energy Exchange</h2><button type="button" class="eye" data-eye aria-label="Show or hide amounts"><svg class="eo" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="ec" viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M10.6 5.1A10.6 10.6 0 0 1 12 5c6.4 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.1M6.6 6.6C3.8 8.4 2 12 2 12s3.6 7 10 7a9.7 9.7 0 0 0 4.4-1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button><button class="link" data-goto="money" style="margin-left:auto">View all ›</button></div>
@@ -605,6 +655,24 @@ body.money-hidden .mv-r{display:none}
     </section>
 
     <!-- PATIENT DETAIL -->
+    <!-- CRYSTALS -->
+    <section id="v-crystals" class="hidden">
+      <div class="page-h"><h1>Crystals</h1>
+        <div class="page-acts"><button class="btn btn-p" data-act="new-crystal">+ Add crystal</button></div></div>
+      <div class="stats">
+        <div class="stat"><b id="cs-total">0</b><span>Crystals & tools</span></div>
+        <div class="stat"><b id="cs-due" class="rose">0</b><span>Due or overdue</span></div>
+        <div class="stat"><b id="cs-week" class="gold">0</b><span>Due in next 7 days</span></div>
+        <div class="stat"><b id="cs-month" class="sage">0</b><span>Cleansed this month</span></div>
+      </div>
+      <div class="filters">
+        <input type="search" id="cq" placeholder="Search crystals" aria-label="Search crystals">
+        <select id="ccat" aria-label="Category"></select>
+        <select id="cfor" aria-label="Used for"></select>
+      </div>
+      <div id="clist" class="crys-grid"></div>
+    </section>
+
     <section id="v-patient" class="hidden"></section>
     <p class="app-foot">Healer's Desk · <a href="/policy">Policies</a> · <a href="mailto:healersdesk@gmail.com">healersdesk@gmail.com</a></p>
   </main>
@@ -615,6 +683,7 @@ body.money-hidden .mv-r{display:none}
       <button data-view="patients"><span class="bt" id="nav-p">0</span><span class="bl">Subjects</span></button>
       <button data-view="healings"><span class="bt" id="nav-h">0</span><span class="bl">Today</span></button>
       <button data-view="money"><span class="bt emo" aria-hidden="true">💵</span><span class="bl">Exchange</span></button>
+      <button data-view="crystals"><span class="bt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10l4 6-9 12L3 9z"/><path d="M3 9h18M9.5 3 8 9l4 12 4-12-1.5-6"/></svg></span><span class="bl">Crystals</span><i class="ndot hidden" id="nav-c"></i></button>
     </div>
   </nav>
 </div>
@@ -647,7 +716,7 @@ const HSTATUS = ["Pending","Complete","Cancelled"];
 const PAYMODES = ["UPI","Cash","Bank transfer","Card","Other"];
 const WEEKDAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
-const S = { patients:[], healings:[], payments:[], photos:{}, current:null, tab:'profile', view:'home', chart:null };
+const S = { patients:[], healings:[], payments:[], crystals:[], photos:{}, current:null, tab:'profile', view:'home', chart:null };
 let D = null;      // this healer's desk (name, practice, slug…)
 let G = { connected:false }; // Google Calendar connection
 let PENDING_GCAL = null;
@@ -709,7 +778,8 @@ async function boot(){
   if(q.get('error_description')){ showLogin(q.get('error_description')); history.replaceState(null,'',location.pathname); return; }
   const { data:{ session } } = await sb.auth.getSession();
   if(q.has('code')) history.replaceState(null,'',location.pathname+location.hash);
-  session ? enter(session) : showLogin();
+  if(q.get('signin')) history.replaceState(null,'',location.pathname+location.hash);
+  if(session) enter(session); else { showLogin(); if(q.get('signin')==='google') $('#gbtn').click(); }
   sb.auth.onAuthStateChange((ev)=>{ if(ev==='SIGNED_OUT') showLogin(); });
 }
 function hideAll(){ ['login','setup','app'].forEach(id=>$('#'+id).classList.add('hidden')); }
@@ -742,7 +812,7 @@ async function openDesk(){
   if(linked) gcalSync({all:true},{quiet:true});
   if(PENDING_GCAL){ const g=PENDING_GCAL; PENDING_GCAL=null; setTimeout(()=>gcalReturned(g),400); }
   const hash = location.hash.slice(1);
-  if(hash.startsWith('p/')) openPatient(hash.slice(2)); else go(['patients','healings','money'].includes(hash)?hash:'home');
+  if(hash.startsWith('p/')) openPatient(hash.slice(2)); else go(['patients','healings','money','crystals'].includes(hash)?hash:'home');
 }
 
 /* ---- first-time setup ---- */
@@ -786,17 +856,19 @@ $('#setupForm').addEventListener('submit', async e=>{
    DATA
    ===================================================================== */
 async function loadAll(){
-  const [p,h,pay,fb] = await Promise.all([
+  const [p,h,pay,fb,cr] = await Promise.all([
     sb.from('patients').select('*').order('created_at',{ascending:false}),
     sb.from('healings').select('*').order('healing_date').order('healing_time',{nullsFirst:true}),
     sb.from('payments').select('*').order('paid_on',{ascending:false}),
-    sb.from('feedback').select('id,patient_id,created_at').eq('seen',false).order('created_at',{ascending:false})
+    sb.from('feedback').select('id,patient_id,created_at').eq('seen',false).order('created_at',{ascending:false}),
+    sb.from('crystals').select('*').order('created_at')
   ]);
   if(p.error){
     fail(p.error);
   }
   S.patients = p.data||[]; S.healings = (h.data||[]).sort((a,b)=>(a.healing_date+(a.healing_time||'')).localeCompare(b.healing_date+(b.healing_time||''))) ; S.payments = pay.data||[];
   S.unseen = fb.error ? [] : (fb.data||[]);
+  S.crystals = cr.error ? [] : (cr.data||[]);
   await loadPhotos();
 }
 async function loadPhotos(){
@@ -811,11 +883,11 @@ async function loadPhotos(){
    ===================================================================== */
 function go(view){
   S.view=view;
-  ['home','patients','healings','money','patient'].forEach(v=>$('#v-'+v).classList.toggle('hidden', v!==view));
+  ['home','patients','healings','money','crystals','patient'].forEach(v=>$('#v-'+v).classList.toggle('hidden', v!==view));
   $$('.bnav button').forEach(b=>b.classList.toggle('on', b.dataset.view===view || (view==='patient'&&b.dataset.view==='patients')));
   updateNav();
   if(view!=='patient') history.replaceState(null,'', view==='home'?location.pathname:'#'+view);
-  ({home:renderHome, patients:renderPatients, healings:renderHealings, money:renderMoney})[view]?.();
+  ({home:renderHome, patients:renderPatients, healings:renderHealings, money:renderMoney, crystals:renderCrystals})[view]?.();
   window.scrollTo(0,0);
 }
 $$('.bnav button').forEach(b=>b.onclick=()=>go(b.dataset.view));
@@ -823,11 +895,13 @@ function updateNav(){
   const t=todayISO();
   $('#nav-p').textContent=S.patients.length;
   $('#nav-h').textContent=S.healings.filter(h=>h.healing_date===t && h.status!=='Cancelled').length;
+  $('#nav-c').classList.toggle('hidden', !S.crystals.some(c=>crysDays(c)<=0));
 }
 document.addEventListener('click', e=>{
   const a = e.target.closest('[data-act]'); if(!a) return;
   const act=a.dataset.act, id=a.dataset.id;
   if(act==='new-patient') patientModal();
+  if(act==='new-crystal') crystalModal();
   if(act==='new-healing') healingModal(S.view==='patient'?S.current:null,'schedule');
   if(act==='past-healing') healingModal(S.view==='patient'?S.current:null,'past');
   if(act==='open') openPatient(id);
@@ -837,6 +911,7 @@ document.addEventListener('click', e=>{
    OVERVIEW
    ===================================================================== */
 function renderHome(){
+  renderCrysPanel();
   const t=todayISO(), wk=addDays(t,7), wkAgo=addDays(t,-7);
   const pend = S.healings.filter(h=>h.status==='Pending');
   $('#s-today').textContent = pend.filter(h=>h.healing_date===t).length;
@@ -990,7 +1065,7 @@ async function openPatient(id){
   const p=pById(id); if(!p){ go('patients'); return; }
   if(S.current!==id) S.tab='profile'; S.current=id;
   history.replaceState(null,'','#p/'+id);
-  ['home','patients','healings','money'].forEach(v=>$('#v-'+v).classList.add('hidden'));
+  ['home','patients','healings','money','crystals'].forEach(v=>$('#v-'+v).classList.add('hidden'));
   $('#v-patient').classList.remove('hidden'); S.view='patient';
   $$('.bnav button').forEach(b=>b.classList.toggle('on', b.dataset.view==='patients')); updateNav();
   const [sc, fbk] = await Promise.all([
@@ -1076,7 +1151,7 @@ function tabProfile(p){
     const { error } = await sb.from('patients').delete().eq('id',p.id);
     if(error) return fail(error);
     S.patients=S.patients.filter(x=>x.id!==p.id); S.healings=S.healings.filter(h=>h.patient_id!==p.id); S.payments=S.payments.filter(x=>x.patient_id!==p.id);
-    toast('Subject deleted'); go('patients');
+    S.crystals.forEach(c=>{ if(c.patient_id===p.id) c.patient_id=null; }); toast('Subject deleted'); go('patients');
   };
 }
 
@@ -1293,10 +1368,11 @@ function renderMoney(){
 /* =====================================================================
    SHARE PROGRESS REPORT
    ===================================================================== */
-function reportURL(p){ return `${location.origin}/report?t=${p.share_token}`; }
+const shortToken = () => { const a='abcdefghijkmnpqrstuvwxyz23456789', r=crypto.getRandomValues(new Uint8Array(10)); return [...r].map(x=>a[x%a.length]).join(''); };
+function reportURL(p){ return `${location.origin}/r/${D.slug}/${slugify(first(p.full_name))||'report'}-${p.share_token}`; }
 async function shareModal(p){
   if(!p.share_token){
-    const token=(uuid()+uuid()).replace(/-/g,'');
+    const token=shortToken();
     const { error } = await sb.from('patients').update({share_token:token}).eq('id',p.id);
     if(error) return fail(error);
     p.share_token=token;
@@ -1603,7 +1679,7 @@ function settingsModal(){
       <div class="fld"><label for="ds_city">City</label><input type="text" id="ds_city" maxlength="80" value="${esc(D.city||'')}"></div></div>
     <div class="fld"><label for="ds_slug">Intake form link</label>
       <div class="share-box"><div class="slug-row" style="flex:1;min-width:0"><span>${esc(location.host.replace(/^www\./,''))}/intake/</span><input type="text" id="ds_slug" maxlength="40" autocapitalize="off" spellcheck="false" value="${esc(D.slug)}"></div>
-        <button type="button" class="btn btn-o" id="ds_copy">Copy link</button></div>
+        <button type="button" class="icon-btn copy-btn" id="ds_copy" aria-label="Copy intake form link" title="Copy link"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5"/></svg></button></div>
       <div class="hint" id="ds_slughint">Changing this stops the old link from working.</div></div>
     <label class="agree"><input type="checkbox" id="ds_open" ${D.intake_open?'checked':''}> <span>Accept new intake forms</span></label>
     <label class="agree"><input type="checkbox" id="ds_notify" ${D.notify_intake!==false?'checked':''}> <span>Email me at <b>${esc(D.contact_email||'my sign-in email')}</b> when a new intake form arrives</span></label>
@@ -1648,7 +1724,7 @@ function settingsModal(){
 async function exportData(){
   const [sc, fb] = await Promise.all([ sb.from('scans').select('*'), sb.from('feedback').select('*') ]);
   const out={ exported_at:new Date().toISOString(), desk:D,
-    clients:S.patients.map(({_scans,_feedback,...p})=>p), healings:S.healings, payments:S.payments, scans:sc.data||[], feedback:fb.data||[] };
+    clients:S.patients.map(({_scans,_feedback,...p})=>p), healings:S.healings, payments:S.payments, scans:sc.data||[], feedback:fb.data||[], crystals:S.crystals };
   const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`healers-desk-${D.slug}-${todayISO()}.json`;
   document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),4000);
@@ -1674,6 +1750,110 @@ async function deleteDesk(){
     closeModal(); showLogin('Your desk and all its data have been deleted. Thank you for using Healer\'s Desk.');
   }catch(e){ fail(e); $('#ds_delete').disabled=false; $('#ds_delete').textContent='Delete my desk'; }
 }
+
+/* =====================================================================
+   CRYSTALS — cleansing & recharging records
+   ===================================================================== */
+const CRYS_CATS = ['Laser healing crystal','Activator','Knife','Disintegrator','Extractor','Black tourmaline','KS activator','Laying pebbles/tumbles','Bracelet','Pendant/ring','Pyramid/tower','Cleansing spray','Salt & oils','Others'];
+const GEM_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10l4 6-9 12L3 9z"/><path d="M3 9h18M9.5 3 8 9l4 12 4-12-1.5-6"/></svg>';
+const crysNext = c => c.last_cleansed ? addDays(c.last_cleansed, c.cycle_days||7) : null;
+const crysDays = c => { const n=crysNext(c); if(!n) return -9999; return Math.round((new Date(n+'T00:00:00')-new Date(todayISO()+'T00:00:00'))/864e5); };
+const crysFor = c => c.patient_id ? (pById(c.patient_id)?.full_name||'Subject') : 'Myself';
+function crysDue(c){
+  const d=crysDays(c);
+  if(!c.last_cleansed) return { cls:'over', text:'Not cleansed yet' };
+  if(d<0) return { cls:'over', text:`Overdue by ${-d} day${d===-1?'':'s'}` };
+  if(d===0) return { cls:'over', text:'Due today' };
+  if(d===1) return { cls:'soon', text:'Due tomorrow' };
+  return { cls:d<=7?'soon':'ok', text:`Due in ${d} days · ${fmtDate(crysNext(c))}` };
+}
+function crysCard(c, compact){
+  const due=crysDue(c), cyc=c.cycle_days||7, d=crysDays(c);
+  const pct = c.last_cleansed ? Math.max(0,Math.min(100, Math.round(100*(cyc-Math.max(d,0))/cyc))) : 100;
+  const forHTML = c.patient_id && pById(c.patient_id) ? `<button class="link" data-act="open" data-id="${c.patient_id}">${esc(crysFor(c))}</button>` : esc(crysFor(c));
+  return `<div class="crys ${compact?'compact':''}">
+    <div class="crys-h"><span class="crys-ic">${GEM_SVG}</span><div class="grow"><b>${esc(c.name)}</b><span class="tag">${esc(c.category)}</span></div></div>
+    ${compact?'':`<div class="crys-row"><span>Used for</span><span>${forHTML}</span></div>
+    <div class="crys-row"><span>Last cleansed & recharged</span><span>${c.last_cleansed?fmtDateRel(c.last_cleansed):'—'}</span></div>
+    <div class="crys-row"><span>Cleanse every</span><span>${cyc} day${cyc===1?'':'s'}</span></div>`}
+    <div class="crys-bar ${due.cls}"><i style="width:${pct}%"></i></div>
+    <div class="crys-due ${due.cls}">${due.text}${compact?` · ${esc(crysFor(c))}`:''}</div>
+    <div class="crys-acts"><button class="btn btn-p btn-sm" data-cl="${c.id}">✓ Cleansed today</button>${compact?'':`<button class="btn btn-o btn-sm" data-ce="${c.id}">Edit</button>`}</div>
+  </div>`;
+}
+function bindCrys(root){
+  $$('[data-cl]',root).forEach(b=>b.onclick=()=>cleanseNow(b.dataset.cl));
+  $$('[data-ce]',root).forEach(b=>b.onclick=()=>crystalModal(S.crystals.find(c=>c.id===b.dataset.ce)));
+}
+function renderCrystals(){
+  const sel=(el,list,ph)=>{ const v=el.value; el.innerHTML=`<option value="">${ph}</option>`+list.map(([k,l])=>`<option value="${esc(k)}">${esc(l)}</option>`).join(''); el.value=v; };
+  sel($('#ccat'), CRYS_CATS.map(c=>[c,c]), 'All categories');
+  const used=[...new Set(S.crystals.map(c=>c.patient_id).filter(Boolean))].map(id=>[id,pById(id)?.full_name||'Subject']);
+  sel($('#cfor'), [['self','Myself'],...used], 'Everyone');
+  const q=$('#cq').value.trim().toLowerCase(), cat=$('#ccat').value, f=$('#cfor').value, m=todayISO().slice(0,7);
+  $('#cs-total').textContent=S.crystals.length;
+  $('#cs-due').textContent=S.crystals.filter(c=>crysDays(c)<=0).length;
+  $('#cs-week').textContent=S.crystals.filter(c=>{ const d=crysDays(c); return d>0 && d<=7; }).length;
+  $('#cs-month').textContent=S.crystals.filter(c=>(c.last_cleansed||'').slice(0,7)===m).length;
+  const list=S.crystals.filter(c=>(!q || (c.name+' '+c.category+' '+crysFor(c)).toLowerCase().includes(q)) && (!cat||c.category===cat) && (!f || (f==='self'?!c.patient_id:c.patient_id===f)))
+    .sort((a,b)=>crysDays(a)-crysDays(b));
+  $('#clist').innerHTML = list.length ? list.map(c=>crysCard(c)).join('')
+    : `<div class="panel empty">${S.crystals.length?'No crystals match these filters.':'No crystals yet. Add your laser crystals, pebbles, bracelets and other tools to keep track of when they need cleansing and recharging.'}</div>`;
+  bindCrys($('#clist'));
+}
+function renderCrysPanel(){
+  const due=S.crystals.filter(c=>crysDays(c)<=0).sort((a,b)=>crysDays(a)-crysDays(b));
+  $('#crysPanel').classList.toggle('hidden',!due.length);
+  $('#crysDue').innerHTML = `<div class="crys-grid">${due.slice(0,6).map(c=>crysCard(c,true)).join('')}</div>`;
+  bindCrys($('#crysDue'));
+}
+async function cleanseNow(id){
+  const c=S.crystals.find(x=>x.id===id); if(!c) return;
+  const t=todayISO(), history=[t,...(c.history||[]).filter(d=>d!==t)].slice(0,40);
+  const { data, error } = await sb.from('crystals').update({ last_cleansed:t, history }).eq('id',id).select().single();
+  if(error) return fail(error);
+  Object.assign(c,data); toast(`✨ ${c.name} cleansed & recharged`); refresh();
+}
+function crystalModal(c){
+  const subs=S.patients.filter(p=>p.status==='Active'||p.id===c?.patient_id).sort((a,b)=>a.full_name.localeCompare(b.full_name));
+  const cyc=c?.cycle_days||7;
+  openModal(c?'Edit crystal':'Add crystal', `
+    <div class="fld"><label for="cr_name">Crystal name *</label><input type="text" id="cr_name" maxlength="80" placeholder="e.g. My big laser, Rose quartz bracelet" value="${esc(c?.name||'')}"></div>
+    <div class="g2">
+      <div class="fld"><label for="cr_cat">Category *</label><select id="cr_cat">${CRYS_CATS.map(x=>`<option ${x===(c?.category||'Laser healing crystal')?'selected':''}>${esc(x)}</option>`).join('')}</select></div>
+      <div class="fld"><label for="cr_for">Used for</label><select id="cr_for"><option value="">Myself</option>${subs.map(p=>`<option value="${p.id}" ${p.id===c?.patient_id?'selected':''}>${esc(p.full_name)}</option>`).join('')}</select></div>
+    </div>
+    <div class="g2">
+      <div class="fld"><label for="cr_last">Last cleansed & recharged</label><input type="date" id="cr_last" value="${esc(c ? (c.last_cleansed||'') : todayISO())}" max="${todayISO()}"></div>
+      <div class="fld"><label for="cr_cyc">Cleanse & recharge every (days) *</label><input type="number" id="cr_cyc" min="1" max="365" inputmode="numeric" value="${cyc}">
+        <div class="chips-row">${[1,3,7,14,21,30].map(n=>`<button type="button" class="chip-btn ${n===cyc?'on':''}" data-cyc="${n}">${n} day${n>1?'s':''}</button>`).join('')}</div></div>
+    </div>
+    <div class="fld"><label for="cr_notes">Notes</label><textarea id="cr_notes" maxlength="1000" placeholder="How you cleanse it, where it's kept…">${esc(c?.notes||'')}</textarea></div>
+    ${c && (c.history||[]).length ? `<div class="sec-t">Cleansing history</div><ol class="crys-hist">${c.history.slice(0,12).map(d=>`<li>${fmtDayRel(d)}</li>`).join('')}</ol>`:''}
+    <div class="err-box hidden" id="cr_err"></div>`,
+    `${c?'<button class="btn-danger" id="cr_del">Delete</button>':''}<button class="btn btn-o" value="cancel">Cancel</button><button class="btn btn-p" id="ok" value="">${c?'Save':'Add crystal'}</button>`);
+  $$('[data-cyc]').forEach(b=>b.onclick=()=>{ $('#cr_cyc').value=b.dataset.cyc; $$('[data-cyc]').forEach(x=>x.classList.toggle('on',x===b)); });
+  $('#cr_cyc').oninput=()=>$$('[data-cyc]').forEach(x=>x.classList.toggle('on',x.dataset.cyc===$('#cr_cyc').value));
+  $('#ok').onclick=async ev=>{
+    ev.preventDefault(); const err=$('#cr_err'); err.classList.add('hidden');
+    const last=$('#cr_last').value||null;
+    const row={ name:$('#cr_name').value.trim(), category:$('#cr_cat').value, patient_id:$('#cr_for').value||null,
+      last_cleansed:last, cycle_days:Math.round(+$('#cr_cyc').value), notes:$('#cr_notes').value.trim()||null };
+    const bad=!row.name?'Please give this crystal a name.':!(row.cycle_days>=1&&row.cycle_days<=365)?'Days must be between 1 and 365.':last&&last>todayISO()?'The last cleansing date can\'t be in the future.':'';
+    if(bad){ err.textContent=bad; err.classList.remove('hidden'); return; }
+    if(last){ const h=c?.history||[]; row.history=h.includes(last)?h:[last,...h].sort().reverse().slice(0,40); }
+    $('#ok').disabled=true;
+    const res = c ? await sb.from('crystals').update(row).eq('id',c.id).select().single() : await sb.from('crystals').insert(row).select().single();
+    $('#ok').disabled=false;
+    if(res.error){ err.textContent=res.error.message; err.classList.remove('hidden'); return; }
+    if(c) Object.assign(c,res.data); else S.crystals.push(res.data);
+    closeModal(); toast(c?'Crystal saved':'Crystal added'); refresh();
+  };
+  if(c) $('#cr_del').onclick=async ev=>{ ev.preventDefault(); if(!confirm(`Delete ${c.name}?`)) return;
+    const { error } = await sb.from('crystals').delete().eq('id',c.id); if(error) return fail(error);
+    S.crystals=S.crystals.filter(x=>x.id!==c.id); closeModal(); toast('Crystal deleted'); refresh(); };
+}
+['#cq','#ccat','#cfor'].forEach(id=>{ $(id).addEventListener('input',renderCrystals); $(id).addEventListener('change',renderCrystals); });
 
 /* =====================================================================
    GOOGLE CALENDAR — healings are copied to a "Healer's Desk" calendar

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="hd-version" content="3.1">
+<meta name="hd-version" content="4.0">
 <script>(function(){try{var r=document.documentElement,q=matchMedia('(prefers-color-scheme: dark)');function a(){var p=localStorage.getItem('hdTheme')||'auto',d=p==='dark'||(p==='auto'&&q.matches);r.setAttribute('data-theme',d?'dark':'light');r.setAttribute('data-pref',p);var m=document.querySelector('meta[name=theme-color]');if(m)m.content=d?'#110C28':'#FBFAFE';}a();window.hdApplyTheme=a;q.addEventListener&&q.addEventListener('change',a);}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Healing progress — Healer's Desk</title>
@@ -134,7 +134,7 @@ footer a{color:var(--v-600)}
     <p class="lede" id="sub">Loading your report…</p>
   </header>
   <main id="out"></main>
-  <footer id="foot"><span class="powered">Powered by <a href="/"><img class="logo-l" src="/assets/brand/logo-full-600.png" srcset="/assets/brand/logo-full-600.png 1x, /assets/brand/logo-full-1200.png 2x" alt="Healer's Desk" width="75" height="20"><img class="logo-d" src="/assets/brand/logo-full-dark-600.png" srcset="/assets/brand/logo-full-dark-600.png 1x, /assets/brand/logo-full-dark-1200.png 2x" alt="Healer's Desk" width="75" height="20"></a></span> · <a href="/policy#privacy">Privacy</a></footer>
+  <footer id="foot"><span class="powered">Powered by <a href="https://www.healersdesk.com/"><img class="logo-l" src="/assets/brand/logo-full-600.png" srcset="/assets/brand/logo-full-600.png 1x, /assets/brand/logo-full-1200.png 2x" alt="Healer's Desk" width="75" height="20"><img class="logo-d" src="/assets/brand/logo-full-dark-600.png" srcset="/assets/brand/logo-full-dark-600.png 1x, /assets/brand/logo-full-dark-1200.png 2x" alt="Healer's Desk" width="75" height="20"></a></span> · <a href="/policy#privacy">Privacy</a></footer>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
@@ -150,7 +150,8 @@ footer a{color:var(--v-600)}
   const fmt=s=>s?new Date(s+'T00:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'—';
   const out=document.getElementById('out'), sub=document.getElementById('sub');
   const fail=m=>{ sub.textContent=''; out.innerHTML=`<div class="msg">${m}</div>`; };
-  const token=new URLSearchParams(location.search).get('t');
+  const pm=location.pathname.match(/^\/r\/[^/]+\/(?:[^/]*-)?([a-z0-9]{8,64})\/?$/i);
+  const token=(pm&&pm[1]) || new URLSearchParams(location.search).get('t');
   if(!token) return fail('This report link is incomplete. Please ask your healer for a new link.');
   let data, sb;
   try{

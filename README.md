@@ -1,8 +1,15 @@
-# Healer's Desk — v3
+# Healer's Desk — v4 (app.healersdesk.com)
 
 **www.healersdesk.com** · Help: healersdesk@gmail.com
 
-## What's new in v3
+## What's new in v4
+- The app lives at **app.healersdesk.com** (desk, intake forms, progress reports). www.healersdesk.com stays the home page; old links redirect automatically.
+- Crystals section: record crystals & tools by category, who they're used for, last cleansing/recharging and how often.
+- Shorter progress-report links: app.healersdesk.com/r/<healer-link>/<first-name>-<code>.
+- Desktop: menu on the left as a sidebar. Settings: copy-link icon.
+- Run `supabase/04-crystals-and-short-links.sql` once.
+
+## What was new in v3
 - Google sign-in also asks for Google Calendar permission, so the calendar connects automatically.
 - Dark mode (Settings → Appearance: Auto / Light / Dark, Auto by default).
 - Email alert to each healer's own sign-in email when a new intake form arrives (sent through Google Apps Script from healersdesk@gmail.com).
@@ -45,7 +52,7 @@
    | `GOOGLE_CLIENT_ID` | from Google Cloud → Clients |
    | `GOOGLE_CLIENT_SECRET` | from Google Cloud → Clients |
    | `HD_SECRET` | any long random text (40+ letters and numbers). Never change it later. |
-   | `SITE_URL` | `https://www.healersdesk.com` |
+   | `SITE_URL` | `https://app.healersdesk.com` |
    | `APPS_SCRIPT_URL` | the Web app URL from your Apps Script deployment (ends in `/exec`) |
    | `APPS_SCRIPT_SECRET` | the same long secret you put in the Apps Script's Script Properties |
    Then Deployments → ⋯ on the latest → **Redeploy**.

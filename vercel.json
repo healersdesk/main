@@ -3,6 +3,94 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/desk",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.healersdesk.com"
+        }
+      ],
+      "destination": "https://app.healersdesk.com/desk",
+      "permanent": false
+    },
+    {
+      "source": "/desk/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.healersdesk.com"
+        }
+      ],
+      "destination": "https://app.healersdesk.com/desk/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/intake",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.healersdesk.com"
+        }
+      ],
+      "destination": "https://app.healersdesk.com/intake",
+      "permanent": false
+    },
+    {
+      "source": "/intake/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.healersdesk.com"
+        }
+      ],
+      "destination": "https://app.healersdesk.com/intake/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/report",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.healersdesk.com"
+        }
+      ],
+      "destination": "https://app.healersdesk.com/report",
+      "permanent": false
+    },
+    {
+      "source": "/r/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.healersdesk.com"
+        }
+      ],
+      "destination": "https://app.healersdesk.com/r/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/i/:slug",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.healersdesk.com"
+        }
+      ],
+      "destination": "https://app.healersdesk.com/intake/:slug",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "app.healersdesk.com"
+        }
+      ],
+      "destination": "/desk",
+      "permanent": false
+    },
+    {
       "source": "/admin",
       "destination": "/desk",
       "permanent": true
@@ -37,6 +125,10 @@
     {
       "source": "/intake/:slug",
       "destination": "/intake"
+    },
+    {
+      "source": "/r/:slug/:sub",
+      "destination": "/report"
     }
   ],
   "headers": [
